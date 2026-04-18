@@ -114,7 +114,7 @@
                 <span class="text-xl font-extrabold text-blue-900 tracking-tight">Kaybeden ve Bulan</span>
             </div>
             <!-- API Durum Göstergesi -->
-            <div id="serverStatus" class="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-100 shadow-sm">
+            <div id="serverStatus" class="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-100 shadow-sm cursor-pointer" onclick="checkServerStatus()">
                 <span id="statusDot" class="status-dot status-checking"></span>
                 <span id="statusText" class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Sunucu Kontrol Ediliyor...</span>
             </div>
@@ -260,19 +260,35 @@
             const dot = document.getElementById('statusDot');
             const text = document.getElementById('statusText');
             
+            // Başlangıç durumu
+            dot.className = "status-dot status-checking";
+            text.innerText = "Bağlantı Deneniyor...";
+
             try {
-                const response = await fetch(API_BASE, { method: 'GET', mode: 'cors' });
+                // Timeout mekanizması ekleyelim (5 saniye)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                const response = await fetch(API_BASE, { 
+                    method: 'GET', 
+                    mode: 'cors',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+
                 if(response.ok) {
                     dot.className = "status-dot status-online";
                     text.innerText = "Sunucu Çevrimiçi";
                     text.className = "text-[10px] font-bold text-green-600 uppercase tracking-tighter";
                 } else {
-                    throw new Error();
+                    throw new Error(`HTTP Hata: ${response.status}`);
                 }
             } catch (e) {
                 dot.className = "status-dot status-offline";
-                text.innerText = "Sunucu Çevrimdışı";
+                text.innerText = e.name === 'AbortError' ? "Zaman Aşımı" : "Sunucu Çevrimdışı";
                 text.className = "text-[10px] font-bold text-red-600 uppercase tracking-tighter";
+                console.error("Bağlantı hatası detayları:", e);
             }
         }
 
@@ -346,6 +362,8 @@
                     errorMsg += error.message;
                 }
                 showAlert(errorMsg);
+                // Hata durumunda sunucu durumunu tekrar kontrol et
+                checkServerStatus();
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalContent;
@@ -396,6 +414,7 @@
             } catch (error) {
                 console.error("Kayıt Hatası:", error);
                 showAlert(error.message.includes("Failed to fetch") ? "Sunucu çevrimdışı. Lütfen API URL'sini ve Vercel loglarını kontrol edin." : error.message);
+                checkServerStatus();
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalContent;
