@@ -169,7 +169,7 @@
         </div>
 
         <div class="flex-1 overflow-y-auto p-8">
-            <div id="apiAlert" class="hidden mb-6 p-4 rounded-2xl flex items-center gap-3 border">
+            <div id="apiAlert" class="hidden mb-6 p-4 rounded-2xl flex items-center gap-3 border transition-all duration-300">
                 <!-- Hata mesajları buraya gelecek -->
             </div>
 
@@ -237,6 +237,7 @@
     </div>
 
     <script>
+        // API Adresini kontrol edin - Vercel deploy'u ile eşleşmelidir
         const API_BASE = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
         
         function openPanel() { document.getElementById('sidePanel').classList.add('open'); }
@@ -253,7 +254,7 @@
         function showAlert(msg, isError = true) {
             const alert = document.getElementById('apiAlert');
             alert.className = `mb-6 p-4 rounded-2xl flex items-center gap-3 border ${isError ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'}`;
-            alert.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'}"></i> <span class="text-xs font-bold leading-tight">${msg}</span>`;
+            alert.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'}"></i> <div class="flex flex-col"><span class="text-xs font-bold leading-tight">${msg}</span></div>`;
             alert.classList.remove('hidden');
         }
 
@@ -262,6 +263,14 @@
         async function handleLogin() {
             const btn = document.getElementById('loginBtn');
             const originalContent = btn.innerHTML;
+            const email = document.getElementById('l_email').value;
+            const password = document.getElementById('l_pass').value;
+
+            if(!email || !password) {
+                showAlert("Lütfen tüm alanları doldurun.");
+                return;
+            }
+
             btn.disabled = true;
             btn.innerHTML = '<div class="loader"></div>';
             hideAlert();
@@ -269,23 +278,33 @@
             try {
                 const response = await fetch(`${API_BASE}/users/login`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify({
-                        email: document.getElementById('l_email').value,
-                        passwordHash: document.getElementById('l_pass').value
+                        email: email,
+                        passwordHash: password
                     })
                 });
 
+                const data = await response.json();
+
                 if (!response.ok) {
-                    const errData = await response.json();
-                    throw new Error(errData.detail || "Giriş bilgileri hatalı veya kullanıcı bulunamadı.");
+                    throw new Error(data.detail || "Giriş başarısız.");
                 }
 
-                showAlert("Giriş başarılı! Yönlendiriliyorsunuz...", false);
-                // Burada dashboard'a yönlendirme yapabilirsiniz
+                showAlert("Giriş başarılı! Hoş geldiniz.", false);
+                // Başarılı giriş sonrası yönlendirme veya state güncelleme
             } catch (error) {
-                console.error("Login Error:", error);
-                showAlert(error.message === "Failed to fetch" ? "Veritabanına ulaşılamıyor. Sunucu çevrimdışı veya ağ hatası mevcut." : error.message);
+                console.error("Hata Detayı:", error);
+                let errorMsg = "Bağlantı Hatası: ";
+                if (error.message.includes("Failed to fetch")) {
+                    errorMsg += "Sunucuya ulaşılamıyor. Lütfen internetinizi veya sunucu durumunu kontrol edin.";
+                } else {
+                    errorMsg += error.message;
+                }
+                showAlert(errorMsg);
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalContent;
@@ -294,37 +313,51 @@
 
         async function handleRegister() {
             const btn = document.getElementById('regBtn');
+            const originalContent = btn.innerHTML;
+            
+            const name = document.getElementById('r_name').value;
+            const email = document.getElementById('r_email').value;
+            const pass = document.getElementById('r_pass').value;
+            const phone = document.getElementById('r_phone').value;
+
+            if(!name || !email || !pass) {
+                showAlert("Ad, E-posta ve Şifre zorunludur.");
+                return;
+            }
+
             btn.disabled = true;
             btn.innerHTML = '<div class="loader mx-auto"></div>';
             hideAlert();
 
-            const payload = {
-                name: document.getElementById('r_name').value,
-                email: document.getElementById('r_email').value,
-                passwordHash: document.getElementById('r_pass').value,
-                phoneNumber: document.getElementById('r_phone').value
-            };
-
             try {
                 const response = await fetch(`${API_BASE}/users/register`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        passwordHash: pass,
+                        phoneNumber: phone
+                    })
                 });
 
+                const data = await response.json();
+
                 if (!response.ok) {
-                    const errData = await response.json();
-                    throw new Error(errData.detail || "Kayıt sırasında bir hata oluştu.");
+                    throw new Error(data.detail || "Kayıt başarısız.");
                 }
 
-                showAlert("Kaydınız başarıyla oluşturuldu! Şimdi giriş yapabilirsiniz.", false);
-                setTimeout(() => toggleView('login'), 2000);
+                showAlert("Kayıt başarılı! Doğrulama e-postası gönderildi.", false);
+                setTimeout(() => toggleView('login'), 3000);
             } catch (error) {
-                console.error("Register Error:", error);
-                showAlert(error.message === "Failed to fetch" ? "Veritabanına ulaşılamıyor. Lütfen internet bağlantınızı kontrol edin." : error.message);
+                console.error("Kayıt Hatası:", error);
+                showAlert(error.message.includes("Failed to fetch") ? "Sunucu çevrimdışı. Veritabanı bağlantısı kurulamıyor." : error.message);
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = 'Kayıt Ol';
+                btn.innerHTML = originalContent;
             }
         }
     </script>
