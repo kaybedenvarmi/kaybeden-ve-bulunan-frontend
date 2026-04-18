@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaybeden ve Bulan | Çok Yakında</title>
+    <title>Kaybeden ve Bulan | İnteraktif Test</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -18,9 +18,8 @@
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
         }
 
-        /* Test Paneli Kayma Efekti */
         #testPanel {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
         }
 
@@ -28,226 +27,364 @@
             transform: translateX(0);
         }
 
+        /* Başarılı girişte paneli genişletiriz */
+        #testPanel.expanded {
+            width: 85%;
+            max-width: 900px;
+        }
+
         .floating-button {
             writing-mode: vertical-rl;
             text-orientation: mixed;
         }
 
-        /* Yükleme animasyonu */
         .loader {
             border: 3px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 3px solid #3498db;
+            border-top: 3px solid #3b82f6;
             width: 20px;
             height: 20px;
             animation: spin 1s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 8px;
         }
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body class="hero-gradient min-h-screen overflow-x-hidden">
 
     <!-- Navigasyon -->
-    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto relative z-20">
         <div class="flex items-center space-x-2">
-            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg">
                 kb
             </div>
-            <span class="text-2xl font-bold text-blue-900">Kaybeden ve Bulan</span>
+            <span class="text-2xl font-bold text-blue-900 tracking-tight">Kaybeden ve Bulan</span>
         </div>
     </nav>
 
-    <!-- Ana İçerik Alanı -->
-    <main class="max-w-7xl mx-auto px-6 pt-12 pb-24 flex flex-col lg:flex-row items-center">
-        
-        <!-- Sol Taraf: Metinler ve İstatistikler -->
+    <!-- Ana İçerik -->
+    <main class="max-w-7xl mx-auto px-6 pt-12 pb-24 flex flex-col lg:flex-row items-center relative">
         <div class="lg:w-1/2 text-center lg:text-left z-10">
             <h1 class="text-4xl lg:text-6xl font-extrabold text-blue-900 leading-tight mb-6">
-                Eşyalarınızı bulmanın <br><span class="text-blue-600 text-3xl lg:text-5xl">en kolay yolu burada.</span>
+                Eşyalarınızı bulmanın <br><span class="text-blue-600 text-3xl lg:text-5xl font-bold underline decoration-yellow-400">en kolay yolu burada.</span>
             </h1>
-            <p class="text-gray-600 text-lg mb-8 max-w-xl">
+            <p class="text-gray-600 text-lg mb-8 max-w-xl leading-relaxed">
                 Kaybolan değerli eşyalarınız için endişelenmeyin. Topluluk odaklı platformumuzla kayıpları buluyor, bulunanları sahiplerine ulaştırıyoruz.
             </p>
 
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-100">
-                    <i class="fa-solid fa-magnifying-glass text-blue-500 mb-2"></i>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-blue-50 hover:shadow-md transition">
+                    <i class="fa-solid fa-magnifying-glass text-blue-500 text-xl mb-3 block"></i>
                     <div class="text-2xl font-bold text-blue-900">600K+</div>
-                    <div class="text-xs text-gray-500">Kayıp İlanı</div>
+                    <div class="text-xs text-gray-500 uppercase tracking-widest font-semibold">Kayıp İlanı</div>
                 </div>
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-100">
-                    <i class="fa-solid fa-hand-holding-heart text-yellow-500 mb-2"></i>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-blue-50 hover:shadow-md transition">
+                    <i class="fa-solid fa-hand-holding-heart text-yellow-500 text-xl mb-3 block"></i>
                     <div class="text-2xl font-bold text-blue-900">147K+</div>
-                    <div class="text-xs text-gray-500">Bulunan Eşya</div>
+                    <div class="text-xs text-gray-500 uppercase tracking-widest font-semibold">Bulunan Eşya</div>
                 </div>
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-100 hidden md:block">
-                    <i class="fa-solid fa-earth-americas text-green-500 mb-2"></i>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-blue-50 hidden md:block hover:shadow-md transition">
+                    <i class="fa-solid fa-earth-americas text-green-500 text-xl mb-3 block"></i>
                     <div class="text-2xl font-bold text-blue-900">7/24</div>
-                    <div class="text-xs text-gray-500">Aktif Destek</div>
+                    <div class="text-xs text-gray-500 uppercase tracking-widest font-semibold">Aktif Destek</div>
                 </div>
             </div>
 
-            <div class="bg-white inline-flex items-center p-2 pr-6 rounded-full shadow-lg border border-blue-200">
-                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse mr-4">🚀</span>
-                <span class="text-blue-900 font-semibold italic">Sistemimiz çok yakında yayında!</span>
+            <div class="bg-white inline-flex items-center p-2 pr-6 rounded-full shadow-lg border border-blue-100">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-full font-bold animate-pulse mr-4">🚀</span>
+                <span class="text-blue-900 font-medium italic">Sistemimiz çok yakında yayında!</span>
             </div>
         </div>
 
-        <!-- Sağ Taraf: Dinamik Görsel Alanı -->
         <div class="lg:w-1/2 mt-16 lg:mt-0 relative flex justify-center">
-            <div class="absolute w-[400px] h-[400px] bg-blue-200 rounded-full blur-3xl opacity-30 -z-10"></div>
-            
+            <div class="absolute w-[450px] h-[450px] bg-blue-300 rounded-full blur-[80px] opacity-20 -z-10"></div>
             <div class="relative w-full max-w-md">
-                <!-- Her açılışta değişen dinamik resim -->
                 <img id="dynamicHeroImage" 
-                     src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600" 
-                     alt="Kullanıcı" 
-                     class="rounded-3xl shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition duration-500 object-cover aspect-[4/5]">
+                     src="" 
+                     alt="Kullanıcı Görseli" 
+                     onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600'"
+                     class="rounded-[2.5rem] shadow-2xl border-[12px] border-white transform hover:scale-105 transition duration-700 object-cover aspect-[4/5]">
                 
-                <div class="absolute -top-6 -left-6 bg-yellow-400 p-4 rounded-2xl shadow-lg animate-bounce">
-                    <i class="fa-solid fa-key text-white text-2xl"></i>
+                <div class="absolute -top-8 -left-8 bg-yellow-400 p-5 rounded-3xl shadow-xl animate-bounce">
+                    <i class="fa-solid fa-key text-white text-3xl"></i>
                 </div>
-                <div class="absolute -bottom-6 -right-6 bg-blue-500 p-4 rounded-2xl shadow-lg">
-                    <i class="fa-solid fa-wallet text-white text-2xl"></i>
+                <div class="absolute -bottom-8 -right-8 bg-blue-500 p-5 rounded-3xl shadow-xl">
+                    <i class="fa-solid fa-camera text-white text-3xl"></i>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- SAĞ TARAF TEST ET BUTONU -->
-    <button onclick="togglePanel()" class="fixed right-0 top-1/2 transform -translate-y-1/2 bg-blue-700 hover:bg-blue-800 text-white px-2 py-8 rounded-l-2xl shadow-2xl z-50 floating-button font-bold text-sm tracking-widest transition-all">
-        TEST ETMEK İÇİN TIKLAYINIZ
+    <!-- TEST PANELİ TETİKLEYİCİ -->
+    <button id="panelTrigger" onclick="togglePanel()" class="fixed right-0 top-1/2 transform -translate-y-1/2 bg-blue-800 hover:bg-blue-950 text-white px-2 py-10 rounded-l-3xl shadow-2xl z-50 floating-button font-bold text-xs tracking-[0.2em] transition-all hover:pr-4">
+        TEST ET & GEZİN
     </button>
 
-    <!-- TEST PANELİ -->
-    <aside id="testPanel" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white shadow-2xl z-[60] flex flex-col p-8 border-l border-blue-100">
-        <div class="flex justify-between items-center mb-10">
-            <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold">kb</div>
-                <h2 class="text-xl font-bold text-blue-900">Giriş Yap</h2>
+    <!-- INTERAKTIF PANEL -->
+    <aside id="testPanel" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-white shadow-[-20px_0_50px_rgba(0,0,0,0.1)] z-[60] flex flex-col border-l border-blue-50 overflow-hidden">
+        
+        <!-- Panel Başlığı -->
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-md">kb</div>
+                <div>
+                    <h2 id="panelTitle" class="text-lg font-bold text-blue-900">Giriş Yap</h2>
+                    <p id="panelSub" class="text-xs text-gray-500">Test sistemi aktif</p>
+                </div>
             </div>
-            <button onclick="togglePanel()" class="text-gray-400 hover:text-red-500 transition">
-                <i class="fa-solid fa-xmark text-2xl"></i>
+            <button onclick="togglePanel()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-red-50 text-gray-400 hover:text-red-500 transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
             </button>
         </div>
 
-        <div class="flex-1">
-            <p class="text-sm text-gray-500 mb-8">Test aşaması için API bağlantınız aktiftir.</p>
-            
-            <div id="loginMessage" class="hidden p-4 rounded-xl mb-6 text-sm font-medium"></div>
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+            <div id="statusMessage" class="hidden p-4 rounded-2xl mb-6 text-sm flex items-start gap-3"></div>
 
-            <form id="loginForm" class="space-y-6">
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">E-POSTA</label>
-                    <div class="relative">
-                        <span class="absolute left-4 top-3.5 text-gray-400">
-                            <i class="fa-solid fa-envelope"></i>
-                        </span>
-                        <input type="email" id="emailInput" required placeholder="E-posta adresiniz" class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+            <!-- GİRİŞ FORMU -->
+            <div id="loginView">
+                <form id="loginForm" class="space-y-5">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">E-POSTA</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-envelope absolute left-4 top-4 text-gray-400"></i>
+                            <input type="email" id="loginEmail" required placeholder="ornek@mail.com" class="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">ŞİFRE</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-lock absolute left-4 top-4 text-gray-400"></i>
+                            <input type="password" id="loginPass" required placeholder="••••••••" class="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-blue-200 transform active:scale-[0.98] transition flex items-center justify-center gap-2">
+                        <span>Giriş Yap</span>
+                    </button>
+                    <p class="text-center text-sm text-gray-500">
+                        Hesabın yok mu? <button type="button" onclick="switchView('register')" class="text-blue-600 font-bold hover:underline">Kayıt Ol</button>
+                    </p>
+                </form>
+            </div>
+
+            <!-- KAYIT FORMU -->
+            <div id="registerView" class="hidden">
+                <form id="registerForm" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase">AD SOYAD</label>
+                            <input type="text" id="regName" required class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-400 transition">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase">TELEFON</label>
+                            <input type="tel" id="regPhone" class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-400 transition">
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase">E-POSTA</label>
+                        <input type="email" id="regEmail" required class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-400 transition">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase">ŞİFRE</label>
+                        <input type="password" id="regPass" required class="w-full p-3 bg-gray-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-400 transition">
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-2xl shadow-lg transform active:scale-95 transition mt-4">Kayıt Ol</button>
+                    <p class="text-center text-sm text-gray-500">
+                        Zaten üye misin? <button type="button" onclick="switchView('login')" class="text-blue-600 font-bold hover:underline">Giriş Yap</button>
+                    </p>
+                </form>
+            </div>
+
+            <!-- DASHBOARD (Giriş Sonrası) -->
+            <div id="dashboardView" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-6 rounded-3xl border border-blue-100 hover:bg-blue-100 transition cursor-pointer">
+                        <i class="fa-solid fa-plus-circle text-blue-600 text-2xl mb-2"></i>
+                        <h4 class="font-bold text-blue-900">Yeni İlan Ver</h4>
+                        <p class="text-xs text-blue-700 opacity-70">Kayıp veya bulunan eşya ekle</p>
+                    </div>
+                    <div class="bg-yellow-50 p-6 rounded-3xl border border-yellow-100 hover:bg-yellow-100 transition cursor-pointer">
+                        <i class="fa-solid fa-list-check text-yellow-600 text-2xl mb-2"></i>
+                        <h4 class="font-bold text-yellow-900">İlanlarım</h4>
+                        <p class="text-xs text-yellow-700 opacity-70">Yayındaki 3 ilanınız</p>
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">ŞİFRE</label>
-                    <div class="relative">
-                        <span class="absolute left-4 top-3.5 text-gray-400">
-                            <i class="fa-solid fa-lock"></i>
-                        </span>
-                        <input type="password" id="passwordInput" required placeholder="••••••••" class="w-full pl-12 pr-12 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                <div class="mt-8">
+                    <h3 class="font-bold text-blue-900 mb-4 flex items-center justify-between">
+                        <span>Son Kayıp İlanları</span>
+                        <a href="#" class="text-xs text-blue-600 hover:underline">Tümünü Gör</a>
+                    </h3>
+                    <div id="postsList" class="space-y-3">
+                        <!-- İlanlar buraya gelecek -->
+                        <div class="animate-pulse bg-gray-50 h-20 rounded-2xl"></div>
+                        <div class="animate-pulse bg-gray-50 h-20 rounded-2xl"></div>
                     </div>
                 </div>
-
-                <button type="submit" id="submitBtn" class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-4 rounded-xl shadow-lg transform active:scale-95 transition flex items-center justify-center">
-                    <span>Giriş Yap</span>
-                </button>
-
-                <div class="text-center">
-                    <button type="button" class="text-sm font-semibold text-blue-600 hover:text-blue-800">Hesap Oluştur</button>
-                </div>
-            </form>
+            </div>
         </div>
 
-        <div class="mt-auto pt-6 border-t border-gray-100 text-center">
-            <p class="text-xs text-gray-400">© 2026 Kaybeden ve Bulan</p>
+        <div class="p-6 bg-gray-50 text-center">
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">© 2026 Kaybeden ve Bulan</p>
         </div>
     </aside>
 
     <script>
-        // API ADRESİNİZ
-        const API_BASE_URL = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
+        const API_URL = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
+        let currentUser = null;
 
-        // 1. Dinamik Resim Değiştirme (Sayfa yüklendiğinde çalışır)
-        window.onload = function() {
-            const heroImg = document.getElementById('dynamicHeroImage');
-            const keywords = ['woman', 'man', 'portrait', 'smiling', 'user'];
-            const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
-            // Unsplash'ten her seferinde farklı bir insan resmi getirir
-            heroImg.src = `https://source.unsplash.com/600x800/?${randomKeyword}&sig=${Math.random()}`;
-        };
-
-        // 2. Panel Aç/Kapat
-        function togglePanel() {
-            document.getElementById('testPanel').classList.toggle('open');
+        // 1. Dinamik Resimler (Unsplash Personas)
+        function refreshHeroImage() {
+            const img = document.getElementById('dynamicHeroImage');
+            const seeds = Math.floor(Math.random() * 1000);
+            const collections = ['woman', 'man', 'student', 'professional'];
+            const randomTag = collections[Math.floor(Math.random() * collections.length)];
+            img.src = `https://images.unsplash.com/photo-${seeds % 2 === 0 ? '1573497019940-1c28c88b4f3e' : '1539571696357-5a69c17a67c6'}?auto=format&fit=crop&q=80&w=600&sig=${seeds}`;
         }
 
-        // 3. Aktif Giriş Testi (API Bağlantısı)
+        window.onload = refreshHeroImage;
+
+        // 2. Görünüm Değiştirici
+        function switchView(view) {
+            const views = ['loginView', 'registerView', 'dashboardView'];
+            views.forEach(v => document.getElementById(v).classList.add('hidden'));
+            document.getElementById(view + 'View').classList.remove('hidden');
+
+            const title = document.getElementById('panelTitle');
+            if(view === 'login') title.innerText = "Giriş Yap";
+            if(view === 'register') title.innerText = "Hesap Oluştur";
+            if(view === 'dashboard') {
+                title.innerText = `Hoş geldin, ${currentUser?.name || 'Kullanıcı'}`;
+                document.getElementById('testPanel').classList.add('expanded');
+                loadPosts();
+            } else {
+                document.getElementById('testPanel').classList.remove('expanded');
+            }
+        }
+
+        // 3. Panel Toggle
+        function togglePanel() {
+            const panel = document.getElementById('testPanel');
+            panel.classList.toggle('open');
+        }
+
+        // 4. Durum Mesajı Göster
+        function showMsg(text, type = 'error') {
+            const msg = document.getElementById('statusMessage');
+            msg.classList.remove('hidden', 'bg-red-50', 'text-red-700', 'bg-green-50', 'text-green-700');
+            
+            const colorClass = type === 'error' ? 'bg-red-50 text-red-700 border border-red-100' : 'bg-green-50 text-green-700 border border-green-100';
+            const icon = type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check';
+            
+            msg.innerHTML = `<i class="fa-solid ${icon} mt-0.5"></i> <span>${text}</span>`;
+            msg.className = `p-4 rounded-2xl mb-6 text-sm flex items-start gap-3 ${colorClass}`;
+            msg.classList.remove('hidden');
+        }
+
+        // 5. Giriş İşlemi
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('passwordInput').value;
-            const msgDiv = document.getElementById('loginMessage');
-            const submitBtn = document.getElementById('submitBtn');
-
-            // Görsel geri bildirim
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<div class="loader"></div> Bağlanıyor...';
-            msgDiv.classList.add('hidden');
+            const btn = e.target.querySelector('button');
+            const originalBtn = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loader"></div>';
 
             try {
-                const response = await fetch(`${API_BASE_URL}/users/login`, {
+                const response = await fetch(`${API_URL}/users/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        email: email,
-                        passwordHash: password // API modelinizde passwordHash olarak tanımlı
+                        email: document.getElementById('loginEmail').value,
+                        passwordHash: document.getElementById('loginPass').value
                     })
                 });
 
-                const result = await response.json();
+                const data = await response.json();
+                if(!response.ok) throw new Error(data.detail || "Giriş yapılamadı.");
 
-                if (response.ok) {
-                    msgDiv.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Giriş Başarılı! Hoş geldin, ${result.name}`;
-                    msgDiv.className = "p-4 rounded-xl mb-6 text-sm font-medium bg-green-100 text-green-700";
-                    msgDiv.classList.remove('hidden');
-                } else {
-                    throw new Error(result.detail || "Giriş başarısız.");
-                }
-            } catch (error) {
-                msgDiv.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-2"></i> ${error.message}`;
-                msgDiv.className = "p-4 rounded-xl mb-6 text-sm font-medium bg-red-100 text-red-700";
-                msgDiv.classList.remove('hidden');
+                currentUser = data;
+                showMsg("Giriş başarılı! Yönlendiriliyorsunuz...", "success");
+                setTimeout(() => switchView('dashboard'), 1000);
+
+            } catch (err) {
+                showMsg(err.message);
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>Giriş Yap</span>';
+                btn.disabled = false;
+                btn.innerHTML = originalBtn;
             }
         });
 
-        // Panel dışına tıklandığında kapatma
-        document.addEventListener('click', (e) => {
-            const panel = document.getElementById('testPanel');
-            const btn = document.querySelector('.floating-button');
-            if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
-                togglePanel();
+        // 6. Kayıt İşlemi
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.disabled = true;
+            btn.innerHTML = "Kaydediliyor...";
+
+            try {
+                const response = await fetch(`${API_URL}/users/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('regName').value,
+                        email: document.getElementById('regEmail').value,
+                        passwordHash: document.getElementById('regPass').value,
+                        phoneNumber: document.getElementById('regPhone').value
+                    })
+                });
+
+                const data = await response.json();
+                if(!response.ok) throw new Error(data.detail || "Kayıt hatası.");
+
+                showMsg("Kayıt başarılı! Lütfen mail kutunuzu onaylayın ve sonra giriş yapın.", "success");
+                setTimeout(() => switchView('login'), 2000);
+
+            } catch (err) {
+                showMsg(err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "Kayıt Ol";
             }
         });
+
+        // 7. İlanları Yükle
+        async function loadPosts() {
+            const list = document.getElementById('postsList');
+            try {
+                const res = await fetch(`${API_URL}/posts`);
+                const posts = await res.json();
+                
+                list.innerHTML = posts.length === 0 ? '<p class="text-gray-400 text-sm italic">Henüz onaylı ilan bulunmuyor.</p>' : '';
+                
+                posts.slice(0, 5).forEach(post => {
+                    list.innerHTML += `
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-2xl hover:bg-white border border-transparent hover:border-blue-100 transition shadow-sm">
+                            <img src="${post.imageUrl || 'https://via.placeholder.com/60'}" class="w-14 h-14 rounded-xl object-cover shadow-sm">
+                            <div class="flex-1">
+                                <h5 class="font-bold text-sm text-blue-900 line-clamp-1">${post.title}</h5>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-600 text-[9px] font-bold rounded-full uppercase">${post.type === 'lost' ? 'Kayıp' : 'Bulunan'}</span>
+                                    <span class="text-[10px] text-gray-400"><i class="fa-solid fa-location-dot mr-1"></i>${post.location || 'Bilinmiyor'}</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-300 text-xs mr-2"></i>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                list.innerHTML = '<p class="text-red-500 text-xs">Veriler çekilemedi.</p>';
+            }
+        }
     </script>
 </body>
 </html>
