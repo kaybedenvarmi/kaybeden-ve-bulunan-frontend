@@ -18,12 +18,6 @@
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
         /* Test Paneli Kayma Efekti */
         #testPanel {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -38,6 +32,24 @@
             writing-mode: vertical-rl;
             text-orientation: mixed;
         }
+
+        /* Yükleme animasyonu */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #3498db;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="hero-gradient min-h-screen overflow-x-hidden">
@@ -45,7 +57,6 @@
     <!-- Navigasyon -->
     <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
         <div class="flex items-center space-x-2">
-            <!-- Logo Yerine Placeholder (Mavi Kare ikonunuz gibi) -->
             <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
                 kb
             </div>
@@ -65,7 +76,6 @@
                 Kaybolan değerli eşyalarınız için endişelenmeyin. Topluluk odaklı platformumuzla kayıpları buluyor, bulunanları sahiplerine ulaştırıyoruz.
             </p>
 
-            <!-- İstatistik Kartları (Resim 4'teki gibi) -->
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-100">
                     <i class="fa-solid fa-magnifying-glass text-blue-500 mb-2"></i>
@@ -84,26 +94,23 @@
                 </div>
             </div>
 
-            <!-- Yakında Butonu -->
             <div class="bg-white inline-flex items-center p-2 pr-6 rounded-full shadow-lg border border-blue-200">
                 <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse mr-4">🚀</span>
                 <span class="text-blue-900 font-semibold italic">Sistemimiz çok yakında yayında!</span>
             </div>
         </div>
 
-        <!-- Sağ Taraf: İllüstrasyon / Görsel Alanı (Resim 3/4 sentezi) -->
+        <!-- Sağ Taraf: Dinamik Görsel Alanı -->
         <div class="lg:w-1/2 mt-16 lg:mt-0 relative flex justify-center">
-            <!-- Arka Plan Dekoratif Yuvarlak -->
             <div class="absolute w-[400px] h-[400px] bg-blue-200 rounded-full blur-3xl opacity-30 -z-10"></div>
             
-            <!-- Karışık Karakter Görseli Temsili -->
             <div class="relative w-full max-w-md">
-                <!-- Buraya gerçek bir görsel (image_266dc9.jpg gibi) veya illüstrasyon gelebilir -->
-                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600" 
-                     alt="Kullanıcılar" 
-                     class="rounded-3xl shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition duration-500">
+                <!-- Her açılışta değişen dinamik resim -->
+                <img id="dynamicHeroImage" 
+                     src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600" 
+                     alt="Kullanıcı" 
+                     class="rounded-3xl shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition duration-500 object-cover aspect-[4/5]">
                 
-                <!-- Küçük İkon Baloncukları -->
                 <div class="absolute -top-6 -left-6 bg-yellow-400 p-4 rounded-2xl shadow-lg animate-bounce">
                     <i class="fa-solid fa-key text-white text-2xl"></i>
                 </div>
@@ -114,12 +121,12 @@
         </div>
     </main>
 
-    <!-- SAĞ TARAF TEST ET BUTONU (Floating Button) -->
+    <!-- SAĞ TARAF TEST ET BUTONU -->
     <button onclick="togglePanel()" class="fixed right-0 top-1/2 transform -translate-y-1/2 bg-blue-700 hover:bg-blue-800 text-white px-2 py-8 rounded-l-2xl shadow-2xl z-50 floating-button font-bold text-sm tracking-widest transition-all">
         TEST ETMEK İÇİN TIKLAYINIZ
     </button>
 
-    <!-- TEST PANELİ (Sağdan Açılan Giriş Kısmı) -->
+    <!-- TEST PANELİ -->
     <aside id="testPanel" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white shadow-2xl z-[60] flex flex-col p-8 border-l border-blue-100">
         <div class="flex justify-between items-center mb-10">
             <div class="flex items-center space-x-2">
@@ -132,16 +139,18 @@
         </div>
 
         <div class="flex-1">
-            <p class="text-sm text-gray-500 mb-8">Test aşaması için hesabınıza giriş yapın.</p>
+            <p class="text-sm text-gray-500 mb-8">Test aşaması için API bağlantınız aktiftir.</p>
             
-            <form class="space-y-6">
+            <div id="loginMessage" class="hidden p-4 rounded-xl mb-6 text-sm font-medium"></div>
+
+            <form id="loginForm" class="space-y-6">
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">E-POSTA</label>
                     <div class="relative">
                         <span class="absolute left-4 top-3.5 text-gray-400">
                             <i class="fa-solid fa-envelope"></i>
                         </span>
-                        <input type="email" placeholder="E-posta adresiniz" class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <input type="email" id="emailInput" required placeholder="E-posta adresiniz" class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
                 </div>
 
@@ -151,15 +160,12 @@
                         <span class="absolute left-4 top-3.5 text-gray-400">
                             <i class="fa-solid fa-lock"></i>
                         </span>
-                        <input type="password" placeholder="••••••••" class="w-full pl-12 pr-12 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
-                        <button type="button" class="absolute right-4 top-3.5 text-gray-400 hover:text-blue-600">
-                            <i class="fa-solid fa-eye text-sm"></i>
-                        </button>
+                        <input type="password" id="passwordInput" required placeholder="••••••••" class="w-full pl-12 pr-12 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
                     </div>
                 </div>
 
-                <button type="button" class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-4 rounded-xl shadow-lg transform active:scale-95 transition">
-                    Giriş Yap
+                <button type="submit" id="submitBtn" class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-4 rounded-xl shadow-lg transform active:scale-95 transition flex items-center justify-center">
+                    <span>Giriş Yap</span>
                 </button>
 
                 <div class="text-center">
@@ -168,23 +174,77 @@
             </form>
         </div>
 
-        <div class="mt-auto pt-6 border-t border-gray-100">
-            <p class="text-center text-xs text-gray-400">© 2026 Kaybeden ve Bulan</p>
+        <div class="mt-auto pt-6 border-t border-gray-100 text-center">
+            <p class="text-xs text-gray-400">© 2026 Kaybeden ve Bulan</p>
         </div>
     </aside>
 
-    <!-- Panel Kontrol Script -->
     <script>
+        // API ADRESİNİZ
+        const API_BASE_URL = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
+
+        // 1. Dinamik Resim Değiştirme (Sayfa yüklendiğinde çalışır)
+        window.onload = function() {
+            const heroImg = document.getElementById('dynamicHeroImage');
+            const keywords = ['woman', 'man', 'portrait', 'smiling', 'user'];
+            const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
+            // Unsplash'ten her seferinde farklı bir insan resmi getirir
+            heroImg.src = `https://source.unsplash.com/600x800/?${randomKeyword}&sig=${Math.random()}`;
+        };
+
+        // 2. Panel Aç/Kapat
         function togglePanel() {
-            const panel = document.getElementById('testPanel');
-            panel.classList.toggle('open');
+            document.getElementById('testPanel').classList.toggle('open');
         }
+
+        // 3. Aktif Giriş Testi (API Bağlantısı)
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const msgDiv = document.getElementById('loginMessage');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Görsel geri bildirim
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="loader"></div> Bağlanıyor...';
+            msgDiv.classList.add('hidden');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/users/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        passwordHash: password // API modelinizde passwordHash olarak tanımlı
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    msgDiv.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Giriş Başarılı! Hoş geldin, ${result.name}`;
+                    msgDiv.className = "p-4 rounded-xl mb-6 text-sm font-medium bg-green-100 text-green-700";
+                    msgDiv.classList.remove('hidden');
+                } else {
+                    throw new Error(result.detail || "Giriş başarısız.");
+                }
+            } catch (error) {
+                msgDiv.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-2"></i> ${error.message}`;
+                msgDiv.className = "p-4 rounded-xl mb-6 text-sm font-medium bg-red-100 text-red-700";
+                msgDiv.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Giriş Yap</span>';
+            }
+        });
 
         // Panel dışına tıklandığında kapatma
         document.addEventListener('click', (e) => {
             const panel = document.getElementById('testPanel');
             const btn = document.querySelector('.floating-button');
-            if (!panel.contains(e.target) && !btn.contains(e.target) && panel.classList.contains('open')) {
+            if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) {
                 togglePanel();
             }
         });
