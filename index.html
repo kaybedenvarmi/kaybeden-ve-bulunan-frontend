@@ -102,6 +102,18 @@
         .status-online { background-color: #22c55e; box-shadow: 0 0 8px #22c55e; }
         .status-offline { background-color: #ef4444; box-shadow: 0 0 8px #ef4444; }
         .status-checking { background-color: #eab308; }
+
+        /* Kayan Duyuru Animasyonu */
+        .announcement-fade {
+            animation: fadeInfinite 6s infinite;
+        }
+
+        @keyframes fadeInfinite {
+            0%, 45% { opacity: 1; transform: translateY(0); }
+            50% { opacity: 0; transform: translateY(-10px); }
+            55% { opacity: 0; transform: translateY(10px); }
+            60%, 100% { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -149,9 +161,12 @@
                     </div>
                 </div>
 
-                <div class="inline-flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-sm border border-blue-50">
-                    <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                    <span class="text-sm font-bold text-blue-900 italic">Sistemimiz çok yakında yayında!</span>
+                <!-- Yeni Dinamik Duyuru Alanı -->
+                <div class="relative h-12 overflow-hidden bg-white px-6 rounded-full shadow-sm border border-blue-50 flex items-center">
+                    <div id="announcementBox" class="flex items-center gap-3 w-full announcement-fade">
+                        <div id="announcementIcon" class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                        <span id="announcementText" class="text-sm font-bold text-blue-900 italic">Sistemimiz çok yakında yayında!</span>
+                    </div>
                 </div>
             </div>
 
@@ -252,31 +267,41 @@
     </div>
 
     <script>
-        // API Adresini kontrol edin - Vercel deploy'u ile eşleşmelidir
         const API_BASE = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
         
+        // Reklam/Duyuru Döngüsü
+        const ads = [
+            { text: "Sistemimiz çok yakında yayında!", iconColor: "bg-blue-500" },
+            { text: "Google Android uygulamamız çok yakında!", iconColor: "bg-green-500" }
+        ];
+        let currentAd = 0;
+
+        function cycleAds() {
+            const textEl = document.getElementById('announcementText');
+            const iconEl = document.getElementById('announcementIcon');
+            
+            setInterval(() => {
+                currentAd = (currentAd + 1) % ads.length;
+                
+                // Animasyon geçişi sırasında içeriği değiştir
+                setTimeout(() => {
+                    textEl.innerText = ads[currentAd].text;
+                    iconEl.className = `w-3 h-3 ${ads[currentAd].iconColor} rounded-full animate-pulse`;
+                }, 3000); // fade out ortasında değişim
+            }, 6000);
+        }
+
         // Sunucu Durumunu Kontrol Et
         async function checkServerStatus() {
             const dot = document.getElementById('statusDot');
             const text = document.getElementById('statusText');
-            
-            // Başlangıç durumu
             dot.className = "status-dot status-checking";
             text.innerText = "Bağlantı Deneniyor...";
-
             try {
-                // Timeout mekanizması ekleyelim (5 saniye)
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-                const response = await fetch(API_BASE, { 
-                    method: 'GET', 
-                    mode: 'cors',
-                    signal: controller.signal
-                });
-                
+                const response = await fetch(API_BASE, { method: 'GET', mode: 'cors', signal: controller.signal });
                 clearTimeout(timeoutId);
-
                 if(response.ok) {
                     dot.className = "status-dot status-online";
                     text.innerText = "Sunucu Çevrimiçi";
@@ -288,19 +313,16 @@
                 dot.className = "status-dot status-offline";
                 text.innerText = e.name === 'AbortError' ? "Zaman Aşımı" : "Sunucu Çevrimdışı";
                 text.className = "text-[10px] font-bold text-red-600 uppercase tracking-tighter";
-                console.error("Bağlantı hatası detayları:", e);
             }
         }
 
-        // Sayfa yüklendiğinde ve panel her açıldığında kontrol et
-        window.onload = checkServerStatus;
-
-        function openPanel() { 
-            document.getElementById('sidePanel').classList.add('open'); 
+        window.onload = () => {
             checkServerStatus();
-        }
-        function closePanel() { document.getElementById('sidePanel').classList.remove('open'); }
+            cycleAds();
+        };
 
+        function openPanel() { document.getElementById('sidePanel').classList.add('open'); checkServerStatus(); }
+        function closePanel() { document.getElementById('sidePanel').classList.remove('remove'); }
         function toggleView(view) {
             const isReg = view === 'register';
             document.getElementById('loginSection').classList.toggle('hidden', isReg);
@@ -312,7 +334,7 @@
         function showAlert(msg, isError = true) {
             const alert = document.getElementById('apiAlert');
             alert.className = `mb-6 p-4 rounded-2xl flex items-center gap-3 border ${isError ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'}`;
-            alert.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'}"></i> <div class="flex flex-col"><span class="text-xs font-bold leading-tight">${msg}</span></div>`;
+            alert.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'}"></i> <span class="text-xs font-bold leading-tight">${msg}</span>`;
             alert.classList.remove('hidden');
         }
 
@@ -320,105 +342,45 @@
 
         async function handleLogin() {
             const btn = document.getElementById('loginBtn');
-            const originalContent = btn.innerHTML;
             const email = document.getElementById('l_email').value;
             const password = document.getElementById('l_pass').value;
-
-            if(!email || !password) {
-                showAlert("Lütfen tüm alanları doldurun.");
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerHTML = '<div class="loader"></div>';
-            hideAlert();
-
+            if(!email || !password) { showAlert("Lütfen tüm alanları doldurun."); return; }
+            btn.disabled = true; btn.innerHTML = '<div class="loader"></div>'; hideAlert();
             try {
                 const response = await fetch(`${API_BASE}/users/login`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        passwordHash: password
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, passwordHash: password })
                 });
-
                 const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.detail || "Giriş başarısız.");
-                }
-
+                if (!response.ok) throw new Error(data.detail || "Giriş başarısız.");
                 showAlert("Giriş başarılı! Hoş geldiniz.", false);
             } catch (error) {
-                console.error("Hata Detayı:", error);
-                let errorMsg = "Bağlantı Hatası: ";
-                if (error.message.includes("Failed to fetch")) {
-                    errorMsg += "Sunucuya ulaşılamıyor. Vercel panelinden uygulamanın 'Deployment' durumunu kontrol edin.";
-                } else {
-                    errorMsg += error.message;
-                }
-                showAlert(errorMsg);
-                // Hata durumunda sunucu durumunu tekrar kontrol et
+                showAlert(error.message.includes("Failed to fetch") ? "Sunucuya ulaşılamıyor." : error.message);
                 checkServerStatus();
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalContent;
-            }
+            } finally { btn.disabled = false; btn.innerHTML = "Giriş Yap"; }
         }
 
         async function handleRegister() {
             const btn = document.getElementById('regBtn');
-            const originalContent = btn.innerHTML;
-            
             const name = document.getElementById('r_name').value;
             const email = document.getElementById('r_email').value;
             const pass = document.getElementById('r_pass').value;
-            const phone = document.getElementById('r_phone').value;
-
-            if(!name || !email || !pass) {
-                showAlert("Ad, E-posta ve Şifre zorunludur.");
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerHTML = '<div class="loader mx-auto"></div>';
-            hideAlert();
-
+            if(!name || !email || !pass) { showAlert("Ad, E-posta ve Şifre zorunludur."); return; }
+            btn.disabled = true; btn.innerHTML = '<div class="loader mx-auto"></div>'; hideAlert();
             try {
                 const response = await fetch(`${API_BASE}/users/register`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        passwordHash: pass,
-                        phoneNumber: phone
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, passwordHash: pass })
                 });
-
                 const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.detail || "Kayıt başarısız.");
-                }
-
-                showAlert("Kayıt başarılı! Doğrulama e-postası gönderildi.", false);
+                if (!response.ok) throw new Error(data.detail || "Kayıt başarısız.");
+                showAlert("Kayıt başarılı! E-posta onayını bekleyin.", false);
                 setTimeout(() => toggleView('login'), 3000);
             } catch (error) {
-                console.error("Kayıt Hatası:", error);
-                showAlert(error.message.includes("Failed to fetch") ? "Sunucu çevrimdışı. Lütfen API URL'sini ve Vercel loglarını kontrol edin." : error.message);
-                checkServerStatus();
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalContent;
-            }
+                showAlert(error.message);
+            } finally { btn.disabled = false; btn.innerHTML = "Kayıt Ol"; }
         }
     </script>
 </body>
