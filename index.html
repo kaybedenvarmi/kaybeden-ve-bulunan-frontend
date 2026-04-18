@@ -1,40 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  
-  <!--
-    İlk yapılan sayfamız.
-  If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaybeden ve Bulan | Çok Yakında</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+        .hero-gradient {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="/">
+        /* Test Paneli Kayma Efekti */
+        #testPanel {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+        #testPanel.open {
+            transform: translateX(0);
+        }
 
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="kaybolan_ve_bulunan_app">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>kaybolan_ve_bulunan_app</title>
-  <link rel="manifest" href="manifest.json">
+        .floating-button {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+    </style>
 </head>
-<body>
-  <script src="flutter_bootstrap.js" async></script>
+<body class="hero-gradient min-h-screen overflow-x-hidden">
+
+    <!-- Navigasyon -->
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="flex items-center space-x-2">
+            <!-- Logo Yerine Placeholder (Mavi Kare ikonunuz gibi) -->
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+                kb
+            </div>
+            <span class="text-2xl font-bold text-blue-900">Kaybeden ve Bulan</span>
+        </div>
+    </nav>
+
+    <!-- Ana İçerik Alanı -->
+    <main class="max-w-7xl mx-auto px-6 pt-12 pb-24 flex flex-col lg:flex-row items-center">
+        
+        <!-- Sol Taraf: Metinler ve İstatistikler -->
+        <div class="lg:w-1/2 text-center lg:text-left z-10">
+            <h1 class="text-4xl lg:text-6xl font-extrabold text-blue-900 leading-tight mb-6">
+                Eşyalarınızı bulmanın <br><span class="text-blue-600 text-3xl lg:text-5xl">en kolay yolu burada.</span>
+            </h1>
+            <p class="text-gray-600 text-lg mb-8 max-w-xl">
+                Kaybolan değerli eşyalarınız için endişelenmeyin. Topluluk odaklı platformumuzla kayıpları buluyor, bulunanları sahiplerine ulaştırıyoruz.
+            </p>
+
+            <!-- İstatistik Kartları (Resim 4'teki gibi) -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-100">
+                    <i class="fa-solid fa-magnifying-glass text-blue-500 mb-2"></i>
+                    <div class="text-2xl font-bold text-blue-900">600K+</div>
+                    <div class="text-xs text-gray-500">Kayıp İlanı</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-100">
+                    <i class="fa-solid fa-hand-holding-heart text-yellow-500 mb-2"></i>
+                    <div class="text-2xl font-bold text-blue-900">147K+</div>
+                    <div class="text-xs text-gray-500">Bulunan Eşya</div>
+                </div>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-100 hidden md:block">
+                    <i class="fa-solid fa-earth-americas text-green-500 mb-2"></i>
+                    <div class="text-2xl font-bold text-blue-900">7/24</div>
+                    <div class="text-xs text-gray-500">Aktif Destek</div>
+                </div>
+            </div>
+
+            <!-- Yakında Butonu -->
+            <div class="bg-white inline-flex items-center p-2 pr-6 rounded-full shadow-lg border border-blue-200">
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse mr-4">🚀</span>
+                <span class="text-blue-900 font-semibold italic">Sistemimiz çok yakında yayında!</span>
+            </div>
+        </div>
+
+        <!-- Sağ Taraf: İllüstrasyon / Görsel Alanı (Resim 3/4 sentezi) -->
+        <div class="lg:w-1/2 mt-16 lg:mt-0 relative flex justify-center">
+            <!-- Arka Plan Dekoratif Yuvarlak -->
+            <div class="absolute w-[400px] h-[400px] bg-blue-200 rounded-full blur-3xl opacity-30 -z-10"></div>
+            
+            <!-- Karışık Karakter Görseli Temsili -->
+            <div class="relative w-full max-w-md">
+                <!-- Buraya gerçek bir görsel (image_266dc9.jpg gibi) veya illüstrasyon gelebilir -->
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600" 
+                     alt="Kullanıcılar" 
+                     class="rounded-3xl shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition duration-500">
+                
+                <!-- Küçük İkon Baloncukları -->
+                <div class="absolute -top-6 -left-6 bg-yellow-400 p-4 rounded-2xl shadow-lg animate-bounce">
+                    <i class="fa-solid fa-key text-white text-2xl"></i>
+                </div>
+                <div class="absolute -bottom-6 -right-6 bg-blue-500 p-4 rounded-2xl shadow-lg">
+                    <i class="fa-solid fa-wallet text-white text-2xl"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SAĞ TARAF TEST ET BUTONU (Floating Button) -->
+    <button onclick="togglePanel()" class="fixed right-0 top-1/2 transform -translate-y-1/2 bg-blue-700 hover:bg-blue-800 text-white px-2 py-8 rounded-l-2xl shadow-2xl z-50 floating-button font-bold text-sm tracking-widest transition-all">
+        TEST ETMEK İÇİN TIKLAYINIZ
+    </button>
+
+    <!-- TEST PANELİ (Sağdan Açılan Giriş Kısmı) -->
+    <aside id="testPanel" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white shadow-2xl z-[60] flex flex-col p-8 border-l border-blue-100">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold">kb</div>
+                <h2 class="text-xl font-bold text-blue-900">Giriş Yap</h2>
+            </div>
+            <button onclick="togglePanel()" class="text-gray-400 hover:text-red-500 transition">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+        </div>
+
+        <div class="flex-1">
+            <p class="text-sm text-gray-500 mb-8">Test aşaması için hesabınıza giriş yapın.</p>
+            
+            <form class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">E-POSTA</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3.5 text-gray-400">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input type="email" placeholder="E-posta adresiniz" class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">ŞİFRE</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3.5 text-gray-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" placeholder="••••••••" class="w-full pl-12 pr-12 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <button type="button" class="absolute right-4 top-3.5 text-gray-400 hover:text-blue-600">
+                            <i class="fa-solid fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="button" class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-4 rounded-xl shadow-lg transform active:scale-95 transition">
+                    Giriş Yap
+                </button>
+
+                <div class="text-center">
+                    <button type="button" class="text-sm font-semibold text-blue-600 hover:text-blue-800">Hesap Oluştur</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-auto pt-6 border-t border-gray-100">
+            <p class="text-center text-xs text-gray-400">© 2026 Kaybeden ve Bulan</p>
+        </div>
+    </aside>
+
+    <!-- Panel Kontrol Script -->
+    <script>
+        function togglePanel() {
+            const panel = document.getElementById('testPanel');
+            panel.classList.toggle('open');
+        }
+
+        // Panel dışına tıklandığında kapatma
+        document.addEventListener('click', (e) => {
+            const panel = document.getElementById('testPanel');
+            const btn = document.querySelector('.floating-button');
+            if (!panel.contains(e.target) && !btn.contains(e.target) && panel.classList.contains('open')) {
+                togglePanel();
+            }
+        });
+    </script>
 </body>
 </html>
