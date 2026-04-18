@@ -11,7 +11,7 @@
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f0f7ff;
+            background-color: #f8fbff;
             overflow-x: hidden;
         }
 
@@ -19,44 +19,50 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 2rem;
+            padding: 1.5rem;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
-        }
-
+        /* Yan Panel Animasyonu */
         #sidePanel {
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             transform: translateX(100%);
         }
-
         #sidePanel.open {
             transform: translateX(0);
         }
 
+        /* Stat Kartları */
         .stat-card {
             background: white;
-            padding: 1.5rem;
-            border-radius: 1.25rem;
-            border: 1px solid rgba(0,0,0,0.03);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.02);
+            padding: 1.25rem;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.02);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+
+        /* Yanıp Sönen Dikkat Çekici Yazı */
+        .blink-urgent {
+            animation: urgentBlink 1.5s infinite;
         }
 
-        .btn-primary {
-            background-color: #16a34a;
-            color: white;
-            transition: all 0.3s;
+        @keyframes urgentBlink {
+            0%, 100% { opacity: 1; color: #1e40af; }
+            50% { opacity: 0.4; color: #ef4444; }
         }
 
-        .btn-primary:hover {
-            background-color: #15803d;
-            transform: translateY(-1px);
+        /* Duyuru Geçiş Animasyonu */
+        .slide-up {
+            animation: slideUp 6s infinite;
+        }
+
+        @keyframes slideUp {
+            0%, 45% { transform: translateY(0); opacity: 1; }
+            48%, 52% { transform: translateY(-20px); opacity: 0; }
+            55%, 100% { transform: translateY(0); opacity: 1; }
         }
 
         .floating-label-btn {
@@ -66,7 +72,7 @@
             right: 0;
             top: 50%;
             transform: translateY(-50%);
-            background: #1d4ed8;
+            background: #2563eb;
             color: white;
             padding: 1.5rem 0.75rem;
             border-radius: 1.5rem 0 0 1.5rem;
@@ -74,255 +80,231 @@
             font-size: 0.75rem;
             letter-spacing: 0.1rem;
             z-index: 50;
-            box-shadow: -5px 0 20px rgba(29, 78, 216, 0.3);
+            box-shadow: -5px 0 20px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s;
         }
+        .floating-label-btn:hover { padding-right: 1.5rem; background: #1d4ed8; }
 
-        .loader {
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        input:focus {
-            border-color: #3b82f6;
-            background-color: white;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .status-online { background-color: #22c55e; box-shadow: 0 0 8px #22c55e; }
-        .status-offline { background-color: #ef4444; box-shadow: 0 0 8px #ef4444; }
-        .status-checking { background-color: #eab308; }
-
-        /* Kayan Duyuru Animasyonu */
-        .announcement-fade {
-            animation: fadeInfinite 6s infinite;
-        }
-
-        @keyframes fadeInfinite {
-            0%, 45% { opacity: 1; transform: translateY(0); }
-            50% { opacity: 0; transform: translateY(-10px); }
-            55% { opacity: 0; transform: translateY(10px); }
-            60%, 100% { opacity: 1; transform: translateY(0); }
-        }
+        /* Sunucu Durum Noktaları */
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .status-online { background-color: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+        .status-offline { background-color: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+        .status-checking { background-color: #f59e0b; animation: pulse 1s infinite; }
+        
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
 
     <div class="main-container">
         <!-- Header -->
-        <header class="flex justify-between items-center mb-12">
-            <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold">kb</div>
-                <span class="text-xl font-extrabold text-blue-900 tracking-tight">Kaybeden ve Bulan</span>
+        <header class="flex justify-between items-center mb-10">
+            <div class="flex items-center gap-4">
+                <img src="logo.jpg" alt="Kaybeden ve Bulan Logo" class="w-14 h-14 rounded-2xl shadow-lg object-cover border-2 border-white">
+                <div>
+                    <span class="text-2xl font-black text-blue-900 tracking-tighter block leading-none">Kaybeden ve Bulan</span>
+                    <span class="text-[10px] font-bold text-blue-400 tracking-[0.3em] uppercase">kaybedenvebulan.com.tr</span>
+                </div>
             </div>
-            <!-- API Durum Göstergesi -->
-            <div id="serverStatus" class="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-100 shadow-sm cursor-pointer" onclick="checkServerStatus()">
+            
+            <!-- Durum Göstergesi -->
+            <div class="hidden md:flex items-center gap-3 bg-white px-5 py-2.5 rounded-full shadow-sm border border-blue-50">
                 <span id="statusDot" class="status-dot status-checking"></span>
-                <span id="statusText" class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Sunucu Kontrol Ediliyor...</span>
+                <span id="statusText" class="text-[11px] font-extrabold text-slate-500 uppercase tracking-widest">Sistem Hazırlanıyor</span>
             </div>
         </header>
 
-        <!-- Hero Section -->
-        <div class="flex flex-col lg:flex-row items-center gap-12 flex-1">
-            <div class="lg:w-1/2 space-y-8">
-                <h1 class="text-6xl font-extrabold text-blue-950 leading-[1.1]">
-                    Eşyalarınızı <br>bulmanın <br>
-                    <span class="text-blue-600 border-b-8 border-yellow-400">en kolay yolu</span> burada.
-                </h1>
-                <p class="text-lg text-slate-500 font-medium max-w-lg leading-relaxed">
-                    Kaybolan değerli eşyalarınız için endişelenmeyin. Topluluk odaklı platformumuzla kayıpları buluyor, bulunanları sahiplerine ulaştırıyoruz.
-                </p>
+        <!-- Main Section -->
+        <div class="flex flex-col lg:flex-row items-center gap-16 flex-1">
+            <div class="lg:w-3/5 space-y-10">
+                <div class="space-y-4">
+                    <h1 class="text-7xl font-extrabold text-blue-950 leading-[1.05]">
+                        Eşyalarınızı <br>bulmanın <br>
+                        <span class="text-blue-600 relative inline-block">
+                            en kolay yolu.
+                            <svg class="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
+                                <path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="#fbbf24" stroke-width="4" fill="transparent" />
+                            </svg>
+                        </span>
+                    </h1>
+                    <p class="text-xl text-slate-500 font-medium max-w-xl leading-relaxed">
+                        Kaybolan değerli eşyalarınız için artık endişelenmeyin. Gelişmiş altyapımız ile kayıpları buluyor, bulunanları sahiplerine ulaştırıyoruz.
+                    </p>
+                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="stat-card">
-                        <i class="fa-solid fa-magnifying-glass text-blue-500 mb-2"></i>
-                        <div class="text-2xl font-extrabold text-blue-950">600K+</div>
-                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Kayıp İlanı</div>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fa-solid fa-hand-holding-heart text-yellow-500 mb-2"></i>
-                        <div class="text-2xl font-extrabold text-blue-950">147K+</div>
-                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Bulunan Eşya</div>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fa-solid fa-clock text-green-500 mb-2"></i>
-                        <div class="text-2xl font-extrabold text-blue-950">7/24</div>
-                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Aktif Destek</div>
+                <!-- Duyuru ve Reklam Alanı (Yanıp Sönen) -->
+                <div class="bg-blue-50/50 p-1 rounded-3xl max-w-lg border border-blue-100 overflow-hidden">
+                    <div id="adContainer" class="bg-white px-8 py-5 rounded-[1.4rem] flex items-center gap-5 shadow-inner">
+                        <div id="adIcon" class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 shrink-0">
+                            <i class="fa-solid fa-rocket text-xl"></i>
+                        </div>
+                        <div class="overflow-hidden">
+                            <div id="adSlider" class="slide-up">
+                                <div id="adText" class="text-lg font-black tracking-tight blink-urgent uppercase">
+                                    Sistemimiz çok yakında yayında!
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Yeni Dinamik Duyuru Alanı -->
-                <div class="relative h-12 overflow-hidden bg-white px-6 rounded-full shadow-sm border border-blue-50 flex items-center">
-                    <div id="announcementBox" class="flex items-center gap-3 w-full announcement-fade">
-                        <div id="announcementIcon" class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                        <span id="announcementText" class="text-sm font-bold text-blue-900 italic">Sistemimiz çok yakında yayında!</span>
+                <!-- İstatistikler -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-2xl">
+                    <div class="stat-card">
+                        <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500 mb-3">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div class="text-3xl font-black text-blue-900">600K+</div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Kayıp İlanı</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center text-yellow-500 mb-3">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+                        <div class="text-3xl font-black text-blue-900">147K+</div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Bulunan Eşya</div>
+                    </div>
+                    <div class="stat-card hidden md:block">
+                        <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-500 mb-3">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div class="text-3xl font-black text-blue-900">%100</div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Güvenli Teslimat</div>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:w-1/2 relative">
-                <div class="absolute -top-10 -right-10 w-24 h-24 bg-yellow-400 rounded-3xl flex items-center justify-center shadow-2xl z-10 animate-bounce">
-                    <i class="fa-solid fa-key text-white text-3xl"></i>
+            <!-- Sağ Görsel Alanı -->
+            <div class="lg:w-2/5 relative">
+                <div class="absolute -top-6 -left-6 w-20 h-20 bg-yellow-400 rounded-2xl flex items-center justify-center shadow-xl z-10 animate-bounce">
+                    <i class="fa-solid fa-key text-white text-2xl"></i>
                 </div>
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop" 
-                     class="w-full h-[550px] object-cover rounded-[3rem] shadow-2xl border-[12px] border-white" 
-                     alt="Topluluk">
+                <div class="relative rounded-[3rem] overflow-hidden shadow-2xl border-[16px] border-white ring-1 ring-slate-100">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop" 
+                         class="w-full h-[600px] object-cover" 
+                         alt="Topluluk Çalışması">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Giriş Butonu -->
-    <button onclick="openPanel()" class="floating-label-btn uppercase hover:pr-10 transition-all duration-300">
-        GİRİŞ & KEŞFET
+    <button onclick="openPanel()" class="floating-label-btn uppercase">
+        GİRİŞ & KAYIT OL
     </button>
 
     <!-- Yan Panel -->
-    <div id="sidePanel" class="fixed top-0 right-0 h-full w-full md:w-[450px] bg-white z-[100] shadow-[-20px_0_60px_rgba(0,0,0,0.1)] flex flex-col">
-        <div class="p-8 flex justify-between items-center border-b">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm font-bold">kb</div>
-                <h2 id="panelTitle" class="text-xl font-extrabold text-blue-900">Giriş Yap</h2>
+    <div id="sidePanel" class="fixed top-0 right-0 h-full w-full md:w-[480px] bg-white z-[100] shadow-[-20px_0_60px_rgba(0,0,0,0.1)] flex flex-col">
+        <div class="p-10 flex justify-between items-center border-b">
+            <div class="flex items-center gap-4">
+                <img src="logo.jpg" alt="kb logo" class="w-10 h-10 rounded-xl">
+                <h2 id="panelTitle" class="text-2xl font-black text-blue-900">Giriş Yap</h2>
             </div>
-            <button onclick="closePanel()" class="text-slate-300 hover:text-red-500 transition-colors">
+            <button onclick="closePanel()" class="w-10 h-10 rounded-full hover:bg-red-50 text-slate-300 hover:text-red-500 transition-all flex items-center justify-center">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
         </div>
 
-        <div class="flex-1 overflow-y-auto p-8">
-            <div id="apiAlert" class="hidden mb-6 p-4 rounded-2xl flex items-center gap-3 border transition-all duration-300">
-                <!-- Hata mesajları buraya gelecek -->
-            </div>
+        <div class="flex-1 overflow-y-auto p-10">
+            <div id="apiAlert" class="hidden mb-8 p-5 rounded-2xl flex items-center gap-4 border transition-all duration-300"></div>
 
-            <!-- Giriş Formu -->
-            <div id="loginSection" class="space-y-6">
-                <p class="text-sm text-slate-400 font-medium">Test aşaması için API bağlantınız aktiftir.</p>
+            <!-- Login Form -->
+            <div id="loginSection" class="space-y-8">
+                <div class="space-y-2">
+                    <p class="text-slate-500 font-medium">Hoş geldiniz, devam etmek için giriş yapın.</p>
+                </div>
                 
-                <div class="space-y-4">
+                <div class="space-y-5">
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">E-POSTA</label>
+                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">E-POSTA ADRESİ</label>
                         <div class="relative">
-                            <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
-                            <input type="email" id="l_email" placeholder="ornek@email.com" 
-                                   class="w-full bg-slate-50 border border-slate-100 p-4 pl-12 rounded-2xl outline-none transition-all">
+                            <i class="fa-solid fa-at absolute left-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                            <input type="email" id="l_email" placeholder="kullanici@kaybedenvebulan.com.tr" 
+                                   class="w-full bg-slate-50 border border-slate-100 p-5 pl-14 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-50 outline-none transition-all">
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">ŞİFRE</label>
+                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">ŞİFRE</label>
                         <div class="relative">
-                            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
+                            <i class="fa-solid fa-shield-halved absolute left-5 top-1/2 -translate-y-1/2 text-slate-300"></i>
                             <input type="password" id="l_pass" placeholder="••••••••" 
-                                   class="w-full bg-slate-50 border border-slate-100 p-4 pl-12 rounded-2xl outline-none transition-all">
+                                   class="w-full bg-slate-50 border border-slate-100 p-5 pl-14 rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-50 outline-none transition-all">
                         </div>
                     </div>
-                    <button onclick="handleLogin()" id="loginBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-blue-200 transition-all flex items-center justify-center gap-3 mt-4">
-                        Giriş Yap
+                    <button onclick="handleLogin()" id="loginBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-5 rounded-2xl shadow-xl shadow-blue-100 transition-all flex items-center justify-center gap-3">
+                        Sisteme Eriş
                     </button>
-                    <button onclick="toggleView('register')" class="w-full text-center text-blue-600 font-bold text-sm py-2">
-                        Hesap Oluştur
+                    <button onclick="toggleView('register')" class="w-full text-center text-blue-600 font-bold text-sm">
+                        Henüz bir hesabınız yok mu? <span class="underline">Hemen Kaydolun</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Kayıt Formu -->
+            <!-- Register Form -->
             <div id="registerSection" class="hidden space-y-6">
-                <p class="text-sm text-slate-400 font-medium italic">Test sistemi aktif</p>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">AD SOYAD</label>
-                        <input type="text" id="r_name" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl outline-none">
+                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">AD SOYAD</label>
+                        <input type="text" id="r_name" class="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:bg-white transition-all">
                     </div>
                     <div class="space-y-2">
-                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">TELEFON</label>
-                        <input type="tel" id="r_phone" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl outline-none">
+                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">TELEFON</label>
+                        <input type="tel" id="r_phone" placeholder="05XX XXX XX XX" class="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:bg-white transition-all">
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">E-POSTA</label>
-                    <input type="email" id="r_email" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl outline-none">
+                    <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">E-POSTA</label>
+                    <input type="email" id="r_email" class="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:bg-white transition-all">
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">ŞİFRE</label>
-                    <input type="password" id="r_pass" class="w-full bg-slate-50 border border-slate-100 p-4 rounded-2xl outline-none">
+                    <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">ŞİFRE OLUŞTUR</label>
+                    <input type="password" id="r_pass" class="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:bg-white transition-all">
                 </div>
-                <button onclick="handleRegister()" id="regBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold py-4 rounded-2xl shadow-lg shadow-green-100 transition-all">
-                    Kayıt Ol
+                <button onclick="handleRegister()" id="regBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-black py-5 rounded-2xl shadow-xl shadow-green-50 transition-all">
+                    Kaydı Tamamla
                 </button>
-                <p class="text-center text-sm text-slate-400 font-medium">Zaten üye misin? <button onclick="toggleView('login')" class="text-blue-600 font-bold">Giriş Yap</button></p>
+                <p class="text-center text-sm text-slate-400 font-medium">Zaten üye misiniz? <button onclick="toggleView('login')" class="text-blue-600 font-bold underline">Giriş Yap</button></p>
             </div>
         </div>
 
-        <div class="p-6 text-center">
-            <span class="text-[10px] font-bold text-slate-300 tracking-[0.2em] uppercase">© 2026 Kaybeden ve Bulan</span>
+        <div class="p-8 text-center bg-slate-50 border-t">
+            <span class="text-[11px] font-black text-slate-300 tracking-[0.3em] uppercase">© 2026 Kaybeden ve Bulan</span>
         </div>
     </div>
 
     <script>
         const API_BASE = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
         
-        // Reklam/Duyuru Döngüsü
+        // Reklam ve Duyuru Döngüsü
         const ads = [
-            { text: "Sistemimiz çok yakında yayında!", iconColor: "bg-blue-500" },
-            { text: "Google Android uygulamamız çok yakında!", iconColor: "bg-green-500" }
+            { text: "Sistemimiz çok yakında yayında!", color: "text-blue-600", urgent: true, icon: "fa-rocket" },
+            { text: "Google Android uygulamamız çok yakında!", color: "text-green-600", urgent: false, icon: "fa-android" }
         ];
-        let currentAd = 0;
+        let adIndex = 0;
 
-        function cycleAds() {
-            const textEl = document.getElementById('announcementText');
-            const iconEl = document.getElementById('announcementIcon');
+        function updateAds() {
+            const adText = document.getElementById('adText');
+            const adIcon = document.getElementById('adIcon');
+            const adSlider = document.getElementById('adSlider');
             
             setInterval(() => {
-                currentAd = (currentAd + 1) % ads.length;
+                adIndex = (adIndex + 1) % ads.length;
                 
-                // Animasyon geçişi sırasında içeriği değiştir
+                // Animasyon ortasında içeriği değiştir
                 setTimeout(() => {
-                    textEl.innerText = ads[currentAd].text;
-                    iconEl.className = `w-3 h-3 ${ads[currentAd].iconColor} rounded-full animate-pulse`;
-                }, 3000); // fade out ortasında değişim
+                    adText.innerText = ads[adIndex].text;
+                    adText.className = `text-lg font-black tracking-tight uppercase ${ads[adIndex].color} ${ads[adIndex].urgent ? 'blink-urgent' : ''}`;
+                    adIcon.innerHTML = `<i class="fa-solid ${ads[adIndex].icon} text-xl"></i>`;
+                    adIcon.className = `w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${ads[adIndex].urgent ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`;
+                }, 3000); 
             }, 6000);
         }
 
-        // Sunucu Durumunu Kontrol Et
-        async function checkServerStatus() {
-            const dot = document.getElementById('statusDot');
-            const text = document.getElementById('statusText');
-            dot.className = "status-dot status-checking";
-            text.innerText = "Bağlantı Deneniyor...";
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-                const response = await fetch(API_BASE, { method: 'GET', mode: 'cors', signal: controller.signal });
-                clearTimeout(timeoutId);
-                if(response.ok) {
-                    dot.className = "status-dot status-online";
-                    text.innerText = "Sunucu Çevrimiçi";
-                    text.className = "text-[10px] font-bold text-green-600 uppercase tracking-tighter";
-                } else {
-                    throw new Error(`HTTP Hata: ${response.status}`);
-                }
-            } catch (e) {
-                dot.className = "status-dot status-offline";
-                text.innerText = e.name === 'AbortError' ? "Zaman Aşımı" : "Sunucu Çevrimdışı";
-                text.className = "text-[10px] font-bold text-red-600 uppercase tracking-tighter";
-            }
-        }
-
-        window.onload = () => {
-            checkServerStatus();
-            cycleAds();
-        };
-
-        function openPanel() { document.getElementById('sidePanel').classList.add('open'); checkServerStatus(); }
-        function closePanel() { document.getElementById('sidePanel').classList.remove('remove'); }
+        // Panel Kontrolleri
+        function openPanel() { document.getElementById('sidePanel').classList.add('open'); }
+        function closePanel() { document.getElementById('sidePanel').classList.remove('open'); }
+        
         function toggleView(view) {
             const isReg = view === 'register';
             document.getElementById('loginSection').classList.toggle('hidden', isReg);
@@ -333,8 +315,8 @@
 
         function showAlert(msg, isError = true) {
             const alert = document.getElementById('apiAlert');
-            alert.className = `mb-6 p-4 rounded-2xl flex items-center gap-3 border ${isError ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'}`;
-            alert.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'}"></i> <span class="text-xs font-bold leading-tight">${msg}</span>`;
+            alert.className = `mb-8 p-5 rounded-2xl flex items-center gap-4 border ${isError ? 'bg-red-50 text-red-700 border-red-100' : 'bg-green-50 text-green-700 border-green-100'}`;
+            alert.innerHTML = `<i class="fa-solid ${isError ? 'fa-triangle-exclamation' : 'fa-circle-check'} text-xl"></i> <span class="text-sm font-bold">${msg}</span>`;
             alert.classList.remove('hidden');
         }
 
@@ -343,22 +325,23 @@
         async function handleLogin() {
             const btn = document.getElementById('loginBtn');
             const email = document.getElementById('l_email').value;
-            const password = document.getElementById('l_pass').value;
-            if(!email || !password) { showAlert("Lütfen tüm alanları doldurun."); return; }
-            btn.disabled = true; btn.innerHTML = '<div class="loader"></div>'; hideAlert();
+            const pass = document.getElementById('l_pass').value;
+            if(!email || !pass) { showAlert("E-posta ve şifre zorunludur."); return; }
+            
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i>'; hideAlert();
+            
             try {
                 const response = await fetch(`${API_BASE}/users/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, passwordHash: password })
+                    body: JSON.stringify({ email, passwordHash: pass })
                 });
                 const data = await response.json();
-                if (!response.ok) throw new Error(data.detail || "Giriş başarısız.");
-                showAlert("Giriş başarılı! Hoş geldiniz.", false);
+                if (!response.ok) throw new Error(data.detail || "Giriş yapılamadı.");
+                showAlert("Başarıyla giriş yapıldı, yönlendiriliyorsunuz...", false);
             } catch (error) {
-                showAlert(error.message.includes("Failed to fetch") ? "Sunucuya ulaşılamıyor." : error.message);
-                checkServerStatus();
-            } finally { btn.disabled = false; btn.innerHTML = "Giriş Yap"; }
+                showAlert(error.message);
+            } finally { btn.disabled = false; btn.innerHTML = "Sisteme Eriş"; }
         }
 
         async function handleRegister() {
@@ -366,22 +349,28 @@
             const name = document.getElementById('r_name').value;
             const email = document.getElementById('r_email').value;
             const pass = document.getElementById('r_pass').value;
-            if(!name || !email || !pass) { showAlert("Ad, E-posta ve Şifre zorunludur."); return; }
-            btn.disabled = true; btn.innerHTML = '<div class="loader mx-auto"></div>'; hideAlert();
+            if(!name || !email || !pass) { showAlert("Lütfen eksik alanları doldurun."); return; }
+            
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i>'; hideAlert();
+            
             try {
                 const response = await fetch(`${API_BASE}/users/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, passwordHash: pass })
                 });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.detail || "Kayıt başarısız.");
-                showAlert("Kayıt başarılı! E-posta onayını bekleyin.", false);
-                setTimeout(() => toggleView('login'), 3000);
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.detail || "Kayıt işlemi başarısız.");
+                }
+                showAlert("Kayıt başarılı! Giriş yapabilirsiniz.", false);
+                setTimeout(() => toggleView('login'), 2000);
             } catch (error) {
                 showAlert(error.message);
-            } finally { btn.disabled = false; btn.innerHTML = "Kayıt Ol"; }
+            } finally { btn.disabled = false; btn.innerHTML = "Kaydı Tamamla"; }
         }
+
+        window.onload = updateAds;
     </script>
 </body>
 </html>
