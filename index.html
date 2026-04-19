@@ -28,6 +28,16 @@
                 @apply px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider;
             }
         }
+        /* Resim yüklenirken görünecek shimmer efekti */
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-100">
@@ -74,7 +84,7 @@
                 </h2>
                 
                 <p class="text-lg text-slate-500 leading-relaxed max-w-lg">
-                    Türkiye’de kaybolan eşyaları sahipleriyle yeniden buluşturan platform .Çünkü kaybedilen her şeyin bir sahibi, her sahibin bir umudu vardır.
+                    Türkiye’de kaybolan eşyaları sahipleriyle yeniden buluşturan platform. Çünkü kaybedilen her şeyin bir sahibi, her sahibin bir umudu vardır.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -102,9 +112,13 @@
                 <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
                 
                 <div class="glass-card p-4 rounded-[3rem] relative overflow-hidden group">
-                    <img src="https://images.unsplash.com/photo-1553531384-cc64ac80f931?auto=format&fit=crop&w=800&q=80" 
-                         class="w-full h-[550px] object-cover rounded-[2.5rem] transition-transform duration-700 group-hover:scale-105" 
-                         alt="Lost items search">
+                    <!-- Resim Konteynırı ve Shimmer -->
+                    <div id="image-container" class="w-full h-[550px] rounded-[2.5rem] shimmer overflow-hidden relative">
+                        <img id="dynamic-hero-image" 
+                             src="" 
+                             class="w-full h-full object-cover opacity-0 transition-opacity duration-1000 group-hover:scale-105" 
+                             alt="">
+                    </div>
                     
                     <!-- Yüzen İstatistik Kartı -->
                     <div class="absolute bottom-10 left-10 right-10 glass-card p-6 rounded-2xl flex justify-around">
@@ -137,8 +151,31 @@
     <script>
         const FLUTTER_APP_PATH = "/app";
 
+        function setRandomHeroImage() {
+            const heroImage = document.getElementById('dynamic-hero-image');
+            const container = document.getElementById('image-container');
+            
+            const categories = [
+                'wallet', 'happy', 'sad', 'cat', 'dog', 'pet', 'glasses', 'keys', 'luggage'
+            ];
+
+            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+            const timestamp = new Date().getTime();
+            
+            // Unsplash'in daha modern ve hızlı API endpoint'ini kullanıyoruz
+            const imageUrl = `https://images.unsplash.com/featured/800x1200?${randomCategory}&sig=${timestamp}`;
+            
+            // Resim yüklenene kadar bekleyip sonra gösteriyoruz (Flicker'ı önler)
+            const imgLoader = new Image();
+            imgLoader.src = imageUrl;
+            imgLoader.onload = () => {
+                heroImage.src = imageUrl;
+                heroImage.classList.remove('opacity-0');
+                container.classList.remove('shimmer');
+            };
+        }
+
         function goToApp() {
-            // Butona basıldığında şık bir geçiş efekti verilebilir
             document.body.style.opacity = "0.5";
             document.body.style.transition = "opacity 0.5s";
             setTimeout(() => {
@@ -146,11 +183,15 @@
             }, 300);
         }
 
-        // Mouse takip eden hafif ışık efekti (Opsiyonel - Profesyonellik katar)
+        document.addEventListener('DOMContentLoaded', setRandomHeroImage);
+
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX / window.innerWidth * 100;
             const y = e.clientY / window.innerHeight * 100;
-            document.querySelector('.hero-gradient').style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(37, 99, 235, 0.08) 0%, transparent 60%)`;
+            const gradient = document.querySelector('.hero-gradient');
+            if(gradient) {
+                gradient.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(37, 99, 235, 0.08) 0%, transparent 60%)`;
+            }
         });
     </script>
 </body>
