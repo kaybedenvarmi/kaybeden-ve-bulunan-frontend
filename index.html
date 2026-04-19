@@ -78,7 +78,6 @@
                     Şu an 1,240+ aktif ilan yayında
                 </div>
                 
-                <!-- Başlık Alanı Güncellendi -->
                 <h2 id="dynamic-title" class="text-6xl md:text-7xl font-800 text-slate-900 leading-[1.1] tracking-tight min-h-[220px]">
                     <span id="title-part-1">Kaybettin veya Buldun</span> <br>
                     <span id="title-part-2" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Sisteme Yükle .</span>
@@ -157,38 +156,41 @@
             const titlePart1 = document.getElementById('title-part-1');
             const titlePart2 = document.getElementById('title-part-2');
             
-            // Başlık seçenekleri
             const titles = [
                 { p1: "Kaybettin veya Buldun", p2: "Sisteme Yükle ." },
                 { p1: "Eşyalarınızı bulmanın", p2: "en kolay yolu ." }
             ];
 
-            // Rastgele başlık seçimi
             const randomTitle = titles[Math.floor(Math.random() * titles.length)];
             titlePart1.innerText = randomTitle.p1;
             titlePart2.innerText = randomTitle.p2;
 
-            // 2. GÖRSEL DÖNGÜSÜ (Kesinlikle çocuk içermez)
+            // 2. GÖRSEL DÖNGÜSÜ
             const heroImage = document.getElementById('dynamic-hero-image');
             const container = document.getElementById('image-container');
             
+            // Reklam, yazı ve çocuk içerme ihtimali düşük, daha "yaşam tarzı" odaklı anahtar kelimeler
             const keywords = [
-                'leather-wallet-close-up', 
-                'professional-adult-man-portrait', 
-                'professional-adult-woman-portrait', 
-                'lost-cat-domestic', 
-                'dog-collar-gold-retriever', 
-                'designer-sunglasses-still-life', 
-                'vintage-keys-bunch',
-                'airport-luggage-suitcase',
-                'found-smartphone-on-sidewalk'
+                'personal-belongings-natural',
+                'adult-man-walking-city',
+                'adult-woman-city-portrait',
+                'street-photography-still-life',
+                'vintage-leather-keys',
+                'dog-running-park',
+                'cat-sitting-window',
+                'luggage-on-floor',
+                'hand-holding-object'
             ];
 
             const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
             const timestamp = new Date().getTime();
             
-            // Unsplash URL'sine -child, -children, -kid ekleyerek filtrelemeyi güçlendiriyoruz
-            const finalUrl = `https://images.unsplash.com/featured/800x1200?${randomKeyword},-child,-children,-kid&sig=${timestamp}`;
+            /* GELİŞMİŞ FİLTRELEME:
+               -child, -children, -kid: Çocukları engeller.
+               -text, -word, -typography: Yazılı/reklamlı görselleri azaltır.
+               -commercial, -advertisement: Ürün reklamı tarzını engeller.
+            */
+            const finalUrl = `https://images.unsplash.com/featured/800x1200?${randomKeyword},-child,-children,-kid,-text,-word,-typography,-commercial,-advertisement&sig=${timestamp}`;
 
             const imgLoader = new Image();
             imgLoader.src = finalUrl;
@@ -200,7 +202,8 @@
             };
 
             imgLoader.onerror = () => {
-                const fallbackUrl = "https://images.unsplash.com/photo-1553531384-cc64ac80f931?auto=format&fit=crop&w=800&q=80";
+                // Güvenli yedek görsel
+                const fallbackUrl = "https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=800&q=80";
                 heroImage.src = fallbackUrl;
                 heroImage.classList.remove('opacity-0');
                 container.classList.remove('shimmer');
