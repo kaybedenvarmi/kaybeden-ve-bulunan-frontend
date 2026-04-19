@@ -224,10 +224,14 @@
                 const data = await res.json();
                 
                 if(!res.ok) throw new Error(data.message || "Giriş bilgileri hatalı.");
-                if(!data.user && !data.email) throw new Error("Kullanıcı verisi alınamadı.");
+                
+                // Güvenli kullanıcı nesnesi tespiti
+                // Eğer data nesnesinin kendisi bir kullanıcıysa veya içinde 'user' anahtarı varsa onu al
+                const user = (data && data.user) ? data.user : (data && data.email ? data : null);
 
-                // Not: API bazen direkt kullanıcıyı, bazen {user: ...} şeklinde döndürür.
-                const user = data.user || data;
+                if(!user) {
+                    throw new Error("Kullanıcı bilgileri doğrulanamadı.");
+                }
 
                 if(!user.isVerified) {
                     showMsg("Lütfen önce e-posta adresinizi doğrulayın.");
@@ -239,6 +243,7 @@
                 showMsg("Giriş başarılı! Uygulamaya aktarılıyorsunuz...", "success");
                 
                 setTimeout(() => {
+                    // name özelliği undefined olsa bile patlamaması için varsayılan değer atandı
                     const userName = user.name || "Kullanıcı";
                     window.location.href = `${FLUTTER_APP_PATH}/#/list?user=${encodeURIComponent(userName)}`;
                 }, 1000);
