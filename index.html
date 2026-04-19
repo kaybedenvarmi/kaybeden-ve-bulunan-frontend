@@ -1,20 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <base href="/app/">
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Kaybeden ve Bulunan - Eşyalarınızı bulun.">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Kaybeden ve Bulunan">
-  <link rel="apple-touch-icon" href="favicon.png">
-  <link rel="icon" type="image/png" href="favicon.png"/>
-  <title>Kayıp & Bulunan</title>
-  <link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıp & Bulunan - Hoş Geldiniz</title>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <style>
+        @keyframes logo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: logo-spin 10s linear infinite;
+        }
+    </style>
 </head>
-<body>
-  <script src="flutter_bootstrap.js" async></script>
+<body class="bg-gray-50 flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="text-center">
+        <div class="bg-green-700 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg animate-spin-slow">
+             <svg viewBox="0 0 24 24" class="w-12 h-12 text-white fill-current">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-green-800 mb-2">Kayıp & Bulunan</h1>
+        <p class="text-gray-600 mb-8">Eşyalarınızı bulmanın en kolay yolu</p>
+        
+        <div class="space-y-4">
+            <a href="/app/" class="block w-64 bg-green-700 text-white py-3 rounded-xl font-semibold hover:bg-green-800 transition shadow-md">
+                Uygulamaya Giriş Yap
+            </a>
+            <p class="text-sm text-gray-400">kaybedenvebulan.com.tr</p>
+        </div>
+    </div>
 </body>
 </html>
-
