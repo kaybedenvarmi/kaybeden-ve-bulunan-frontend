@@ -1,124 +1,38 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaybeden ve Bulan | Eşyalarınızı Bulmanın En Kolay Yolu</title>
-    <!-- Tailwind Play CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style type="text/tailwindcss">
-        @layer base {
-            body {
-                @apply bg-[#f8fbff] text-[#1e293b] overflow-x-hidden;
-                font-family: 'Plus Jakarta Sans', sans-serif;
-            }
-        }
-        @layer components {
-            .logo-box {
-                @apply relative overflow-hidden rounded-[1.25rem] bg-white flex items-center justify-center;
-                box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.1);
-            }
-            .floating-btn {
-                @apply fixed right-0 top-1/2 -translate-y-1/2 bg-[#2563eb] text-white px-5 py-8 rounded-l-[32px] font-extrabold z-[90] shadow-[-10px_0_30px_rgba(37,99,235,0.25)] uppercase transition-all hover:pr-8 active:scale-95;
-                writing-mode: vertical-rl;
-                text-orientation: mixed;
-            }
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-    </style>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="kaybolan_ve_bulunan_app">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>kaybolan_ve_bulunan_app</title>
+  <link rel="manifest" href="manifest.json">
 </head>
-<body class="antialiased">
-
-    <div class="max-w-7xl mx-auto px-6 py-8 min-h-screen flex flex-col">
-        <!-- Navigasyon -->
-        <nav class="flex justify-between items-center mb-16">
-            <div class="flex items-center gap-5">
-                <div class="logo-box w-16 h-16 border-2 border-white ring-1 ring-blue-50">
-                    <img src="./logo.jpg" alt="Logo" class="w-full h-full object-cover" 
-                         onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-people-pulling text-blue-600 text-3xl\'></i>';">
-                </div>
-                <div>
-                    <h1 class="text-3xl font-[900] text-blue-900 tracking-tighter leading-none">Kaybeden ve Bulan</h1>
-                    <p class="text-[11px] font-bold text-blue-400 tracking-[0.4em] uppercase mt-1.5">kaybedenvebulan.com.tr</p>
-                </div>
-            </div>
-            
-            <div class="hidden md:flex items-center gap-4 bg-white px-6 py-3 rounded-2xl border border-blue-50 shadow-sm">
-                <span class="text-[11px] font-extrabold text-slate-500 uppercase tracking-widest">Sistem Yayında</span>
-            </div>
-        </nav>
-
-        <!-- Ana İçerik -->
-        <main class="flex flex-col lg:flex-row items-center gap-16 flex-1">
-            <div class="lg:w-1/2 space-y-12">
-                <h2 class="text-6xl md:text-8xl font-[950] text-slate-900 leading-[0.95] tracking-tight">
-                    Eşyalarınızı <br> bulmanın <br>
-                    <span class="text-blue-600 relative inline-block">en kolay yolu.</span>
-                </h2>
-                <div id="adContainer" class="bg-white p-4 pr-10 rounded-3xl shadow-xl border border-blue-50 inline-flex items-center gap-4">
-                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white">
-                        <i class="fa-solid fa-bell animate-bounce"></i>
-                    </div>
-                    <span id="rotatingText" class="font-bold text-blue-800 transition-opacity duration-500">Kayıp ilanlarını hemen incele!</span>
-                </div>
-                
-                <!-- Mobil için görünür giriş butonu -->
-                <div class="block md:hidden">
-                    <button onclick="goToApp()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-lg">
-                        HEMEN BAŞLA
-                    </button>
-                </div>
-            </div>
-            
-            <div class="lg:w-1/2">
-                <div class="relative rounded-[5rem] overflow-hidden shadow-2xl border-[20px] border-white">
-                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" class="w-full h-[500px] object-cover" alt="Topluluk">
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Sağdaki Sabit Buton -->
-    <button onclick="goToApp()" class="floating-btn">GİRİŞ YAP & KAYIT OL</button>
-
-    <script>
-        const FLUTTER_APP_PATH = "/app"; 
-        const ads = [
-            "Kayıp ilanlarını hemen incele!", 
-            "Eşyanı mı buldun? Hemen bildir!", 
-            "Topluluğumuza sen de katıl."
-        ];
-        let adIdx = 0;
-
-        // Reklam metni döndürme
-        setInterval(() => {
-            adIdx = (adIdx + 1) % ads.length;
-            const el = document.getElementById('rotatingText');
-            if(el) {
-                el.style.opacity = 0;
-                setTimeout(() => { el.innerText = ads[adIdx]; el.style.opacity = 1; }, 500);
-            }
-        }, 5000);
-
-        // Uygulamaya yönlendirme fonksiyonu
-        function goToApp() {
-            // Kullanıcıyı doğrudan Flutter uygulamasının ana giriş ekranına gönderir
-            window.location.href = FLUTTER_APP_PATH;
-        }
-    </script>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
