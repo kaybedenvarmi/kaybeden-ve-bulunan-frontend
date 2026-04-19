@@ -13,18 +13,15 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #f8fbff;
             color: #1e293b;
+            overflow-x: hidden;
         }
 
-        /* Yan Panel Animasyonu */
         #sidePanel {
             transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             transform: translateX(100%);
         }
-        #sidePanel.open {
-            transform: translateX(0);
-        }
+        #sidePanel.open { transform: translateX(0); }
 
-        /* Logo Konteynırı ve Parlama */
         .logo-box {
             position: relative;
             overflow: hidden;
@@ -35,28 +32,9 @@
             align-items: center;
             justify-content: center;
         }
-        
-        .logo-box::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: rotate(45deg);
-            animation: shine 4s infinite;
-        }
 
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
-
-        /* Yanıp Sönen Metin Animasyonu */
         .blink-custom {
             animation: pulse-blue 2s infinite;
-            transition: opacity 0.5s ease-in-out;
         }
 
         @keyframes pulse-blue {
@@ -64,7 +42,6 @@
             50% { opacity: 0.7; }
         }
 
-        /* Yandan Açılan Buton */
         .floating-btn {
             position: fixed;
             right: 0;
@@ -77,29 +54,23 @@
             writing-mode: vertical-rl;
             text-orientation: mixed;
             font-weight: 800;
-            letter-spacing: 2px;
             z-index: 90;
             box-shadow: -10px 0 30px rgba(37, 99, 235, 0.25);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .floating-btn:hover { padding-right: 28px; background: #1d4ed8; }
 
-        /* Resim Yüklenme Efekti (Skeleton) */
-        .img-skeleton {
-            background: linear-gradient(90deg, #f0f4f8 25%, #e2e8f0 50%, #f0f4f8 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
+        /* Doğrulama Ekranı Animasyonu */
+        .verification-step {
+            animation: slideIn 0.4s ease-out;
         }
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body class="antialiased">
 
     <div class="max-w-7xl mx-auto px-6 py-8 min-h-screen flex flex-col">
-        <!-- Üst Menü / Navigasyon -->
         <nav class="flex justify-between items-center mb-16">
             <div class="flex items-center gap-5">
                 <div class="logo-box w-16 h-16 border-2 border-white ring-1 ring-blue-50">
@@ -113,279 +84,171 @@
             </div>
             
             <div class="hidden md:flex items-center gap-4 bg-white px-6 py-3 rounded-2xl border border-blue-50 shadow-sm">
-                <span class="flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-yellow-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
-                </span>
                 <span class="text-[11px] font-extrabold text-slate-500 uppercase tracking-widest">Sistem Hazırlanıyor</span>
             </div>
         </nav>
 
-        <!-- Ana İçerik -->
         <main class="flex flex-col lg:flex-row items-center gap-16 flex-1">
             <div class="lg:w-1/2 space-y-12">
-                <div class="space-y-6">
-                    <h2 class="text-6xl md:text-8xl font-[950] text-slate-900 leading-[0.95] tracking-tight">
-                        Eşyalarınızı <br> bulmanın <br>
-                        <span class="text-blue-600 relative inline-block">
-                            en kolay yolu.
-                            <svg class="absolute -bottom-4 left-0 w-full h-3 text-yellow-400" preserveAspectRatio="none" viewBox="0 0 100 10">
-                                <path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="currentColor" stroke-width="6" fill="transparent" />
-                            </svg>
-                        </span>
-                    </h2>
-                    <p class="text-xl text-slate-500 font-medium leading-relaxed max-w-lg pt-4">
-                        Kaybolan veya bulduğunuz eşyaları topluluğumuzla paylaşın, sahiplerine kavuşmasını en güvenli yoldan sağlayın.
-                    </p>
-                </div>
-
-                <!-- Dönen Duyuru Alanı -->
-                <div class="inline-flex items-center gap-5 bg-white p-3 pr-10 rounded-3xl shadow-2xl shadow-blue-900/10 border border-blue-50">
-                    <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg rotate-3">
-                        <i class="fa-solid fa-mobile-screen-button text-xl animate-pulse"></i>
+                <h2 class="text-6xl md:text-8xl font-[950] text-slate-900 leading-[0.95] tracking-tight">
+                    Eşyalarınızı <br> bulmanın <br>
+                    <span class="text-blue-600 relative inline-block">en kolay yolu.</span>
+                </h2>
+                <div id="adContainer" class="bg-white p-4 pr-10 rounded-3xl shadow-xl border border-blue-50 inline-flex items-center gap-4">
+                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white">
+                        <i class="fa-solid fa-bell animate-swing"></i>
                     </div>
-                    <div class="flex flex-col">
-                        <span id="rotatingText" class="text-lg font-black tracking-tight blink-custom uppercase text-blue-600">
-                            Uygulamalarımız çok yakında mağazalarda!
-                        </span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-6 max-w-md">
-                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-                        <i class="fa-solid fa-magnifying-glass text-blue-500 mb-5 text-2xl"></i>
-                        <div class="text-4xl font-black text-slate-900">600K+</div>
-                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Kayıp İlanı</div>
-                    </div>
-                    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-                        <i class="fa-solid fa-hand-holding-heart text-yellow-500 mb-5 text-2xl"></i>
-                        <div class="text-4xl font-black text-slate-900">147K+</div>
-                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Bulunan Eşya</div>
-                    </div>
+                    <span id="rotatingText" class="font-bold text-blue-800 transition-opacity duration-500">Uygulamalarımız çok yakında mağazalarda!</span>
                 </div>
             </div>
-
-            <!-- Dinamik Resim Alanı -->
-            <div class="lg:w-1/2 relative group">
-                <div class="absolute -top-12 -right-12 w-36 h-36 bg-yellow-400 rounded-[3rem] flex items-center justify-center shadow-2xl z-20 animate-bounce cursor-pointer">
-                    <i class="fa-solid fa-key text-white text-5xl"></i>
-                </div>
-                <div id="heroImageWrapper" class="relative rounded-[5rem] overflow-hidden shadow-2xl border-[20px] border-white ring-1 ring-slate-200 transform transition-transform group-hover:scale-[1.01] duration-500 img-skeleton">
-                    <img id="heroImage" src="" 
-                         alt="Topluluk Görseli" 
-                         class="w-full h-[650px] object-cover opacity-0 transition-opacity duration-700"
-                         onload="this.classList.remove('opacity-0'); document.getElementById('heroImageWrapper').classList.remove('img-skeleton')">
-                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/40 via-transparent to-transparent"></div>
+            <div class="lg:w-1/2">
+                <div class="relative rounded-[5rem] overflow-hidden shadow-2xl border-[20px] border-white">
+                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" class="w-full h-[500px] object-cover">
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Giriş Butonu -->
-    <button onclick="togglePanel(true)" class="floating-btn uppercase">
-        GİRİŞ & KAYIT OL
-    </button>
+    <button onclick="togglePanel(true)" class="floating-btn uppercase">GİRİŞ & KAYIT OL</button>
 
-    <!-- Yan Panel (Login/Register) -->
-    <div id="sidePanel" class="fixed top-0 right-0 h-full w-full md:w-[520px] bg-white z-[100] shadow-[-30px_0_100px_rgba(0,0,0,0.1)] flex flex-col">
-        <div class="p-10 flex justify-between items-center border-b border-slate-50">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center overflow-hidden border border-slate-100">
-                    <img src="logo.jpg" alt="Logo" class="w-full h-full object-cover" 
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user-check text-blue-600\'></i>';">
-                </div>
-                <h3 id="panelHeaderTitle" class="text-2xl font-black text-slate-900 tracking-tight">Giriş Yap</h3>
-            </div>
-            <button onclick="togglePanel(false)" class="w-12 h-12 rounded-full hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition-all">
-                <i class="fa-solid fa-xmark text-2xl"></i>
-            </button>
+    <!-- Yan Panel -->
+    <div id="sidePanel" class="fixed top-0 right-0 h-full w-full md:w-[500px] bg-white z-[100] shadow-2xl flex flex-col">
+        <div class="p-8 flex justify-between items-center border-b">
+            <h3 id="panelTitle" class="text-2xl font-black text-slate-900">Giriş Yap</h3>
+            <button onclick="togglePanel(false)" class="text-slate-400 hover:text-red-500"><i class="fa-solid fa-xmark text-2xl"></i></button>
         </div>
 
-        <div class="flex-1 overflow-y-auto p-12">
-            <div id="msgBox" class="hidden mb-10 p-6 rounded-3xl flex items-center gap-4 border text-sm font-bold shadow-sm"></div>
+        <div class="flex-1 overflow-y-auto p-10">
+            <div id="msgBox" class="hidden mb-6 p-5 rounded-2xl text-sm font-bold border"></div>
 
-            <div id="loginForm" class="space-y-8">
-                <div class="space-y-6">
-                    <div class="space-y-3">
-                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">E-POSTA ADRESİ</label>
-                        <div class="relative">
-                            <i class="fa-solid fa-at absolute left-6 top-1/2 -translate-y-1/2 text-slate-300"></i>
-                            <input type="email" id="email_login" placeholder="E-posta adresinizi giriniz" 
-                                   class="w-full bg-slate-50 border border-slate-100 p-6 pl-16 rounded-[1.5rem] outline-none focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all text-slate-700 font-medium">
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">ŞİFRE</label>
-                        <div class="relative">
-                            <i class="fa-solid fa-lock absolute left-6 top-1/2 -translate-y-1/2 text-slate-300"></i>
-                            <input type="password" id="pass_login" placeholder="Şifrenizi giriniz" 
-                                   class="w-full bg-slate-50 border border-slate-100 p-6 pl-16 rounded-[1.5rem] outline-none focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all text-slate-700 font-medium">
-                        </div>
-                    </div>
-                </div>
-                <button onclick="doLogin()" id="loginActionBtn" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-black py-6 rounded-[1.5rem] shadow-xl shadow-green-100 transition-all text-lg">
-                    Giriş Yap
-                </button>
-                <div class="text-center pt-4">
-                    <button onclick="switchView('reg')" class="text-slate-500 font-bold hover:text-blue-600">
-                        Hesabınız yok mu? <span class="text-blue-600 underline underline-offset-4">Hesap Oluşturun</span>
-                    </button>
-                </div>
+            <!-- Login Form -->
+            <div id="loginForm" class="space-y-6">
+                <input type="email" id="l_email" placeholder="E-posta" class="w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none">
+                <input type="password" id="l_pass" placeholder="Şifre" class="w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none">
+                <button onclick="handleLogin()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-lg">Giriş Yap</button>
+                <p class="text-center text-slate-500 font-bold cursor-pointer" onclick="switchView('reg')">Hesabınız yok mu? <span class="text-blue-600">Kayıt Ol</span></p>
             </div>
 
-            <div id="regForm" class="hidden space-y-6">
-                <!-- Register form alanları aynı kalabilir -->
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="space-y-2">
-                        <label class="text-[11px] font-black text-slate-400 uppercase ml-2">AD SOYAD</label>
-                        <input type="text" id="reg_name" class="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:bg-white transition-all">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-[11px] font-black text-slate-400 uppercase ml-2">TELEFON</label>
-                        <input type="tel" id="reg_phone" placeholder="05XX" class="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:bg-white transition-all">
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[11px] font-black text-slate-400 uppercase ml-2">E-POSTA</label>
-                    <input type="email" id="reg_email" class="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:bg-white transition-all">
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[11px] font-black text-slate-400 uppercase ml-2">ŞİFRE OLUŞTUR</label>
-                    <input type="password" id="reg_pass" class="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:bg-white transition-all">
-                </div>
-                <button onclick="doRegister()" id="regActionBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-6 rounded-[1.5rem] shadow-xl shadow-blue-100 transition-all text-lg mt-4">
-                    Kayıt Ol ve Başlat
-                </button>
-                <div class="text-center pt-4">
-                    <button onclick="switchView('login')" class="text-slate-500 font-bold">
-                        Zaten üye misiniz? <span class="text-blue-600 underline underline-offset-4">Giriş Yap</span>
-                    </button>
-                </div>
+            <!-- Register Form -->
+            <div id="regForm" class="hidden space-y-4">
+                <input type="text" id="r_name" placeholder="Ad Soyad" class="w-full p-5 bg-slate-50 rounded-2xl border">
+                <input type="email" id="r_email" placeholder="E-posta" class="w-full p-5 bg-slate-50 rounded-2xl border">
+                <input type="tel" id="r_phone" placeholder="Telefon (05XX)" class="w-full p-5 bg-slate-50 rounded-2xl border">
+                <input type="password" id="r_pass" placeholder="Şifre Oluştur" class="w-full p-5 bg-slate-50 rounded-2xl border">
+                <button onclick="handleRegister()" class="w-full bg-green-600 text-white font-bold py-5 rounded-2xl shadow-lg">Kayıt Ol ve Link Gönder</button>
+                <p class="text-center text-slate-500 font-bold cursor-pointer" onclick="switchView('login')">Zaten üye misiniz? <span class="text-blue-600">Giriş Yap</span></p>
             </div>
-        </div>
 
-        <div class="p-10 text-center bg-slate-50 border-t border-slate-100">
-            <p class="text-[11px] font-black text-slate-300 uppercase tracking-[0.5em]">© 2026 Kaybeden ve Bulan</p>
+            <!-- Email Verification Waiting View -->
+            <div id="verifyForm" class="hidden verification-step text-center space-y-8 py-10">
+                <div class="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto text-4xl">
+                    <i class="fa-solid fa-envelope-open-text animate-bounce"></i>
+                </div>
+                <div>
+                    <h4 class="text-2xl font-black text-slate-900">E-postanızı Kontrol Edin</h4>
+                    <p class="text-slate-500 mt-4 font-medium">
+                        <strong id="displayEmail" class="text-blue-600"></strong> adresine bir doğrulama linki gönderdik. Hesabınızı aktif etmek için linke tıklamanız yeterlidir.
+                    </p>
+                </div>
+                <div class="p-6 bg-yellow-50 rounded-3xl border border-yellow-100 text-yellow-800 text-sm font-bold">
+                    <i class="fa-solid fa-circle-info mr-2"></i> Spam (Gereksiz) klasörünü kontrol etmeyi unutmayın.
+                </div>
+                <button onclick="switchView('login')" class="text-blue-600 font-bold underline">Giriş ekranına dön</button>
+            </div>
         </div>
     </div>
 
     <script>
         const API_URL = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
-        
-        // --- DINAMIK IÇERIK LISTELERI ---
-        const heroImages = [
-            "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1523240715630-971c9ad06469?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=1000&q=80"
-        ];
+        const ads = ["Uygulamalarımız çok yakında mağazalarda!", "Kayıp eşyalarını hemen bildir!", "Bulduğun eşyayı sahibine ulaştır!", "En güvenli kayıp-buluntu ağı.", "Ücretsiz kayıt ol, topluluğa katıl!"];
+        let adIdx = 0;
 
-        // İstediğin 5 farklı versiyon (Hem renk hem metin odaklı)
-        const adItems = [
-            { text: "Android ve iOS mobil uygulamalarımız çok yakında mağazalarda!", color: "text-blue-600" },
-            { text: "Kaybeden ve Bulan cebine geliyor! Mobil uygulamamız yolda.", color: "text-green-600" },
-            { text: "Tek tıkla ilan oluşturun! Android & iOS uygulamalarımız çok yakında.", color: "text-orange-600" },
-            { text: "İyilik her an yanında! Mobil uygulamalarımız yakında yayında.", color: "text-red-500" },
-            { text: "Google Play ve App Store'da çok yakında buluşuyoruz.", color: "text-slate-700" }
-        ];
-
-        let currentAdIndex = 0;
-
-        window.onload = () => {
-            // Rastgele bir ana görsel seç
-            const randomImg = heroImages[Math.floor(Math.random() * heroImages.length)];
-            const imgEl = document.getElementById('heroImage');
-            if(imgEl) imgEl.src = randomImg;
-
-            // İlk yüklemede rastgele bir reklam seç
-            currentAdIndex = Math.floor(Math.random() * adItems.length);
-            updateAdText();
-
-            // Her 6 saniyede bir sıradaki duyuruya geç
-            setInterval(() => {
-                currentAdIndex = (currentAdIndex + 1) % adItems.length;
-                updateAdText();
-            }, 6000);
-        };
-
-        function updateAdText() {
+        setInterval(() => {
+            adIdx = (adIdx + 1) % ads.length;
             const el = document.getElementById('rotatingText');
-            if(el) {
-                el.style.opacity = 0; // Yumuşak geçiş için
-                setTimeout(() => {
-                    const item = adItems[currentAdIndex];
-                    el.innerText = item.text;
-                    el.className = `text-lg font-black uppercase tracking-tight blink-custom ${item.color}`;
-                    el.style.opacity = 1;
-                }, 500);
+            el.style.opacity = 0;
+            setTimeout(() => { el.innerText = ads[adIdx]; el.style.opacity = 1; }, 500);
+        }, 5000);
+
+        function togglePanel(s) { document.getElementById('sidePanel').classList.toggle('open', s); }
+
+        function switchView(v) {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('regForm').classList.add('hidden');
+            document.getElementById('verifyForm').classList.add('hidden');
+            
+            if(v === 'login') {
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('panelTitle').innerText = "Giriş Yap";
+            } else if(v === 'reg') {
+                document.getElementById('regForm').classList.remove('hidden');
+                document.getElementById('panelTitle').innerText = "Kayıt Ol";
+            } else if(v === 'verify') {
+                document.getElementById('verifyForm').classList.remove('hidden');
+                document.getElementById('panelTitle').innerText = "Doğrulama Bekleniyor";
             }
         }
 
-        // --- PANEL VE AUTH FONKSIYONLARI ---
-        function togglePanel(show) {
-            document.getElementById('sidePanel').classList.toggle('open', show);
-            if(!show) hideMsg();
+        function showMsg(m, t='error') {
+            const b = document.getElementById('msgBox');
+            b.innerText = m;
+            b.className = `mb-6 p-5 rounded-2xl text-sm font-bold border ${t === 'error' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'}`;
+            b.classList.remove('hidden');
         }
 
-        function switchView(view) {
-            const isReg = view === 'reg';
-            document.getElementById('loginForm').classList.toggle('hidden', isReg);
-            document.getElementById('regForm').classList.toggle('hidden', !isReg);
-            document.getElementById('panelHeaderTitle').innerText = isReg ? "Hesap Oluştur" : "Giriş Yap";
-            hideMsg();
+        async function handleRegister() {
+            const name = document.getElementById('r_name').value;
+            const email = document.getElementById('r_email').value;
+            const phone = document.getElementById('r_phone').value;
+            const pass = document.getElementById('r_pass').value;
+
+            if(!name || !email || !pass) return showMsg("Lütfen zorunlu alanları doldurun.");
+
+            try {
+                // Not: Backend'de /users/register endpoint'ine 'sendVerificationEmail: true' parametresi eklenmiş olmalı
+                const res = await fetch(`${API_URL}/users/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, phoneNumber: phone, passwordHash: pass, sendLink: true })
+                });
+
+                if(!res.ok) {
+                    const errorData = await res.json();
+                    throw new Error(errorData.message || "Kayıt sırasında bir hata oluştu.");
+                }
+
+                // Başarılı kayıt sonrası doğrulama ekranına geçiş
+                document.getElementById('displayEmail').innerText = email;
+                switchView('verify');
+            } catch (e) {
+                showMsg(e.message);
+            }
         }
 
-        function showMsg(text, type = 'error') {
-            const box = document.getElementById('msgBox');
-            box.className = `mb-10 p-6 rounded-3xl flex items-center gap-4 border text-sm font-bold shadow-sm ${
-                type === 'error' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'
-            }`;
-            box.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-check'} text-2xl"></i> <span>${text}</span>`;
-            box.classList.remove('hidden');
-        }
+        async function handleLogin() {
+            const email = document.getElementById('l_email').value;
+            const pass = document.getElementById('l_pass').value;
 
-        function hideMsg() { document.getElementById('msgBox').classList.add('hidden'); }
-
-        async function doLogin() {
-            const btn = document.getElementById('loginActionBtn');
-            const email = document.getElementById('email_login').value;
-            const pass = document.getElementById('pass_login').value;
-            if(!email || !pass) return showMsg("Lütfen tüm alanları doldurunuz.");
-
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i>';
             try {
                 const res = await fetch(`${API_URL}/users/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, passwordHash: pass })
                 });
-                if(!res.ok) throw new Error("Giriş başarısız.");
-                const user = await res.json();
-                showMsg(`Hoş geldiniz ${user.name}!`, "success");
-            } catch (e) { showMsg(e.message); }
-            finally { btn.disabled = false; btn.innerHTML = "Giriş Yap"; }
-        }
+                
+                const data = await res.json();
+                if(!res.ok) throw new Error(data.message || "Giriş başarısız.");
 
-        async function doRegister() {
-            const btn = document.getElementById('regActionBtn');
-            const name = document.getElementById('reg_name').value;
-            const email = document.getElementById('reg_email').value;
-            const pass = document.getElementById('reg_pass').value;
-            if(!name || !email || !pass) return showMsg("Lütfen eksik alan bırakmayın.");
+                // Eğer kullanıcı doğrulanmamışsa uyarı ver
+                if(data.user && !data.user.isVerified) {
+                    showMsg("Hesabınız henüz doğrulanmamış. Lütfen mail kutunuzu kontrol edin.");
+                    return;
+                }
 
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i>';
-            try {
-                const res = await fetch(`${API_URL}/users/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, passwordHash: pass })
-                });
-                if(!res.ok) throw new Error("Kayıt yapılamadı.");
-                showMsg("Kayıt başarılı! Giriş yapabilirsiniz.", "success");
-                setTimeout(() => switchView('login'), 2000);
-            } catch (e) { showMsg(e.message); }
-            finally { btn.disabled = false; btn.innerHTML = "Kayıt Ol ve Başlat"; }
+                showMsg(`Hoş geldiniz ${data.user.name}!`, "success");
+            } catch (e) {
+                showMsg(e.message);
+            }
         }
     </script>
 </body>
