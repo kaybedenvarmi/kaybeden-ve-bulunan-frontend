@@ -53,14 +53,15 @@
             100% { transform: translateX(100%) rotate(45deg); }
         }
 
-        /* Yanıp Sönen Metin */
+        /* Yanıp Sönen Metin Animasyonu */
         .blink-custom {
-            animation: pulse-red 2s infinite;
+            animation: pulse-blue 2s infinite;
+            transition: opacity 0.5s ease-in-out;
         }
 
-        @keyframes pulse-red {
-            0%, 100% { opacity: 1; color: #2563eb; }
-            50% { opacity: 0.6; color: #dc2626; }
+        @keyframes pulse-blue {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         /* Yandan Açılan Buton */
@@ -82,6 +83,17 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .floating-btn:hover { padding-right: 28px; background: #1d4ed8; }
+
+        /* Resim Yüklenme Efekti (Skeleton) */
+        .img-skeleton {
+            background: linear-gradient(90deg, #f0f4f8 25%, #e2e8f0 50%, #f0f4f8 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -91,9 +103,8 @@
         <nav class="flex justify-between items-center mb-16">
             <div class="flex items-center gap-5">
                 <div class="logo-box w-16 h-16 border-2 border-white ring-1 ring-blue-50">
-                    <!-- Doğrudan logo.jpg kullanımı -->
                     <img src="logo.jpg" alt="Logo" class="w-full h-full object-cover" 
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-box-open text-blue-600 text-2xl\'></i>';">
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-people-pulling text-blue-600 text-3xl\'></i>';">
                 </div>
                 <div>
                     <h1 class="text-3xl font-[900] text-blue-900 tracking-tighter leading-none">Kaybeden ve Bulan</h1>
@@ -128,19 +139,18 @@
                     </p>
                 </div>
 
-                <!-- Duyuru Kartı -->
+                <!-- Dönen Duyuru Alanı -->
                 <div class="inline-flex items-center gap-5 bg-white p-3 pr-10 rounded-3xl shadow-2xl shadow-blue-900/10 border border-blue-50">
                     <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg rotate-3">
-                        <i class="fa-solid fa-rocket text-xl"></i>
+                        <i class="fa-solid fa-mobile-screen-button text-xl animate-pulse"></i>
                     </div>
                     <div class="flex flex-col">
-                        <span id="rotatingText" class="text-lg font-black tracking-tight blink-custom uppercase">
-                            Web sitemiz çok yakında yayında!
+                        <span id="rotatingText" class="text-lg font-black tracking-tight blink-custom uppercase text-blue-600">
+                            Uygulamalarımız çok yakında mağazalarda!
                         </span>
                     </div>
                 </div>
 
-                <!-- İstatistikler -->
                 <div class="grid grid-cols-2 gap-6 max-w-md">
                     <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                         <i class="fa-solid fa-magnifying-glass text-blue-500 mb-5 text-2xl"></i>
@@ -155,14 +165,17 @@
                 </div>
             </div>
 
-            <!-- Sağ Taraf Görsel Alanı -->
+            <!-- Dinamik Resim Alanı -->
             <div class="lg:w-1/2 relative group">
                 <div class="absolute -top-12 -right-12 w-36 h-36 bg-yellow-400 rounded-[3rem] flex items-center justify-center shadow-2xl z-20 animate-bounce cursor-pointer">
                     <i class="fa-solid fa-key text-white text-5xl"></i>
                 </div>
-                <div class="relative rounded-[5rem] overflow-hidden shadow-2xl border-[20px] border-white ring-1 ring-slate-200 transform transition-transform group-hover:scale-[1.01] duration-500">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1000" alt="Kaybeden ve Bulan Topluluğu" class="w-full h-[650px] object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/50 via-transparent to-transparent"></div>
+                <div id="heroImageWrapper" class="relative rounded-[5rem] overflow-hidden shadow-2xl border-[20px] border-white ring-1 ring-slate-200 transform transition-transform group-hover:scale-[1.01] duration-500 img-skeleton">
+                    <img id="heroImage" src="" 
+                         alt="Topluluk Görseli" 
+                         class="w-full h-[650px] object-cover opacity-0 transition-opacity duration-700"
+                         onload="this.classList.remove('opacity-0'); document.getElementById('heroImageWrapper').classList.remove('img-skeleton')">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-950/40 via-transparent to-transparent"></div>
                 </div>
             </div>
         </main>
@@ -173,13 +186,13 @@
         GİRİŞ & KAYIT OL
     </button>
 
-    <!-- Yan Panel -->
+    <!-- Yan Panel (Login/Register) -->
     <div id="sidePanel" class="fixed top-0 right-0 h-full w-full md:w-[520px] bg-white z-[100] shadow-[-30px_0_100px_rgba(0,0,0,0.1)] flex flex-col">
         <div class="p-10 flex justify-between items-center border-b border-slate-50">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center overflow-hidden border border-slate-100">
                     <img src="logo.jpg" alt="Logo" class="w-full h-full object-cover" 
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-box-open text-blue-600\'></i>';">
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user-check text-blue-600\'></i>';">
                 </div>
                 <h3 id="panelHeaderTitle" class="text-2xl font-black text-slate-900 tracking-tight">Giriş Yap</h3>
             </div>
@@ -191,7 +204,6 @@
         <div class="flex-1 overflow-y-auto p-12">
             <div id="msgBox" class="hidden mb-10 p-6 rounded-3xl flex items-center gap-4 border text-sm font-bold shadow-sm"></div>
 
-            <!-- Giriş Formu -->
             <div id="loginForm" class="space-y-8">
                 <div class="space-y-6">
                     <div class="space-y-3">
@@ -211,20 +223,18 @@
                         </div>
                     </div>
                 </div>
-
-                <button onclick="doLogin()" id="loginActionBtn" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-black py-6 rounded-[1.5rem] shadow-xl shadow-green-100 transition-all flex items-center justify-center gap-3 text-lg">
+                <button onclick="doLogin()" id="loginActionBtn" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-black py-6 rounded-[1.5rem] shadow-xl shadow-green-100 transition-all text-lg">
                     Giriş Yap
                 </button>
-
                 <div class="text-center pt-4">
-                    <button onclick="switchView('reg')" class="text-slate-500 font-bold hover:text-blue-600 transition-colors">
+                    <button onclick="switchView('reg')" class="text-slate-500 font-bold hover:text-blue-600">
                         Hesabınız yok mu? <span class="text-blue-600 underline underline-offset-4">Hesap Oluşturun</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Kayıt Formu -->
             <div id="regForm" class="hidden space-y-6">
+                <!-- Register form alanları aynı kalabilir -->
                 <div class="grid grid-cols-2 gap-5">
                     <div class="space-y-2">
                         <label class="text-[11px] font-black text-slate-400 uppercase ml-2">AD SOYAD</label>
@@ -262,6 +272,57 @@
     <script>
         const API_URL = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
         
+        // --- DINAMIK IÇERIK LISTELERI ---
+        const heroImages = [
+            "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1523240715630-971c9ad06469?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&w=1000&q=80"
+        ];
+
+        // İstediğin 5 farklı versiyon (Hem renk hem metin odaklı)
+        const adItems = [
+            { text: "Android ve iOS mobil uygulamalarımız çok yakında mağazalarda!", color: "text-blue-600" },
+            { text: "Kaybeden ve Bulan cebine geliyor! Mobil uygulamamız yolda.", color: "text-green-600" },
+            { text: "Tek tıkla ilan oluşturun! Android & iOS uygulamalarımız çok yakında.", color: "text-orange-600" },
+            { text: "İyilik her an yanında! Mobil uygulamalarımız yakında yayında.", color: "text-red-500" },
+            { text: "Google Play ve App Store'da çok yakında buluşuyoruz.", color: "text-slate-700" }
+        ];
+
+        let currentAdIndex = 0;
+
+        window.onload = () => {
+            // Rastgele bir ana görsel seç
+            const randomImg = heroImages[Math.floor(Math.random() * heroImages.length)];
+            const imgEl = document.getElementById('heroImage');
+            if(imgEl) imgEl.src = randomImg;
+
+            // İlk yüklemede rastgele bir reklam seç
+            currentAdIndex = Math.floor(Math.random() * adItems.length);
+            updateAdText();
+
+            // Her 6 saniyede bir sıradaki duyuruya geç
+            setInterval(() => {
+                currentAdIndex = (currentAdIndex + 1) % adItems.length;
+                updateAdText();
+            }, 6000);
+        };
+
+        function updateAdText() {
+            const el = document.getElementById('rotatingText');
+            if(el) {
+                el.style.opacity = 0; // Yumuşak geçiş için
+                setTimeout(() => {
+                    const item = adItems[currentAdIndex];
+                    el.innerText = item.text;
+                    el.className = `text-lg font-black uppercase tracking-tight blink-custom ${item.color}`;
+                    el.style.opacity = 1;
+                }, 500);
+            }
+        }
+
+        // --- PANEL VE AUTH FONKSIYONLARI ---
         function togglePanel(show) {
             document.getElementById('sidePanel').classList.toggle('open', show);
             if(!show) hideMsg();
@@ -290,22 +351,20 @@
             const btn = document.getElementById('loginActionBtn');
             const email = document.getElementById('email_login').value;
             const pass = document.getElementById('pass_login').value;
+            if(!email || !pass) return showMsg("Lütfen tüm alanları doldurunuz.");
 
-            if(!email || !pass) return showMsg("Lütfen giriş bilgilerini eksiksiz doldurunuz.");
-
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Kontrol Ediliyor...';
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i>';
             try {
                 const res = await fetch(`${API_URL}/users/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, passwordHash: pass })
                 });
-                const data = await res.json();
-                if(!res.ok) throw new Error(data.detail || "Veritabanı veya Sunucu Hatası: Veritabanına ulaşılamıyor.");
-                showMsg("Başarıyla giriş yapıldı! Hoş geldiniz.", "success");
-            } catch (e) {
-                showMsg(e.message);
-            } finally { btn.disabled = false; btn.innerHTML = "Giriş Yap"; }
+                if(!res.ok) throw new Error("Giriş başarısız.");
+                const user = await res.json();
+                showMsg(`Hoş geldiniz ${user.name}!`, "success");
+            } catch (e) { showMsg(e.message); }
+            finally { btn.disabled = false; btn.innerHTML = "Giriş Yap"; }
         }
 
         async function doRegister() {
@@ -313,44 +372,21 @@
             const name = document.getElementById('reg_name').value;
             const email = document.getElementById('reg_email').value;
             const pass = document.getElementById('reg_pass').value;
+            if(!name || !email || !pass) return showMsg("Lütfen eksik alan bırakmayın.");
 
-            if(!name || !email || !pass) return showMsg("Lütfen tüm alanları doldurarak kaydınızı tamamlayın.");
-
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Kaydediliyor...';
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i>';
             try {
                 const res = await fetch(`${API_URL}/users/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, passwordHash: pass })
                 });
-                if(!res.ok) {
-                    const data = await res.json();
-                    throw new Error(data.detail || "Kayıt işlemi şu an gerçekleştirilemiyor.");
-                }
-                showMsg("Kaydınız oluşturuldu! E-posta onayından sonra giriş yapabilirsiniz.", "success");
-                setTimeout(() => switchView('login'), 3000);
-            } catch (e) {
-                showMsg(e.message);
-            } finally { btn.disabled = false; btn.innerHTML = "Kayıt Ol ve Başlat"; }
+                if(!res.ok) throw new Error("Kayıt yapılamadı.");
+                showMsg("Kayıt başarılı! Giriş yapabilirsiniz.", "success");
+                setTimeout(() => switchView('login'), 2000);
+            } catch (e) { showMsg(e.message); }
+            finally { btn.disabled = false; btn.innerHTML = "Kayıt Ol ve Başlat"; }
         }
-
-        // Akıllı Reklam/Duyuru Geçişi
-        const adItems = [
-            { text: "Web sitemiz çok yakında yayında!", color: "text-blue-600", icon: "fa-rocket" },
-            { text: "Google  Android uygulamamız yakında!", color: "text-green-600", icon: "fa-android" },
-            { text: "Apple iOS uygulamamız çok yakında!", color: "text-slate-700", icon: "fa-apple" }
-        ];
-        let currentAd = 0;
-        setInterval(() => {
-            currentAd = (currentAd + 1) % adItems.length;
-            const el = document.getElementById('rotatingText');
-            el.style.opacity = 0;
-            setTimeout(() => {
-                el.innerText = adItems[currentAd].text;
-                el.className = `text-lg font-black uppercase tracking-tight blink-custom ${adItems[currentAd].color}`;
-                el.style.opacity = 1;
-            }, 600);
-        }, 6000);
     </script>
 </body>
 </html>
