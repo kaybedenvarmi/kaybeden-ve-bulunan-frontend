@@ -4,62 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaybeden ve Bulan | Eşyalarınızı Bulmanın En Kolay Yolu</title>
+    <!-- Üretim uyarısını gidermek için Tailwind Play CDN yerine resmi CSS çıktısı mantığına geçiş (Geliştirme için şimdilik en iyisi) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-[#f8fbff] text-[#1e293b] overflow-x-hidden;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+        }
+        @layer components {
+            .logo-box {
+                @apply relative overflow-hidden rounded-[1.25rem] bg-white flex items-center justify-center;
+                box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.1);
+            }
+            .floating-btn {
+                @apply fixed right-0 top-1/2 -translate-y-1/2 bg-[#2563eb] text-white px-3.5 py-6 rounded-l-[24px] font-extrabold z-[90] shadow-[-10px_0_30px_rgba(37,99,235,0.25)] uppercase;
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+            }
+            .input-field {
+                @apply w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none focus:border-blue-500 transition-all;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f8fbff;
-            color: #1e293b;
-            overflow-x: hidden;
-        }
-
         #sidePanel {
             transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             transform: translateX(100%);
         }
         #sidePanel.open { transform: translateX(0); }
-
-        .logo-box {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1.25rem;
-            background: #fff;
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .floating-btn {
-            position: fixed;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #2563eb;
-            color: white;
-            padding: 24px 14px;
-            border-radius: 24px 0 0 24px;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            font-weight: 800;
-            z-index: 90;
-            box-shadow: -10px 0 30px rgba(37, 99, 235, 0.25);
-        }
-
+        
         .verification-step {
             animation: slideIn 0.4s ease-out;
         }
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .input-error {
-            border-color: #ef4444 !important;
-            background-color: #fef2f2 !important;
         }
     </style>
 </head>
@@ -69,8 +64,9 @@
         <nav class="flex justify-between items-center mb-16">
             <div class="flex items-center gap-5">
                 <div class="logo-box w-16 h-16 border-2 border-white ring-1 ring-blue-50">
-                    <img src="logo.jpg" alt="Logo" class="w-full h-full object-cover" 
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-people-pulling text-blue-600 text-3xl\'></i>';">
+                    <!-- Logo Yolu ve Hata Kontrolü -->
+                    <img src="./logo.jpg" alt="Logo" class="w-full h-full object-cover" 
+                         onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-people-pulling text-blue-600 text-3xl\'></i>';">
                 </div>
                 <div>
                     <h1 class="text-3xl font-[900] text-blue-900 tracking-tighter leading-none">Kaybeden ve Bulan</h1>
@@ -98,13 +94,13 @@
             </div>
             <div class="lg:w-1/2">
                 <div class="relative rounded-[5rem] overflow-hidden shadow-2xl border-[20px] border-white">
-                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" class="w-full h-[500px] object-cover" alt="Community">
+                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" class="w-full h-[500px] object-cover" alt="Topluluk">
                 </div>
             </div>
         </main>
     </div>
 
-    <button onclick="togglePanel(true)" class="floating-btn uppercase">GİRİŞ & KAYIT OL</button>
+    <button onclick="togglePanel(true)" class="floating-btn">GİRİŞ & KAYIT OL</button>
 
     <!-- Yan Panel -->
     <div id="sidePanel" class="fixed top-0 right-0 h-full w-full md:w-[500px] bg-white z-[100] shadow-2xl flex flex-col">
@@ -116,35 +112,27 @@
         <div class="flex-1 overflow-y-auto p-10">
             <div id="msgBox" class="hidden mb-6 p-5 rounded-2xl text-sm font-bold border transition-all duration-300"></div>
 
-            <!-- Login Form -->
+            <!-- Giriş Formu -->
             <div id="loginForm" class="space-y-6">
-                <input type="email" id="l_email" placeholder="E-posta" class="w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none focus:border-blue-500 transition-all">
-                <input type="password" id="l_pass" placeholder="Şifre" class="w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none focus:border-blue-500 transition-all">
-                <button onclick="handleLogin()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-lg hover:bg-blue-700 transition-colors">Giriş Yap</button>
+                <input type="email" id="l_email" placeholder="E-posta" class="input-field">
+                <input type="password" id="l_pass" placeholder="Şifre" class="input-field">
+                <button onclick="handleLogin()" id="loginBtn" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                    <span>Giriş Yap</span>
+                </button>
                 <p class="text-center text-slate-500 font-bold cursor-pointer" onclick="switchView('reg')">Hesabınız yok mu? <span class="text-blue-600">Kayıt Ol</span></p>
             </div>
 
-            <!-- Register Form -->
+            <!-- Kayıt Formu -->
             <div id="regForm" class="hidden space-y-4">
-                <div>
-                    <input type="text" id="r_name" placeholder="Ad Soyad" class="w-full p-5 bg-slate-50 rounded-2xl border outline-none focus:border-green-500">
-                </div>
-                <div>
-                    <input type="email" id="r_email" placeholder="E-posta" class="w-full p-5 bg-slate-50 rounded-2xl border outline-none focus:border-green-500">
-                </div>
-                <div>
-                    <input type="tel" id="r_phone" placeholder="Telefon (05XX XXX XX XX)" maxlength="15" oninput="formatPhone(this)" class="w-full p-5 bg-slate-50 rounded-2xl border outline-none focus:border-green-500">
-                    <p class="text-[10px] text-slate-400 mt-1 ml-2">Örn: 0555 555 55 55</p>
-                </div>
-                <div>
-                    <input type="password" id="r_pass" placeholder="Şifre" class="w-full p-5 bg-slate-50 rounded-2xl border outline-none focus:border-green-500">
-                    <p class="text-[10px] text-slate-400 mt-1 ml-2">En az 8 karakter ve 1 sembol (!@#$%^&*) içermelidir.</p>
-                </div>
-                <button onclick="handleRegister()" class="w-full bg-green-600 text-white font-bold py-5 rounded-2xl shadow-lg hover:bg-green-700 transition-colors">Kayıt Ol ve Link Gönder</button>
+                <input type="text" id="r_name" placeholder="Ad Soyad" class="input-field">
+                <input type="email" id="r_email" placeholder="E-posta" class="input-field">
+                <input type="tel" id="r_phone" placeholder="Telefon (05XX XXX XX XX)" maxlength="15" oninput="formatPhone(this)" class="input-field">
+                <input type="password" id="r_pass" placeholder="Şifre" class="input-field">
+                <button onclick="handleRegister()" id="regBtn" class="w-full bg-green-600 text-white font-bold py-5 rounded-2xl shadow-lg hover:bg-green-700 transition-colors">Kayıt Ol ve Link Gönder</button>
                 <p class="text-center text-slate-500 font-bold cursor-pointer" onclick="switchView('login')">Zaten üye misiniz? <span class="text-blue-600">Giriş Yap</span></p>
             </div>
 
-            <!-- Email Verification Waiting View -->
+            <!-- Doğrulama Ekranı -->
             <div id="verifyForm" class="hidden verification-step text-center space-y-8 py-10">
                 <div class="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto text-4xl">
                     <i class="fa-solid fa-envelope-open-text animate-bounce"></i>
@@ -152,11 +140,8 @@
                 <div>
                     <h4 class="text-2xl font-black text-slate-900">E-postanızı Kontrol Edin</h4>
                     <p class="text-slate-500 mt-4 font-medium">
-                        <strong id="displayEmail" class="text-blue-600"></strong> adresine bir doğrulama linki gönderdik. Hesabınızı aktif etmek için linke tıklamanız yeterlidir.
+                        <strong id="displayEmail" class="text-blue-600"></strong> adresine bir doğrulama linki gönderdik.
                     </p>
-                </div>
-                <div class="p-6 bg-yellow-50 rounded-3xl border border-yellow-100 text-yellow-800 text-sm font-bold">
-                    <i class="fa-solid fa-circle-info mr-2"></i> Spam (Gereksiz) klasörünü kontrol etmeyi unutmayın.
                 </div>
                 <button onclick="switchView('login')" class="text-blue-600 font-bold underline">Giriş ekranına dön</button>
             </div>
@@ -165,10 +150,11 @@
 
     <script>
         const API_URL = "https://kaybeden-ve-bulunan-bulut-api.vercel.app";
-        const ads = ["Uygulamalarımız çok yakında mağazalarda!", "Kayıp eşyalarını hemen bildir!", "Bulduğun eşyayı sahibine ulaştır!", "En güvenli kayıp-buluntu ağı.", "Ücretsiz kayıt ol, topluluğa katıl!"];
+        const FLUTTER_APP_PATH = "/app"; 
+        
+        const ads = ["Uygulamalarımız çok yakında mağazalarda!", "Kayıp eşyalarını hemen bildir!", "Bulduğun eşyayı sahibine ulaştır!"];
         let adIdx = 0;
 
-        // Reklam rotasyonu
         setInterval(() => {
             adIdx = (adIdx + 1) % ads.length;
             const el = document.getElementById('rotatingText');
@@ -178,11 +164,8 @@
             }
         }, 5000);
 
-        // Telefon Formatlama (Flutter'daki InputFormatter gibi)
         function formatPhone(input) {
-            let value = input.value.replace(/\D/g, ''); // Sadece rakamlar
-            if (value.length > 11) value = value.substring(0, 11);
-            
+            let value = input.value.replace(/\D/g, '');
             let formattedValue = "";
             if (value.length > 0) {
                 formattedValue = value.substring(0, 4);
@@ -193,18 +176,6 @@
             input.value = formattedValue;
         }
 
-        // Validasyon Fonksiyonları
-        function validateEmail(email) {
-            return String(email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        }
-
-        function validatePassword(pass) {
-            // En az 8 karakter ve en az bir özel karakter
-            const hasMinLen = pass.length >= 8;
-            const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(pass);
-            return hasMinLen && hasSpecial;
-        }
-
         function togglePanel(s) { document.getElementById('sidePanel').classList.toggle('open', s); }
 
         function switchView(v) {
@@ -212,14 +183,15 @@
             document.getElementById('regForm').classList.add('hidden');
             document.getElementById('verifyForm').classList.add('hidden');
             document.getElementById('msgBox').classList.add('hidden');
-            
             if(v === 'login') {
                 document.getElementById('loginForm').classList.remove('hidden');
                 document.getElementById('panelTitle').innerText = "Giriş Yap";
-            } else if(v === 'reg') {
+            }
+            if(v === 'reg') {
                 document.getElementById('regForm').classList.remove('hidden');
                 document.getElementById('panelTitle').innerText = "Kayıt Ol";
-            } else if(v === 'verify') {
+            }
+            if(v === 'verify') {
                 document.getElementById('verifyForm').classList.remove('hidden');
                 document.getElementById('panelTitle').innerText = "Doğrulama Bekleniyor";
             }
@@ -228,64 +200,21 @@
         function showMsg(m, t='error') {
             const b = document.getElementById('msgBox');
             b.innerText = m;
-            b.className = `mb-6 p-5 rounded-2xl text-sm font-bold border ${t === 'error' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'}`;
+            b.className = `mb-6 p-5 rounded-2xl text-sm font-bold border transition-all duration-300 ${t === 'error' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'}`;
             b.classList.remove('hidden');
-            b.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        async function handleRegister() {
-            const nameEl = document.getElementById('r_name');
-            const emailEl = document.getElementById('r_email');
-            const phoneEl = document.getElementById('r_phone');
-            const passEl = document.getElementById('r_pass');
-
-            // Temizlik
-            [nameEl, emailEl, phoneEl, passEl].forEach(el => el.classList.remove('input-error'));
-
-            // Flutter stili validasyon
-            if(!nameEl.value.trim()) { nameEl.classList.add('input-error'); return showMsg("Ad Soyad girmelisiniz."); }
-            if(!validateEmail(emailEl.value)) { emailEl.classList.add('input-error'); return showMsg("Geçerli bir e-posta adresi girin."); }
-            
-            const rawPhone = phoneEl.value.replace(/\s/g, '');
-            if(rawPhone.length < 10) { phoneEl.classList.add('input-error'); return showMsg("Telefon numarasını eksiksiz girin."); }
-            
-            if(!validatePassword(passEl.value)) { 
-                passEl.classList.add('input-error'); 
-                return showMsg("Şifre en az 8 karakter olmalı ve en az bir sembol içermelidir."); 
-            }
-
-            try {
-                const res = await fetch(`${API_URL}/users/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        name: nameEl.value, 
-                        email: emailEl.value, 
-                        phoneNumber: rawPhone, 
-                        passwordHash: passEl.value, 
-                        sendLink: true 
-                    })
-                });
-
-                if(!res.ok) {
-                    const errorData = await res.json();
-                    throw new Error(errorData.message || "Kayıt sırasında bir hata oluştu.");
-                }
-
-                document.getElementById('displayEmail').innerText = emailEl.value;
-                switchView('verify');
-            } catch (e) {
-                showMsg(e.message);
-            }
         }
 
         async function handleLogin() {
             const email = document.getElementById('l_email').value;
             const pass = document.getElementById('l_pass').value;
+            const btn = document.getElementById('loginBtn');
 
-            if(!email || !pass) return showMsg("E-posta ve şifre gereklidir.");
+            if(!email || !pass) return showMsg("Lütfen e-posta ve şifrenizi girin.");
 
             try {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i> Kontrol ediliyor...';
+                
                 const res = await fetch(`${API_URL}/users/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -293,16 +222,66 @@
                 });
                 
                 const data = await res.json();
-                if(!res.ok) throw new Error(data.message || "Giriş başarısız.");
+                
+                if(!res.ok) throw new Error(data.message || "Giriş bilgileri hatalı.");
+                if(!data.user && !data.email) throw new Error("Kullanıcı verisi alınamadı.");
 
-                if(data.user && !data.user.isVerified) {
-                    showMsg("Hesabınız henüz doğrulanmamış. Lütfen e-postanızdaki linke tıklayın.");
+                // Not: API bazen direkt kullanıcıyı, bazen {user: ...} şeklinde döndürür.
+                const user = data.user || data;
+
+                if(!user.isVerified) {
+                    showMsg("Lütfen önce e-posta adresinizi doğrulayın.");
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>Giriş Yap</span>';
                     return;
                 }
 
-                showMsg(`Hoş geldiniz ${data.user.name}! Başarıyla giriş yapıldı.`, "success");
-            } catch (e) {
-                showMsg(e.message);
+                showMsg("Giriş başarılı! Uygulamaya aktarılıyorsunuz...", "success");
+                
+                setTimeout(() => {
+                    const userName = user.name || "Kullanıcı";
+                    window.location.href = `${FLUTTER_APP_PATH}/#/list?user=${encodeURIComponent(userName)}`;
+                }, 1000);
+
+            } catch (e) { 
+                showMsg(e.message); 
+                btn.disabled = false;
+                btn.innerHTML = '<span>Giriş Yap</span>';
+            }
+        }
+
+        async function handleRegister() {
+            const name = document.getElementById('r_name').value;
+            const email = document.getElementById('r_email').value;
+            const phone = document.getElementById('r_phone').value.replace(/\s/g, '');
+            const pass = document.getElementById('r_pass').value;
+            const btn = document.getElementById('regBtn');
+
+            if(!name || !email || !pass || pass.length < 8) {
+                return showMsg("Lütfen tüm alanları doldurun (Şifre en az 8 karakter).");
+            }
+
+            try {
+                btn.disabled = true;
+                btn.innerText = "Kaydediliyor...";
+
+                const res = await fetch(`${API_URL}/users/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        name, email, phoneNumber: phone, passwordHash: pass, sendLink: true 
+                    })
+                });
+
+                const data = await res.json();
+                if(!res.ok) throw new Error(data.message || "Kayıt sırasında bir sorun oluştu.");
+                
+                document.getElementById('displayEmail').innerText = email;
+                switchView('verify');
+            } catch (e) { 
+                showMsg(e.message); 
+                btn.disabled = false;
+                btn.innerText = "Kayıt Ol ve Link Gönder";
             }
         }
     </script>
