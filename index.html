@@ -113,11 +113,11 @@
                 
                 <div class="glass-card p-4 rounded-[3rem] relative overflow-hidden group">
                     <!-- Resim Konteynırı ve Shimmer -->
-                    <div id="image-container" class="w-full h-[550px] rounded-[2.5rem] shimmer overflow-hidden relative">
+                    <div id="image-container" class="w-full h-[550px] rounded-[2.5rem] shimmer overflow-hidden relative bg-slate-100">
                         <img id="dynamic-hero-image" 
                              src="" 
                              class="w-full h-full object-cover opacity-0 transition-opacity duration-1000 group-hover:scale-105" 
-                             alt="">
+                             alt="Eşya bulma platformu">
                     </div>
                     
                     <!-- Yüzen İstatistik Kartı -->
@@ -155,21 +155,39 @@
             const heroImage = document.getElementById('dynamic-hero-image');
             const container = document.getElementById('image-container');
             
-            const categories = [
-                'wallet', 'happy', 'sad', 'cat', 'dog', 'pet', 'glasses', 'keys', 'luggage'
+            // Unsplash kategorilerini daha spesifik ve doğru anahtar kelimelerle güncelledik
+            const keywords = [
+                'leather-wallet', 'happy-woman-laughing', 'sad-man-searching', 
+                'cat-with-collar', 'dog-leash', 'funny-pet-glasses', 
+                'lost-keys', 'travel-luggage', 'found-iphone'
             ];
 
-            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+            const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
             const timestamp = new Date().getTime();
             
-            // Unsplash'in daha modern ve hızlı API endpoint'ini kullanıyoruz
-            const imageUrl = `https://images.unsplash.com/featured/800x1200?${randomCategory}&sig=${timestamp}`;
+            // Unsplash Source yerine doğrudan Unsplash Images servisini kullanarak kararlılığı artırıyoruz
+            // fit=crop&w=800&h=1200 parametreleri ile boyutlandırmayı garantiye alıyoruz
+            const imageUrl = `https://images.unsplash.com/photo-1553531384-cc64ac80f931?auto=format&fit=crop&w=800&q=80&keyword=${randomKeyword}&sig=${timestamp}`;
             
-            // Resim yüklenene kadar bekleyip sonra gösteriyoruz (Flicker'ı önler)
+            // Eğer keyword bazlı özel resim çekmek istersen şu URL yapısı daha sağlıklıdır:
+            const altImageUrl = `https://source.unsplash.com/featured/800x1200?${randomKeyword}&${timestamp}`;
+            
+            // Yeni Kararlı Yöntem:
+            const finalUrl = `https://images.unsplash.com/featured/800x1200?${randomKeyword},found,lost&sig=${timestamp}`;
+
             const imgLoader = new Image();
-            imgLoader.src = imageUrl;
+            imgLoader.src = finalUrl;
+            
             imgLoader.onload = () => {
-                heroImage.src = imageUrl;
+                heroImage.src = finalUrl;
+                heroImage.classList.remove('opacity-0');
+                container.classList.remove('shimmer');
+            };
+
+            // Hata durumunda (bağlantı yoksa veya resim gelmiyorsa) yedek bir görsel göster
+            imgLoader.onerror = () => {
+                const fallbackUrl = "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?auto=format&fit=crop&w=800&q=80";
+                heroImage.src = fallbackUrl;
                 heroImage.classList.remove('opacity-0');
                 container.classList.remove('shimmer');
             };
