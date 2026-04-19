@@ -33,15 +33,6 @@
             justify-content: center;
         }
 
-        .blink-custom {
-            animation: pulse-blue 2s infinite;
-        }
-
-        @keyframes pulse-blue {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
         .floating-btn {
             position: fixed;
             right: 0;
@@ -58,13 +49,17 @@
             box-shadow: -10px 0 30px rgba(37, 99, 235, 0.25);
         }
 
-        /* Doğrulama Ekranı Animasyonu */
         .verification-step {
             animation: slideIn 0.4s ease-out;
         }
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        .input-error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
         }
     </style>
 </head>
@@ -96,14 +91,14 @@
                 </h2>
                 <div id="adContainer" class="bg-white p-4 pr-10 rounded-3xl shadow-xl border border-blue-50 inline-flex items-center gap-4">
                     <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white">
-                        <i class="fa-solid fa-bell animate-swing"></i>
+                        <i class="fa-solid fa-bell animate-bounce"></i>
                     </div>
                     <span id="rotatingText" class="font-bold text-blue-800 transition-opacity duration-500">Uygulamalarımız çok yakında mağazalarda!</span>
                 </div>
             </div>
             <div class="lg:w-1/2">
                 <div class="relative rounded-[5rem] overflow-hidden shadow-2xl border-[20px] border-white">
-                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" class="w-full h-[500px] object-cover">
+                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1000&q=80" class="w-full h-[500px] object-cover" alt="Community">
                 </div>
             </div>
         </main>
@@ -119,23 +114,33 @@
         </div>
 
         <div class="flex-1 overflow-y-auto p-10">
-            <div id="msgBox" class="hidden mb-6 p-5 rounded-2xl text-sm font-bold border"></div>
+            <div id="msgBox" class="hidden mb-6 p-5 rounded-2xl text-sm font-bold border transition-all duration-300"></div>
 
             <!-- Login Form -->
             <div id="loginForm" class="space-y-6">
-                <input type="email" id="l_email" placeholder="E-posta" class="w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none">
-                <input type="password" id="l_pass" placeholder="Şifre" class="w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none">
-                <button onclick="handleLogin()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-lg">Giriş Yap</button>
+                <input type="email" id="l_email" placeholder="E-posta" class="w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none focus:border-blue-500 transition-all">
+                <input type="password" id="l_pass" placeholder="Şifre" class="w-full p-5 bg-slate-50 rounded-2xl border border-slate-100 outline-none focus:border-blue-500 transition-all">
+                <button onclick="handleLogin()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl shadow-lg hover:bg-blue-700 transition-colors">Giriş Yap</button>
                 <p class="text-center text-slate-500 font-bold cursor-pointer" onclick="switchView('reg')">Hesabınız yok mu? <span class="text-blue-600">Kayıt Ol</span></p>
             </div>
 
             <!-- Register Form -->
             <div id="regForm" class="hidden space-y-4">
-                <input type="text" id="r_name" placeholder="Ad Soyad" class="w-full p-5 bg-slate-50 rounded-2xl border">
-                <input type="email" id="r_email" placeholder="E-posta" class="w-full p-5 bg-slate-50 rounded-2xl border">
-                <input type="tel" id="r_phone" placeholder="Telefon (05XX)" class="w-full p-5 bg-slate-50 rounded-2xl border">
-                <input type="password" id="r_pass" placeholder="Şifre Oluştur" class="w-full p-5 bg-slate-50 rounded-2xl border">
-                <button onclick="handleRegister()" class="w-full bg-green-600 text-white font-bold py-5 rounded-2xl shadow-lg">Kayıt Ol ve Link Gönder</button>
+                <div>
+                    <input type="text" id="r_name" placeholder="Ad Soyad" class="w-full p-5 bg-slate-50 rounded-2xl border outline-none focus:border-green-500">
+                </div>
+                <div>
+                    <input type="email" id="r_email" placeholder="E-posta" class="w-full p-5 bg-slate-50 rounded-2xl border outline-none focus:border-green-500">
+                </div>
+                <div>
+                    <input type="tel" id="r_phone" placeholder="Telefon (05XX XXX XX XX)" maxlength="15" oninput="formatPhone(this)" class="w-full p-5 bg-slate-50 rounded-2xl border outline-none focus:border-green-500">
+                    <p class="text-[10px] text-slate-400 mt-1 ml-2">Örn: 0555 555 55 55</p>
+                </div>
+                <div>
+                    <input type="password" id="r_pass" placeholder="Şifre" class="w-full p-5 bg-slate-50 rounded-2xl border outline-none focus:border-green-500">
+                    <p class="text-[10px] text-slate-400 mt-1 ml-2">En az 8 karakter ve 1 sembol (!@#$%^&*) içermelidir.</p>
+                </div>
+                <button onclick="handleRegister()" class="w-full bg-green-600 text-white font-bold py-5 rounded-2xl shadow-lg hover:bg-green-700 transition-colors">Kayıt Ol ve Link Gönder</button>
                 <p class="text-center text-slate-500 font-bold cursor-pointer" onclick="switchView('login')">Zaten üye misiniz? <span class="text-blue-600">Giriş Yap</span></p>
             </div>
 
@@ -163,12 +168,42 @@
         const ads = ["Uygulamalarımız çok yakında mağazalarda!", "Kayıp eşyalarını hemen bildir!", "Bulduğun eşyayı sahibine ulaştır!", "En güvenli kayıp-buluntu ağı.", "Ücretsiz kayıt ol, topluluğa katıl!"];
         let adIdx = 0;
 
+        // Reklam rotasyonu
         setInterval(() => {
             adIdx = (adIdx + 1) % ads.length;
             const el = document.getElementById('rotatingText');
-            el.style.opacity = 0;
-            setTimeout(() => { el.innerText = ads[adIdx]; el.style.opacity = 1; }, 500);
+            if(el) {
+                el.style.opacity = 0;
+                setTimeout(() => { el.innerText = ads[adIdx]; el.style.opacity = 1; }, 500);
+            }
         }, 5000);
+
+        // Telefon Formatlama (Flutter'daki InputFormatter gibi)
+        function formatPhone(input) {
+            let value = input.value.replace(/\D/g, ''); // Sadece rakamlar
+            if (value.length > 11) value = value.substring(0, 11);
+            
+            let formattedValue = "";
+            if (value.length > 0) {
+                formattedValue = value.substring(0, 4);
+                if (value.length > 4) formattedValue += " " + value.substring(4, 7);
+                if (value.length > 7) formattedValue += " " + value.substring(7, 9);
+                if (value.length > 9) formattedValue += " " + value.substring(9, 11);
+            }
+            input.value = formattedValue;
+        }
+
+        // Validasyon Fonksiyonları
+        function validateEmail(email) {
+            return String(email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        }
+
+        function validatePassword(pass) {
+            // En az 8 karakter ve en az bir özel karakter
+            const hasMinLen = pass.length >= 8;
+            const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(pass);
+            return hasMinLen && hasSpecial;
+        }
 
         function togglePanel(s) { document.getElementById('sidePanel').classList.toggle('open', s); }
 
@@ -176,6 +211,7 @@
             document.getElementById('loginForm').classList.add('hidden');
             document.getElementById('regForm').classList.add('hidden');
             document.getElementById('verifyForm').classList.add('hidden');
+            document.getElementById('msgBox').classList.add('hidden');
             
             if(v === 'login') {
                 document.getElementById('loginForm').classList.remove('hidden');
@@ -194,22 +230,41 @@
             b.innerText = m;
             b.className = `mb-6 p-5 rounded-2xl text-sm font-bold border ${t === 'error' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'}`;
             b.classList.remove('hidden');
+            b.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         async function handleRegister() {
-            const name = document.getElementById('r_name').value;
-            const email = document.getElementById('r_email').value;
-            const phone = document.getElementById('r_phone').value;
-            const pass = document.getElementById('r_pass').value;
+            const nameEl = document.getElementById('r_name');
+            const emailEl = document.getElementById('r_email');
+            const phoneEl = document.getElementById('r_phone');
+            const passEl = document.getElementById('r_pass');
 
-            if(!name || !email || !pass) return showMsg("Lütfen zorunlu alanları doldurun.");
+            // Temizlik
+            [nameEl, emailEl, phoneEl, passEl].forEach(el => el.classList.remove('input-error'));
+
+            // Flutter stili validasyon
+            if(!nameEl.value.trim()) { nameEl.classList.add('input-error'); return showMsg("Ad Soyad girmelisiniz."); }
+            if(!validateEmail(emailEl.value)) { emailEl.classList.add('input-error'); return showMsg("Geçerli bir e-posta adresi girin."); }
+            
+            const rawPhone = phoneEl.value.replace(/\s/g, '');
+            if(rawPhone.length < 10) { phoneEl.classList.add('input-error'); return showMsg("Telefon numarasını eksiksiz girin."); }
+            
+            if(!validatePassword(passEl.value)) { 
+                passEl.classList.add('input-error'); 
+                return showMsg("Şifre en az 8 karakter olmalı ve en az bir sembol içermelidir."); 
+            }
 
             try {
-                // Not: Backend'de /users/register endpoint'ine 'sendVerificationEmail: true' parametresi eklenmiş olmalı
                 const res = await fetch(`${API_URL}/users/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, phoneNumber: phone, passwordHash: pass, sendLink: true })
+                    body: JSON.stringify({ 
+                        name: nameEl.value, 
+                        email: emailEl.value, 
+                        phoneNumber: rawPhone, 
+                        passwordHash: passEl.value, 
+                        sendLink: true 
+                    })
                 });
 
                 if(!res.ok) {
@@ -217,8 +272,7 @@
                     throw new Error(errorData.message || "Kayıt sırasında bir hata oluştu.");
                 }
 
-                // Başarılı kayıt sonrası doğrulama ekranına geçiş
-                document.getElementById('displayEmail').innerText = email;
+                document.getElementById('displayEmail').innerText = emailEl.value;
                 switchView('verify');
             } catch (e) {
                 showMsg(e.message);
@@ -228,6 +282,8 @@
         async function handleLogin() {
             const email = document.getElementById('l_email').value;
             const pass = document.getElementById('l_pass').value;
+
+            if(!email || !pass) return showMsg("E-posta ve şifre gereklidir.");
 
             try {
                 const res = await fetch(`${API_URL}/users/login`, {
@@ -239,13 +295,12 @@
                 const data = await res.json();
                 if(!res.ok) throw new Error(data.message || "Giriş başarısız.");
 
-                // Eğer kullanıcı doğrulanmamışsa uyarı ver
                 if(data.user && !data.user.isVerified) {
-                    showMsg("Hesabınız henüz doğrulanmamış. Lütfen mail kutunuzu kontrol edin.");
+                    showMsg("Hesabınız henüz doğrulanmamış. Lütfen e-postanızdaki linke tıklayın.");
                     return;
                 }
 
-                showMsg(`Hoş geldiniz ${data.user.name}!`, "success");
+                showMsg(`Hoş geldiniz ${data.user.name}! Başarıyla giriş yapıldı.`, "success");
             } catch (e) {
                 showMsg(e.message);
             }
