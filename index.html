@@ -29,8 +29,9 @@
             }
         }
         
+        /* Geçiş Efekti Ayarları */
         .image-fade {
-            transition: opacity 1.5s ease-in-out, transform 2.5s ease-out;
+            transition: opacity 1.2s ease-in-out, transform 2s ease-out;
         }
         
         .shimmer {
@@ -81,12 +82,12 @@
                 </div>
                 
                 <h2 id="dynamic-title" class="text-6xl md:text-7xl font-800 text-slate-900 leading-[1.1] tracking-tight min-h-[220px]">
-                    <span id="title-part-1">Kayıp eşyaları bulumanın</span> <br>
+                    <span id="title-part-1">Eşyalarınızı bulmanın</span> <br>
                     <span id="title-part-2" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">en kolay yolu .</span>
                 </h2>
                 
                 <p class="text-lg text-slate-500 leading-relaxed max-w-lg">
-                    Türkiye’de kayıp eşyaları sahipleriyle yeniden buluşturan platform. Güvenli, hızlı ve tamamen ücretsiz.
+                    Türkiye’de kaybolan eşyaları sahipleriyle yeniden buluşturan platform. Güvenli, hızlı ve tamamen ücretsiz.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -101,8 +102,8 @@
                 <div class="absolute -top-10 -right-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
                 
                 <div class="glass-card p-4 rounded-[3.5rem] relative overflow-hidden">
-                    <div id="image-container" class="w-full h-[600px] rounded-[2.8rem] shimmer overflow-hidden relative bg-slate-200">
-                        <!-- Tek bir resim ile başlayıp JS ile yöneteceğiz -->
+                    <div id="image-container" class="w-full h-[600px] rounded-[2.8rem] overflow-hidden relative bg-slate-200">
+                        <!-- Sabitlenmiş Görsel Katmanı -->
                         <img id="main-hero-img" class="image-fade absolute inset-0 w-full h-full object-cover opacity-100 scale-100" src="" alt="Mutlu İnsanlar">
                     </div>
                     
@@ -125,13 +126,12 @@
     <script>
         const FLUTTER_APP_PATH = "/app";
         
-        const keywords = [
-            'happy-friends-lifestyle',
-            'smiling-people-socializing',
-            'happy-diverse-community',
-            'cheerful-adult-group',
-            'successful-young-adults',
-            'people-laughing-city'
+        // BURASI ÖNEMLİ: Kendi resimlerini buraya ekleyebilirsin.
+        // Web'den çekmek istemiyorsan, kendi klasöründeki yolları yaz (Örn: 'img/mutlu_insanlar.jpg')
+        const myStaticImages = [
+            'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80', // Mutlu Arkadaşlar
+            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80', // Mutlu Kadın/Öğrenci Grubu
+            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80'  // Mutlu Erkek/Profesyonel
         ];
 
         const titleOptions = [
@@ -139,39 +139,28 @@
             { p1: "Kaybettin veya Buldun", p2: "Sisteme Yükle ." }
         ];
 
+        let imgIndex = 0;
         let titleIndex = 0;
+        
         const heroImg = document.getElementById('main-hero-img');
-        const container = document.getElementById('image-container');
         const title1 = document.getElementById('title-part-1');
         const title2 = document.getElementById('title-part-2');
 
-        function getNewImageUrl() {
-            const keyword = keywords[Math.floor(Math.random() * keywords.length)];
-            const rand = Math.random().toString(36).substring(7);
-            // Filtreleri URL içine gömüyoruz
-            return `https://source.unsplash.com/featured/800x1200?${keyword},-child,-kid,-children,-text,-advertisement&sig=${rand}`;
-        }
-
-        function updateImage() {
-            const nextUrl = getNewImageUrl();
-            const tempImg = new Image();
+        function rotateContent() {
+            // Görsel Değişimi
+            imgIndex = (imgIndex + 1) % myStaticImages.length;
             
-            tempImg.onload = function() {
-                // Resmi yumuşak bir geçişle değiştir
-                heroImg.style.opacity = "0";
-                heroImg.style.transform = "scale(1.1)";
-                
-                setTimeout(() => {
-                    heroImg.src = nextUrl;
-                    heroImg.style.opacity = "1";
-                    heroImg.style.transform = "scale(1)";
-                    container.classList.remove('shimmer');
-                }, 1500);
-            };
-            tempImg.src = nextUrl;
-        }
+            // Yumuşak kararma efekti
+            heroImg.style.opacity = "0";
+            heroImg.style.transform = "scale(1.05)";
+            
+            setTimeout(() => {
+                heroImg.src = myStaticImages[imgIndex];
+                heroImg.style.opacity = "1";
+                heroImg.style.transform = "scale(1)";
+            }, 1000);
 
-        function updateTitle() {
+            // Başlık Değişimi
             titleIndex = (titleIndex + 1) % titleOptions.length;
             const newTitle = titleOptions[titleIndex];
             
@@ -183,12 +172,7 @@
                 title2.innerText = newTitle.p2;
                 title1.style.opacity = "1";
                 title2.style.opacity = "1";
-            }, 500);
-        }
-
-        function rotateContent() {
-            updateImage();
-            updateTitle();
+            }, 600);
         }
 
         function goToApp() {
@@ -198,14 +182,14 @@
 
         // Başlat
         window.onload = () => {
-            const initialUrl = getNewImageUrl();
-            heroImg.src = initialUrl;
+            // İlk resmi ayarla
+            heroImg.src = myStaticImages[0];
             
-            // Her 7 saniyede bir değişim
-            setInterval(rotateContent, 7000);
+            // Her 6 saniyede bir döngü çalışsın
+            setInterval(rotateContent, 6000);
         };
 
-        // Görsel efektleri desteklemek için mouse takibi
+        // Arka plan interaktif gradient efekti
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX / window.innerWidth * 100;
             const y = e.clientY / window.innerHeight * 100;
