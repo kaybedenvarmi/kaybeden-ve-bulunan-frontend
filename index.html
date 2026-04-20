@@ -29,7 +29,6 @@
             }
         }
         
-        /* Geçiş Efekti Ayarları */
         .image-fade {
             transition: opacity 1.2s ease-in-out, transform 2s ease-out;
         }
@@ -52,22 +51,26 @@
 
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <header class="py-10 flex justify-between items-center">
+            <!-- Sol Kısım: İkon ve Başlık -->
             <div class="flex items-center gap-4 group cursor-pointer" onclick="location.reload()">
                 <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-100 group-hover:rotate-6 transition-transform">
                     <i class="fa-solid fa-magnifying-glass-location text-white text-2xl"></i>
                 </div>
                 <div>
                     <h1 class="text-2xl font-800 tracking-tight text-slate-900 leading-none">Kaybeden<span class="text-blue-600">ve</span>Bulan</h1>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1"> İyi insanları buluşturma platformu</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1">İyi insanları buluşturma platformu</p>
                 </div>
             </div>
 
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-                <a href="#" class="hover:text-blue-600 transition-colors">Nasıl Çalışır?</a>
-                <a href="#" class="hover:text-blue-600 transition-colors">İstatistikler</a>
-                <button onclick="goToApp()" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl hover:bg-slate-800 transition-all">
-                    Uygulamayı Aç
-                </button>
+            <!-- Sağ Kısım: Navigasyon -->
+            <div class="flex items-center gap-6">
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                    <a href="#" class="hover:text-blue-600 transition-colors">Nasıl Çalışır?</a>
+                    <a href="#" class="hover:text-blue-600 transition-colors">İstatistikler</a>
+                    <button onclick="goToApp()" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl hover:bg-slate-800 transition-all">
+                        Uygulamayı Aç
+                    </button>
+                </nav>
             </div>
         </header>
 
@@ -103,7 +106,6 @@
                 
                 <div class="glass-card p-4 rounded-[3.5rem] relative overflow-hidden">
                     <div id="image-container" class="w-full h-[600px] rounded-[2.8rem] overflow-hidden relative bg-slate-200">
-                        <!-- Sabitlenmiş Görsel Katmanı -->
                         <img id="main-hero-img" class="image-fade absolute inset-0 w-full h-full object-cover opacity-100 scale-100" src="" alt="Mutlu İnsanlar">
                     </div>
                     
@@ -124,14 +126,12 @@
     </div>
 
     <script>
-        const FLUTTER_APP_PATH = "/app";
+        const FLUTTER_APP_PATH = "/app"; 
         
-        // BURASI ÖNEMLİ: Kendi resimlerini buraya ekleyebilirsin.
-        // Web'den çekmek istemiyorsan, kendi klasöründeki yolları yaz (Örn: 'img/mutlu_insanlar.jpg')
         const myStaticImages = [
-            'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80', // Mutlu Arkadaşlar
-            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80', // Mutlu Kadın/Öğrenci Grubu
-            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80'  // Mutlu Erkek/Profesyonel
+            'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80'
         ];
 
         const titleOptions = [
@@ -147,10 +147,7 @@
         const title2 = document.getElementById('title-part-2');
 
         function rotateContent() {
-            // Görsel Değişimi
             imgIndex = (imgIndex + 1) % myStaticImages.length;
-            
-            // Yumuşak kararma efekti
             heroImg.style.opacity = "0";
             heroImg.style.transform = "scale(1.05)";
             
@@ -160,7 +157,6 @@
                 heroImg.style.transform = "scale(1)";
             }, 1000);
 
-            // Başlık Değişimi
             titleIndex = (titleIndex + 1) % titleOptions.length;
             const newTitle = titleOptions[titleIndex];
             
@@ -180,16 +176,11 @@
             setTimeout(() => { window.location.href = FLUTTER_APP_PATH; }, 300);
         }
 
-        // Başlat
         window.onload = () => {
-            // İlk resmi ayarla
             heroImg.src = myStaticImages[0];
-            
-            // Her 6 saniyede bir döngü çalışsın
             setInterval(rotateContent, 6000);
         };
 
-        // Arka plan interaktif gradient efekti
         document.addEventListener('mousemove', (e) => {
             const x = e.clientX / window.innerWidth * 100;
             const y = e.clientY / window.innerHeight * 100;
