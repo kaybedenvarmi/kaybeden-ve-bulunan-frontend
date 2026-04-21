@@ -88861,8 +88861,8 @@ if(!h)q.push(B.RR)
 n=h?200:120
 m=A.cg(8)
 l=A.b([B.I,A.an(B.I.C()>>>24&255,B.I.C()>>>16&255,B.I.C()>>>8&255,255)],t.t_)
-k=h?48:24
-q.push(A.e9(i,A.eV(A.bA("kaybolanvebulunan.com",i,i,i,A.ei(i,i,B.j,i,i,i,i,i,i,i,i,k,i,i,B.hn,i,i,!0,i,h?-2:-1,i,i,i,i,i,i),i,i),i,i),B.t,i,i,new A.cm(B.I,i,i,m,i,new A.u_(B.ds,B.By,B.dh,l,i,i),B.a6),i,n,i,i,i,i,1/0))
+k=h?48:32
+q.push(A.e9(i,A.eV(A.bA("Kaybeden&Bulunan",i,i,i,A.ei(i,i,B.j,i,i,i,i,i,i,i,i,k,i,i,B.hn,i,i,!0,i,h?-2:-1,i,i,i,i,i,i),i,i),i,i),B.t,i,i,new A.cm(B.I,i,i,m,i,new A.u_(B.ds,B.By,B.dh,l,i,i),B.a6),i,n,i,i,i,i,1/0))
 q.push(B.fp)
 q.push(j.a5K())
 q.push(B.fp)
@@ -88872,8 +88872,8 @@ if(f.length===0)q.push(B.Eh)
 else q.push(j.a5U(f,h))
 q=new A.Bg(A.P3(A.e7(q,B.aU,B.R,B.Y),new A.am(o,o,o,o)),j.ga8I(),i)}p.push(A.kH(q,1))
 return A.qs(g,B.j,A.eL(p,B.aU,B.R,B.Y),s,r)},
-a61(a,b){var s,r,q,p=null,o=b?70:60,n=b?p:new A.dR(new A.apQ(),p),m=b?"kaybolanvebulunan.com":"KVB.com"
-m=A.bA(m,p,p,p,A.ei(p,p,B.j,p,p,p,p,p,p,p,p,b?20:16,p,p,B.hn,p,p,!0,p,p,p,p,p,p,p,p),p,p)
+a61(a,b){var s,r,q,p=null,o=b?70:60,n=b?p:new A.dR(new A.apQ(),p),m=b?"Kaybeden&Bulunan":"K&B"
+m=A.bA(m,p,p,p,A.ei(p,p,B.j,p,p,p,p,p,p,p,p,b?20:18,p,p,B.hn,p,p,!0,p,p,p,p,p,p,p,p),p,p)
 s=A.dX(p,p,b?30:12)
 r=A.cg(4)
 q=t.p
