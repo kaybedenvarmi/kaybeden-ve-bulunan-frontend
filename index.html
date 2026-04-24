@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaybeden ve Bulan | Eşya Takip Sistemi</title>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>Kaybeden ve Bulan | Ana Sayfa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,182 +12,157 @@
         @layer base {
             body {
                 font-family: 'Inter', sans-serif;
-                @apply bg-[#FDFDFD] text-[#1E293B] overflow-x-hidden;
+                @apply bg-[#FDFDFD] text-[#1E293B] scroll-smooth;
             }
         }
         @layer components {
-            .glass-card {
-                @apply bg-white/80 backdrop-blur-md border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
-            }
-            .hero-gradient {
-                background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
+            .section-container {
+                @apply max-w-7xl mx-auto px-6 lg:px-8 py-20;
             }
             .btn-primary {
                 @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-2xl transition-all shadow-lg shadow-blue-200 active:scale-95 flex items-center justify-center gap-3;
             }
-            .stat-badge {
-                @apply px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2;
+            .step-card {
+                @apply bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all cursor-pointer;
             }
         }
-        
-        .image-fade {
-            transition: opacity 1.2s ease-in-out, transform 2s ease-out;
+
+        /* Telefon Çerçevesi */
+        .phone-frame {
+            width: 280px;
+            height: 560px;
+            background: #000;
+            border-radius: 40px;
+            border: 10px solid #1a1a1a;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
         }
     </style>
 </head>
-<body class="antialiased selection:bg-blue-100">
+<body class="antialiased">
 
-    <div class="fixed inset-0 hero-gradient -z-10"></div>
-
+    <!-- Header -->
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <header class="py-10 flex justify-between items-center">
-            <!-- Sol Kısım: GitHub'dan Çekilen Logo (Header'da) -->
-            <div class="flex items-center gap-4 group cursor-pointer" onclick="location.reload()">
-                <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-xl shadow-blue-100 group-hover:rotate-6 transition-transform overflow-hidden border border-slate-100 p-1">
-                    <img src="https://raw.githubusercontent.com/kaybedenvarmi/kaybeden-ve-bulunan-frontend/main/KVBLogo_SON.png" 
-                         alt="KVB Logo" 
-                         class="w-full h-full object-contain"
-                         onerror="this.src='https://raw.githubusercontent.com/kaybedenvarmi/kaybeden-ve-bulunan-frontend/master/KVBLogo_SON.png'">
+            <!-- Logo Alanı - Hata riskini önlemek için href='/' kullanımı tercih edildi -->
+            <div class="flex items-center gap-4 group cursor-pointer" onclick="window.location.href='/'">
+                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg border border-slate-100 p-1">
+                    <img src="https://raw.githubusercontent.com/kaybedenvarmi/kaybeden-ve-bulunan-frontend/main/KVBLogo_SON.png" alt="KVB Logo" class="w-full h-full object-contain">
                 </div>
-                <div>
-                    <h1 class="text-2xl font-800 tracking-tight text-slate-900 leading-none">Kaybeden<span class="text-blue-600">ve</span>Bulan</h1>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-1">İyi insanları buluşturma platformu</p>
-                </div>
+                <h1 class="text-xl font-800 tracking-tight text-slate-900">Kaybeden<span class="text-blue-600">ve</span>Bulan</h1>
             </div>
 
-            <!-- Sağ Kısım: Navigasyon -->
-            <div class="flex items-center gap-6">
-                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-                    <a href="#" class="hover:text-blue-600 transition-colors">Nasıl Çalışır?</a>
-                    <a href="#" class="hover:text-blue-600 transition-colors">İstatistikler</a>
-                    <button onclick="goToApp()" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl hover:bg-slate-800 transition-all text-xs font-bold">
-                        UYGULAMAYI AÇ
-                    </button>
-                </nav>
-            </div>
+            <nav class="hidden md:flex items-center gap-8">
+                <!-- Uygulama yönlendirmesi -->
+                <button onclick="window.location.href='/app/'" class="bg-slate-900 text-white px-6 py-2 rounded-xl hover:bg-slate-800 transition-all text-xs font-bold">
+                    UYGULAMAYI AÇ
+                </button>
+            </nav>
         </header>
 
-        <main class="grid lg:grid-cols-2 gap-16 items-center py-12 md:py-24">
-            <div class="space-y-10">
-                <div class="stat-badge">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                    </span>
-                    Şu an 1,240+ aktif ilan yayında
+        <!-- Hero Section -->
+        <main class="grid lg:grid-cols-2 gap-16 items-center py-16">
+            <div class="space-y-8 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-heart animate-pulse"></i> Yardımlaşma Platformu
                 </div>
-                
-                <h2 id="dynamic-title" class="text-6xl md:text-7xl font-800 text-slate-900 leading-[1.1] tracking-tight min-h-[220px]">
-                    <span id="title-part-1">Eşyalarınızı bulmanın</span> <br>
-                    <span id="title-part-2" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">en kolay yolu .</span>
+                <h2 class="text-5xl md:text-7xl font-800 text-slate-900 leading-tight">
+                    İyi İnsanları <br>
+                    <span class="text-blue-600">Buluşturuyoruz .</span>
                 </h2>
-                
-                <p class="text-lg text-slate-500 leading-relaxed max-w-lg">
-                    Türkiye’de kaybolan eşyaları sahipleriyle yeniden buluşturan platform. Güvenli, hızlı ve tamamen ücretsiz.
+                <p class="text-lg text-slate-500 max-w-lg mx-auto lg:mx-0">
+                    Kayıp eşyaların sahiplerine kavuştuğu, güvenin ve yardımlaşmanın ön planda olduğu topluluğa hoş geldiniz.
                 </p>
-
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <button onclick="goToApp()" class="btn-primary">
-                        <i class="fa-solid fa-plus-circle"></i>
-                        İLAN VER VEYA ARA
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+                    <button onclick="window.location.href='/app/'" class="btn-primary">
+                        İLANLARI GÖRÜNTÜLE
                     </button>
+                    <a href="#nasil-calisir" class="px-8 py-4 bg-white border border-slate-200 text-slate-600 font-semibold rounded-2xl hover:bg-slate-50 transition-all flex items-center gap-2 text-sm">
+                        Keşfet <i class="fa-solid fa-arrow-down text-blue-600"></i>
+                    </a>
                 </div>
             </div>
-
-            <div class="relative">
+            
+            <div class="relative hidden lg:block">
                 <div class="absolute -top-10 -right-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
-                
-                <div class="glass-card p-4 rounded-[3.5rem] relative overflow-hidden">
-                    <div id="image-container" class="w-full h-[600px] rounded-[2.8rem] overflow-hidden relative bg-slate-200">
-                        <img id="main-hero-img" class="image-fade absolute inset-0 w-full h-full object-cover opacity-100 scale-100" src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80" alt="Yardımlaşma">
-                    </div>
-                    
-                    <div class="absolute bottom-10 left-10 right-10 glass-card p-6 rounded-2xl flex justify-around">
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-slate-900">850+</div>
-                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Bulunan Eşya</div>
-                        </div>
-                        <div class="w-px h-10 bg-slate-200"></div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-slate-900">%92</div>
-                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Başarı Oranı</div>
-                        </div>
-                    </div>
-                </div>
+                <img class="relative w-full h-[550px] object-cover rounded-[3rem] shadow-2xl border-4 border-white z-10" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Platform Tanıtım">
             </div>
         </main>
     </div>
 
-    <!-- En Alt Kısım: Ziyaretçi Sayacı -->
-    <footer class="py-12 flex flex-col items-center justify-center border-t border-slate-100 bg-white/50 mt-20">
-        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Ziyaretçi Etkileşimi</p>
-        <div class="flex justify-center">
-            <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k"></script>
+    <!-- NASIL ÇALIŞIR BÖLÜMÜ -->
+    <section id="nasil-calisir" class="bg-slate-50/50 border-y border-slate-100">
+        <div class="section-container">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <h3 class="text-3xl md:text-4xl font-800 text-slate-900 mb-4">Her Şey Çok Kolay</h3>
+                <p class="text-slate-500">İyilik hareketine katılmak için sadece birkaç basit adımı takip etmeniz yeterli.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Video/Önizleme Alanı -->
+                <div class="flex justify-center order-2 lg:order-1">
+                    <div class="phone-frame relative">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#1a1a1a] rounded-b-2xl z-20"></div>
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                            <source src="https://raw.githubusercontent.com/kaybedenvarmi/kaybeden-ve-bulunan-frontend/main/Screen_Recording_20260424_225557_Gallery.mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-3/4 bg-white/90 backdrop-blur p-3 rounded-xl shadow-xl text-center z-20">
+                            <p class="text-[10px] font-bold text-blue-600 uppercase">Uygulama İçinden</p>
+                            <p class="text-[11px] text-slate-600 font-medium">Hızlı İlan Oluşturma Ekranı</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adımlar -->
+                <div class="space-y-6 order-1 lg:order-2">
+                    <div class="step-card group" onclick="window.location.href='/app/'">
+                        <div class="flex gap-6">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                1
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-900 mb-2">Hesabınızı Oluşturun</h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">Saniyeler içinde e-posta adresinizle giriş yapın ve topluluğun güvenilir bir parçası olun.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-card group" onclick="window.location.href='/app/'">
+                        <div class="flex gap-6">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                2
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-900 mb-2">İlan Türünü Belirleyin</h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">Kaybettiğiniz bir eşya mı var yoksa birinin eşyasını mı buldunuz? Doğru kategoriyi seçerek başlayın.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-card group border-blue-100 bg-blue-50/20" onclick="window.location.href='/app/'">
+                        <div class="flex gap-6">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-xl font-bold shrink-0">
+                                3
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-900 mb-2">Detayları Paylaşın</h4>
+                                <p class="text-sm text-slate-500 leading-relaxed">Fotoğraf ekleyin ve harita üzerinden tam konumu işaretleyin.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mt-8 text-slate-400 text-[10px] uppercase tracking-widest">© 2024 Kaybeden ve Bulan Platformu</div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-100 flex flex-col items-center">
+        <div class="mb-6 opacity-80 grayscale hover:grayscale-0 transition-all">
+            <script type="text/javascript" id="clstr_globe" src="https://clustrmaps.com/globe.js?d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k"></script>
+        </div>
+        <p class="text-[10px] text-slate-400 uppercase tracking-widest">© 2024 Kaybeden ve Bulan</p>
     </footer>
 
-    <script>
-        const FLUTTER_APP_PATH = "/app"; 
-        
-        const myStaticImages = [
-            'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80',
-            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80',
-            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80'
-        ];
-
-        const titleOptions = [
-            { p1: "Eşyalarınızı bulmanın", p2: "en kolay yolu ." },
-            { p1: "Kaybettin veya Buldun", p2: "Sisteme Yükle ." }
-        ];
-
-        let imgIndex = 0;
-        let titleIndex = 0;
-        
-        const heroImg = document.getElementById('main-hero-img');
-        const title1 = document.getElementById('title-part-1');
-        const title2 = document.getElementById('title-part-2');
-
-        function rotateContent() {
-            imgIndex = (imgIndex + 1) % myStaticImages.length;
-            heroImg.style.opacity = "0";
-            
-            setTimeout(() => {
-                heroImg.src = myStaticImages[imgIndex];
-                heroImg.style.opacity = "1";
-            }, 1000);
-
-            titleIndex = (titleIndex + 1) % titleOptions.length;
-            const newTitle = titleOptions[titleIndex];
-            
-            title1.style.opacity = "0";
-            title2.style.opacity = "0";
-            
-            setTimeout(() => {
-                title1.innerText = newTitle.p1;
-                title2.innerText = newTitle.p2;
-                title1.style.opacity = "1";
-                title2.style.opacity = "1";
-            }, 600);
-        }
-
-        function goToApp() {
-            document.body.style.opacity = "0.5";
-            setTimeout(() => { window.location.href = FLUTTER_APP_PATH; }, 300);
-        }
-
-        window.onload = () => {
-            setInterval(rotateContent, 6000);
-        };
-
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth * 100;
-            const y = e.clientY / window.innerHeight * 100;
-            const gradient = document.querySelector('.hero-gradient');
-            if(gradient) {
-                gradient.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(37, 99, 235, 0.08) 0%, transparent 60%)`;
-            }
-        });
-    </script>
 </body>
 </html>
