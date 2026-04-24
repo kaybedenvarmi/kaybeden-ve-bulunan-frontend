@@ -150,7 +150,7 @@
     <!-- Footer -->
     <footer class="py-16 bg-white flex flex-col items-center">
         <!-- Sosyal Medya Hesapları -->
-        <div class="flex gap-4 mb-10">
+        <div class="flex gap-4 mb-8">
             <a href="https://www.instagram.com/kaybedenvebulan/" target="_blank" class="social-icon" title="Instagram">
                 <i class="fa-brands fa-instagram"></i>
             </a>
@@ -165,15 +165,24 @@
             </a>
         </div>
 
-        <div class="w-full max-w-4xl px-6">
-            <div class="border-t border-slate-100 pt-10 flex flex-col md:flex-row justify-between items-center gap-8">
-                <div class="text-center md:text-left">
-                    <p class="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-bold">© 2024 Kaybeden ve Bulan</p>
-                    <p class="text-xs text-slate-300 mt-1">İyilik paylaştıkça çoğalır.</p>
+        <div class="w-full max-w-4xl px-6 text-center">
+            <div class="border-t border-slate-100 pt-10 flex flex-col items-center gap-8">
+                <div>
+                    <p class="text-[11px] text-slate-400 uppercase tracking-[0.2em] font-bold">© 2024 Kaybeden ve Bulan</p>
+                    <p class="text-sm text-slate-400 mt-2 font-medium">İyilik paylaştıkça çoğalır.</p>
                 </div>
                 
-                <!-- ClustrMaps -->
-                <div class="flex justify-center items-center overflow-hidden rounded-lg shadow-sm">
+                <!-- ClustrMaps Ziyaretçi Takipçisi -->
+                <div class="flex flex-col items-center gap-4">
+                    <a href='https://clustrmaps.com/site/1c9u5' title='Visit tracker' class="block transition-transform hover:scale-105 active:scale-95">
+                        <img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=a&t=n&d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k&co=c2d2dc' 
+                             alt="Visit Tracker" 
+                             class="rounded-xl shadow-md border border-slate-100 max-w-full h-auto" />
+                    </a>
+                </div>
+
+                <!-- ClustrMaps İnteraktif Harita Scripti -->
+                <div class="hidden">
                     <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=n&d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k&co=c2d2dc'></script>
                 </div>
             </div>
