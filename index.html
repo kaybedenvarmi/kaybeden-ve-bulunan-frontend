@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Kaybeden ve Bulan | Ana Sayfa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,9 +24,11 @@
             .step-card {
                 @apply bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all cursor-pointer;
             }
+            .social-icon {
+                @apply w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300;
+            }
         }
 
-        /* Telefon Çerçevesi */
         .phone-frame {
             width: 280px;
             height: 560px;
@@ -45,8 +46,7 @@
     <!-- Header -->
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <header class="py-10 flex justify-between items-center">
-            <!-- Logo Alanı - Hata riskini önlemek için href='/' kullanımı tercih edildi -->
-            <div class="flex items-center gap-4 group cursor-pointer" onclick="window.location.href='/'">
+            <div class="flex items-center gap-4 group cursor-pointer" onclick="window.location.href='/app/'">
                 <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg border border-slate-100 p-1">
                     <img src="https://raw.githubusercontent.com/kaybedenvarmi/kaybeden-ve-bulunan-frontend/main/KVBLogo_SON.png" alt="KVB Logo" class="w-full h-full object-contain">
                 </div>
@@ -54,7 +54,6 @@
             </div>
 
             <nav class="hidden md:flex items-center gap-8">
-                <!-- Uygulama yönlendirmesi -->
                 <button onclick="window.location.href='/app/'" class="bg-slate-900 text-white px-6 py-2 rounded-xl hover:bg-slate-800 transition-all text-xs font-bold">
                     UYGULAMAYI AÇ
                 </button>
@@ -86,12 +85,12 @@
             
             <div class="relative hidden lg:block">
                 <div class="absolute -top-10 -right-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
-                <img class="relative w-full h-[550px] object-cover rounded-[3rem] shadow-2xl border-4 border-white z-10" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Platform Tanıtım">
+                <img class="relative w-full h-[550px] object-cover rounded-[3rem] shadow-2xl border-4 border-white z-10" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Topluluk">
             </div>
         </main>
     </div>
 
-    <!-- NASIL ÇALIŞIR BÖLÜMÜ -->
+    <!-- Nasıl Çalışır -->
     <section id="nasil-calisir" class="bg-slate-50/50 border-y border-slate-100">
         <div class="section-container">
             <div class="text-center max-w-2xl mx-auto mb-20">
@@ -100,7 +99,6 @@
             </div>
 
             <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Video/Önizleme Alanı -->
                 <div class="flex justify-center order-2 lg:order-1">
                     <div class="phone-frame relative">
                         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#1a1a1a] rounded-b-2xl z-20"></div>
@@ -109,45 +107,38 @@
                         </video>
                         <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-3/4 bg-white/90 backdrop-blur p-3 rounded-xl shadow-xl text-center z-20">
                             <p class="text-[10px] font-bold text-blue-600 uppercase">Uygulama İçinden</p>
-                            <p class="text-[11px] text-slate-600 font-medium">Hızlı İlan Oluşturma Ekranı</p>
+                            <p class="text-[11px] text-slate-600 font-medium">Hızlı İlan Oluşturma</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Adımlar -->
                 <div class="space-y-6 order-1 lg:order-2">
                     <div class="step-card group" onclick="window.location.href='/app/'">
                         <div class="flex gap-6">
-                            <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                1
-                            </div>
+                            <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">1</div>
                             <div>
                                 <h4 class="text-lg font-bold text-slate-900 mb-2">Hesabınızı Oluşturun</h4>
-                                <p class="text-sm text-slate-500 leading-relaxed">Saniyeler içinde e-posta adresinizle giriş yapın ve topluluğun güvenilir bir parçası olun.</p>
+                                <p class="text-sm text-slate-500">Saniyeler içinde e-posta adresinizle giriş yapın.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="step-card group" onclick="window.location.href='/app/'">
                         <div class="flex gap-6">
-                            <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                2
-                            </div>
+                            <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">2</div>
                             <div>
                                 <h4 class="text-lg font-bold text-slate-900 mb-2">İlan Türünü Belirleyin</h4>
-                                <p class="text-sm text-slate-500 leading-relaxed">Kaybettiğiniz bir eşya mı var yoksa birinin eşyasını mı buldunuz? Doğru kategoriyi seçerek başlayın.</p>
+                                <p class="text-sm text-slate-500">Kaybeden mi yoksa bulan mı olduğunuzu seçin.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="step-card group border-blue-100 bg-blue-50/20" onclick="window.location.href='/app/'">
                         <div class="flex gap-6">
-                            <div class="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-xl font-bold shrink-0">
-                                3
-                            </div>
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-xl font-bold shrink-0">3</div>
                             <div>
                                 <h4 class="text-lg font-bold text-slate-900 mb-2">Detayları Paylaşın</h4>
-                                <p class="text-sm text-slate-500 leading-relaxed">Fotoğraf ekleyin ve harita üzerinden tam konumu işaretleyin.</p>
+                                <p class="text-sm text-slate-500">Fotoğraf ve konum ekleyerek ilanı tamamlayın.</p>
                             </div>
                         </div>
                     </div>
@@ -157,11 +148,36 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-slate-100 flex flex-col items-center">
-        <div class="mb-6 opacity-80 grayscale hover:grayscale-0 transition-all">
-            <script type="text/javascript" id="clstr_globe" src="https://clustrmaps.com/globe.js?d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k"></script>
+    <footer class="py-16 bg-white flex flex-col items-center">
+        <!-- Sosyal Medya Hesapları -->
+        <div class="flex gap-4 mb-10">
+            <a href="https://www.instagram.com/kaybedenvebulan/" target="_blank" class="social-icon" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://x.com/kaybedenvebulan" target="_blank" class="social-icon" title="X (Twitter)">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61563650550955" target="_blank" class="social-icon" title="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://t.me/kaybedenvebulan" target="_blank" class="social-icon" title="Telegram">
+                <i class="fa-brands fa-telegram"></i>
+            </a>
         </div>
-        <p class="text-[10px] text-slate-400 uppercase tracking-widest">© 2024 Kaybeden ve Bulan</p>
+
+        <div class="w-full max-w-4xl px-6">
+            <div class="border-t border-slate-100 pt-10 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="text-center md:text-left">
+                    <p class="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-bold">© 2024 Kaybeden ve Bulan</p>
+                    <p class="text-xs text-slate-300 mt-1">İyilik paylaştıkça çoğalır.</p>
+                </div>
+                
+                <!-- ClustrMaps -->
+                <div class="flex justify-center items-center overflow-hidden rounded-lg shadow-sm">
+                    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=n&d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k&co=c2d2dc'></script>
+                </div>
+            </div>
+        </div>
     </footer>
 
 </body>
