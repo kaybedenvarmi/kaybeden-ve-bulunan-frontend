@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
   <base href="/app/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Kaybeden ve Bulan Uygulama Sayfası">
-
-  <!-- Google AdSense Script -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6368006900269736" crossorigin="anonymous"></script>
+  <meta name="description" content="A new Flutter project.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -19,142 +29,10 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>Kaybeden ve Bulan - App</title>
+  <title>kaybolan_ve_bulunan_app</title>
   <link rel="manifest" href="manifest.json">
-
-  <style>
-    /* Üst Header Düzenlemeleri */
-    .custom-header {
-      background-color: #1e3a8a; /* Koyu Mavi */
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      color: white;
-      height: 60px;
-      position: relative;
-      z-index: 1000;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    /* Sol Logo Kısmı: Tıklanabilir ve Uygulama Ana Sayfasına (/app/) Gider */
-    .header-logo {
-      font-size: 22px;
-      font-weight: 800;
-      text-decoration: none;
-      color: white;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-    }
-
-    .header-logo:hover {
-      opacity: 0.8;
-      transform: translateY(-1px);
-    }
-
-    /* Orta Arama Alanı: Kısaltıldı ve Ortalandı */
-    .search-container {
-      flex-grow: 1;
-      display: flex;
-      justify-content: center; 
-      padding: 0 15px;
-    }
-
-    .search-bar {
-      width: 100%;
-      max-width: 400px; /* Genişlik kısıtlandı */
-      position: relative;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 9px 15px 9px 40px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-      outline: none;
-      font-size: 14px;
-      color: #333;
-      background-color: rgba(255, 255, 255, 0.95);
-      transition: box-shadow 0.2s;
-    }
-
-    .search-input:focus {
-      background-color: #ffffff;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    /* Sağ Buton */
-    .header-action {
-      flex-shrink: 0;
-    }
-
-    .btn-post {
-      background-color: #2563eb;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 13px;
-      transition: all 0.3s;
-      white-space: nowrap;
-      display: inline-block;
-    }
-
-    .btn-post:hover {
-      background-color: #1d4ed8;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    /* Flutter'ın yükleneceği alt konteyner */
-    #flutter_container {
-      width: 100%;
-      height: calc(100vh - 60px);
-    }
-  </style>
 </head>
 <body>
-  <!-- Özel Üst Menü (Header) -->
-  <div class="custom-header">
-    <!-- Sol Logo: /app/ dizinine yani uygulama ana sayfasına gider -->
-    <a href="/app/" class="header-logo">Kaybeden&Bulan</a>
-
-    <!-- Orta Arama Alanı: Ortalanmış ve Zarif -->
-    <div class="search-container">
-      <div class="search-bar">
-        <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" placeholder="İlanlarda ara...">
-      </div>
-    </div>
-
-    <!-- Sağ Aksiyon Butonu -->
-    <div class="header-action">
-      <a href="/app/#/create-post" class="btn-post">Ücretsiz İlan Ver</a>
-    </div>
-  </div>
-
-  <!-- Flutter buraya yüklenecek -->
-  <div id="flutter_container"></div>
-
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
