@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="/app/">
 
   <meta charset="UTF-8">
@@ -34,8 +21,109 @@
 
   <title>Kaybeden ve Bulan - App</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* Üst Header Düzenlemeleri */
+    .custom-header {
+      background-color: #1e3a8a; /* Koyu Mavi */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      color: white;
+      height: 60px;
+    }
+
+    /* Sol Logo Kısmı */
+    .header-logo {
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+      color: white;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Orta Arama Alanı */
+    .search-container {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center; /* Ortalar */
+      padding: 0 40px;
+    }
+
+    .search-bar {
+      width: 100%;
+      max-width: 500px; /* Arama çubuğunu kısalttık */
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 15px 10px 40px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+
+    /* Sağ Buton */
+    .header-action {
+      flex-shrink: 0;
+    }
+
+    .btn-post {
+      background-color: #2563eb;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .btn-post:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* Flutter içeriğini header'ın altına itmek için */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
+  <!-- Özel Üst Menü (Header) -->
+  <div class="custom-header">
+    <!-- Sol Logo: Tıklayınca ana sayfaya (root) gider -->
+    <a href="/" class="header-logo">Kaybeden&Bulan</a>
+
+    <!-- Orta Arama Alanı: Kısa ve ortalanmış -->
+    <div class="search-container">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" placeholder="Ara...">
+      </div>
+    </div>
+
+    <!-- Sağ Aksiyon Butonu -->
+    <div class="header-action">
+      <a href="/app/#/create-post" class="btn-post">Ücretsiz İlan Ver</a>
+    </div>
+  </div>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
