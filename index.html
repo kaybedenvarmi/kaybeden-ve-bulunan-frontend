@@ -39,29 +39,49 @@
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
         }
+
+        /* Arama alanı daraltma */
+        .search-container {
+            max-width: 300px;
+            width: 100%;
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header -->
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <header class="py-10 flex justify-between items-center">
-            <div class="flex items-center gap-4 group cursor-pointer" onclick="window.location.href='/app/'">
-                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg border border-slate-100 p-1">
+        <header class="py-6 flex flex-wrap justify-between items-center gap-4">
+            <!-- Sol Kısım: Logo ve Başlık (Tıklanabilir) -->
+            <a href="/" class="flex items-center gap-3 group cursor-pointer transition-transform hover:scale-[1.02] active:scale-95">
+                <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md border border-slate-100 p-1">
                     <img src="https://raw.githubusercontent.com/kaybedenvarmi/kaybeden-ve-bulunan-frontend/main/KVBLogo_SON.png" alt="KVB Logo" class="w-full h-full object-contain">
                 </div>
-                <h1 class="text-xl font-800 tracking-tight text-slate-900">Kaybeden<span class="text-blue-600">ve</span>Bulan</h1>
-            </div>
+                <h1 class="text-xl font-800 tracking-tight text-slate-900">
+                    Kaybeden<span class="text-blue-600">ve</span>Bulan
+                </h1>
+            </a>
 
-            <nav class="hidden md:flex items-center gap-8">
-                <button onclick="window.location.href='/app/'" class="bg-slate-900 text-white px-6 py-2 rounded-xl hover:bg-slate-800 transition-all text-xs font-bold">
-                    UYGULAMAYI AÇ
-                </button>
-            </nav>
+            <!-- Orta/Sağ Kısım: Kısaltılmış Arama Alanı ve Navigasyon -->
+            <div class="flex items-center gap-6 flex-1 justify-end">
+                <!-- Arama Çubuğu (Kısaltıldı) -->
+                <div class="search-container relative hidden sm:block">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                    </span>
+                    <input type="text" placeholder="Ara..." class="w-full bg-white border border-slate-200 rounded-xl py-2 pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm">
+                </div>
+
+                <nav class="flex items-center">
+                    <button onclick="window.location.href='/app/'" class="bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-slate-800 transition-all text-xs font-bold shadow-md active:scale-95">
+                        UYGULAMAYI AÇ
+                    </button>
+                </nav>
+            </div>
         </header>
 
         <!-- Hero Section -->
-        <main class="grid lg:grid-cols-2 gap-16 items-center py-16">
+        <main class="grid lg:grid-cols-2 gap-16 items-center py-12 md:py-20">
             <div class="space-y-8 text-center lg:text-left">
                 <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">
                     <i class="fa-solid fa-heart animate-pulse"></i> Yardımlaşma Platformu
@@ -85,7 +105,7 @@
             
             <div class="relative hidden lg:block">
                 <div class="absolute -top-10 -right-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
-                <img class="relative w-full h-[550px] object-cover rounded-[3rem] shadow-2xl border-4 border-white z-10" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Topluluk">
+                <img class="relative w-full h-[500px] object-cover rounded-[3rem] shadow-2xl border-4 border-white z-10" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Topluluk">
             </div>
         </main>
     </div>
@@ -107,7 +127,7 @@
                         </video>
                         <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-3/4 bg-white/90 backdrop-blur p-3 rounded-xl shadow-xl text-center z-20">
                             <p class="text-[10px] font-bold text-blue-600 uppercase">Uygulama İçinden</p>
-                            <p class="text-[11px] text-slate-600 font-medium">Hızlı İlan Oluşturma</p>
+                            <p class="text-[11px] text-slate-600 font-medium text-center">Hızlı İlan Oluşturma</p>
                         </div>
                     </div>
                 </div>
@@ -149,7 +169,7 @@
 
     <!-- Footer -->
     <footer class="py-16 bg-white flex flex-col items-center">
-        <!-- Sosyal Medya Hesapları -->
+        <!-- Sosyal Medya -->
         <div class="flex gap-4 mb-8">
             <a href="https://www.instagram.com/kaybedenvebulan/" target="_blank" class="social-icon" title="Instagram">
                 <i class="fa-brands fa-instagram"></i>
@@ -172,8 +192,8 @@
                     <p class="text-sm text-slate-400 mt-2 font-medium">İyilik paylaştıkça çoğalır.</p>
                 </div>
                 
-                <!-- ClustrMaps Ziyaretçi Takipçisi -->
-                <div class="flex flex-col items-center gap-4">
+                <!-- ClustrMaps (Görsel ve Ortalanmış) -->
+                <div class="flex flex-col items-center">
                     <a href='https://clustrmaps.com/site/1c9u5' title='Visit tracker' class="block transition-transform hover:scale-105 active:scale-95">
                         <img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=a&t=n&d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k&co=c2d2dc' 
                              alt="Visit Tracker" 
@@ -181,7 +201,7 @@
                     </a>
                 </div>
 
-                <!-- ClustrMaps İnteraktif Harita Scripti -->
+                <!-- ClustrMaps Harita Scripti -->
                 <div class="hidden">
                     <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=n&d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k&co=c2d2dc'></script>
                 </div>
