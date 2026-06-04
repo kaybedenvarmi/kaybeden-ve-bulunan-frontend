@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.kaybedenvebulan.app",
+      "sha256_cert_fingerprints": [
+        "72:47:B6:77:4F:34:F9:30:B5:83:94:B7:37:1B:95:3D:B5:A5:EB:4B:9C:EF:3F:2F:F3:46:21:23:A5:9A:41:C8",
+        "13:24:7A:20:56:E1:C1:22:32:17:14:BB:EE:16:A1:80:23:3F:BF:70:C2:73:69:37:05:A2:E7:CA:50:17:E3:A9"
+      ]
+    }
+  }
+]
