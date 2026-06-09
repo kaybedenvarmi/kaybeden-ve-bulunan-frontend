@@ -400,7 +400,47 @@
   .footer-links a:hover { color: var(--white); }
   .footer-copy { font-size: 12px; color: rgba(148,163,184,0.45); }
 
-  /* RESPONSIVE */
+  /* BENEFITS */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+  .benefit-card {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    background: var(--navy-mid);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .benefit-card:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-2px); }
+  .benefit-icon-wrap {
+    flex-shrink: 0;
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .benefit-icon-wrap svg { width: 22px; height: 22px; }
+  .benefit-blue  { background: rgba(59,130,246,0.14); color: var(--blue-light); }
+  .benefit-gold  { background: rgba(245,158,11,0.13); color: #FCD34D; }
+  .benefit-green { background: rgba(34,197,94,0.11);  color: #86EFAC; }
+  .benefit-purple{ background: rgba(139,92,246,0.13); color: #C4B5FD; }
+  .benefit-teal  { background: rgba(20,184,166,0.12); color: #5EEAD4; }
+  .benefit-body h3 {
+    font-size: 16px; font-weight: 600;
+    color: var(--white); margin-bottom: 0.45rem;
+    line-height: 1.3;
+  }
+  .benefit-body p {
+    font-size: 13.5px; color: var(--muted);
+    line-height: 1.65;
+  }
+
+
   @media (max-width: 768px) {
     nav { padding: 0 1.25rem; }
     .nav-links { display: none; }
@@ -467,7 +507,7 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-badge">🇹🇷 Türkiye'nin ulusal kayıp eşya ağı</div>
-  <h1>Kaybettiniz mi?<br><em>Buldunuzmu.?<br><em> Sisteme Yükle </em></h1>
+  <h1>Kaybettiniz mi?<br><em>Birisi bulmuş olabilir.</em></h1>
   <p class="hero-sub">
     Türkiye genelinde binlerce kullanıcıyla büyüyen dayanışma ağı —
     eşyanızı bulmak için tek adres. Ücretsiz, hızlı, güvenli.
@@ -483,37 +523,160 @@
     <div class="map-svg-wrap">
       <svg viewBox="0 0 660 270" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="glow-blue" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="cb"/>
+            <feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3.5" result="cb"/>
+            <feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-green" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="cb"/>
+            <feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-pink" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="cb"/>
+            <feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <radialGradient id="map-fill" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="rgba(59,130,246,0.18)"/>
+            <stop offset="100%" stop-color="rgba(30,58,138,0.08)"/>
+          </radialGradient>
         </defs>
+
+        <!-- Turkey outline with gradient fill -->
         <path d="M38,120 L55,100 L80,88 L110,82 L145,78 L180,75 L210,70 L240,68 L265,65 L285,60 L310,58 L335,56 L360,54 L385,52 L415,50 L445,48 L475,50 L500,55 L520,65 L535,78 L548,90 L558,105 L565,118 L575,130 L590,140 L610,148 L622,155 L630,162 L625,170 L610,178 L595,182 L580,185 L560,190 L540,195 L520,198 L500,202 L480,205 L460,208 L440,212 L420,215 L400,218 L380,220 L360,222 L340,220 L320,218 L300,215 L280,212 L260,208 L240,205 L220,202 L200,200 L180,197 L160,194 L140,190 L120,185 L100,178 L80,168 L62,155 L48,142 Z"
-          fill="rgba(30,58,138,0.22)" stroke="rgba(59,130,246,0.45)" stroke-width="1.2"/>
-        <!-- City dots -->
-        <circle cx="340" cy="138" r="5" fill="#3B82F6" filter="url(#glow)"/>
-        <circle cx="178" cy="148" r="6" fill="#3B82F6" filter="url(#glow)"/>
-        <circle cx="265" cy="185" r="4" fill="#F59E0B" filter="url(#glow)"/>
-        <circle cx="460" cy="130" r="3.5" fill="#22C55E" filter="url(#glow)"/>
-        <circle cx="540" cy="155" r="3.5" fill="#3B82F6" filter="url(#glow)"/>
-        <circle cx="155" cy="175" r="3" fill="#F59E0B" filter="url(#glow)"/>
-        <circle cx="420" cy="175" r="3" fill="#22C55E" filter="url(#glow)"/>
-        <circle cx="370" cy="95" r="3" fill="#3B82F6" filter="url(#glow)"/>
-        <circle cx="290" cy="158" r="2.5" fill="#F59E0B" filter="url(#glow)"/>
-        <circle cx="495" cy="170" r="2.5" fill="#22C55E" filter="url(#glow)"/>
-        <!-- Ripple animations -->
-        <circle cx="340" cy="138" r="6" fill="none" stroke="rgba(59,130,246,0.35)" stroke-width="1">
-          <animate attributeName="r" values="6;20;6" dur="3s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+          fill="url(#map-fill)" stroke="rgba(99,160,255,0.55)" stroke-width="1.4"/>
+
+        <!-- ========== STATIC CORE DOTS ========== -->
+        <!-- İstanbul — mavi büyük -->
+        <circle cx="178" cy="145" r="6.5" fill="#60A5FA" filter="url(#glow-blue)"/>
+        <!-- Ankara — mavi orta -->
+        <circle cx="335" cy="135" r="5.5" fill="#3B82F6" filter="url(#glow-blue)"/>
+        <!-- İzmir — altın (batı kıyısı içeride) -->
+        <circle cx="138" cy="172" r="5" fill="#FBBF24" filter="url(#glow-gold)"/>
+        <!-- Bursa — yeşil -->
+        <circle cx="218" cy="142" r="4" fill="#34D399" filter="url(#glow-green)"/>
+        <!-- Konya — pembe -->
+        <circle cx="295" cy="178" r="4" fill="#F472B6" filter="url(#glow-pink)"/>
+        <!-- Adana — turuncu -->
+        <circle cx="358" cy="205" r="4" fill="#FB923C" filter="url(#glow-gold)"/>
+        <!-- Samsun — mavi -->
+        <circle cx="375" cy="92" r="3.5" fill="#60A5FA" filter="url(#glow-blue)"/>
+        <!-- Trabzon — yeşil -->
+        <circle cx="462" cy="86" r="3.5" fill="#34D399" filter="url(#glow-green)"/>
+        <!-- Kayseri — altın -->
+        <circle cx="395" cy="155" r="3.5" fill="#FBBF24" filter="url(#glow-gold)"/>
+        <!-- Gaziantep — pembe -->
+        <circle cx="400" cy="205" r="3.5" fill="#F472B6" filter="url(#glow-pink)"/>
+        <!-- Erzurum — mavi -->
+        <circle cx="510" cy="115" r="3" fill="#60A5FA" filter="url(#glow-blue)"/>
+        <!-- Diyarbakır — turuncu -->
+        <circle cx="475" cy="178" r="3" fill="#FB923C" filter="url(#glow-gold)"/>
+        <!-- Eskişehir — yeşil -->
+        <circle cx="258" cy="142" r="3" fill="#34D399" filter="url(#glow-green)"/>
+        <!-- Antalya — pembe -->
+        <circle cx="255" cy="210" r="3" fill="#F472B6" filter="url(#glow-pink)"/>
+        <!-- Malatya — altın -->
+        <circle cx="448" cy="155" r="2.8" fill="#FBBF24" filter="url(#glow-gold)"/>
+        <!-- Van — mavi -->
+        <circle cx="555" cy="152" r="2.8" fill="#60A5FA" filter="url(#glow-blue)"/>
+        <!-- Mersin — turuncu -->
+        <circle cx="322" cy="210" r="2.5" fill="#FB923C" filter="url(#glow-gold)"/>
+        <!-- Ordu — pembe -->
+        <circle cx="425" cy="90" r="2.5" fill="#F472B6" filter="url(#glow-pink)"/>
+        <!-- Edirne — mavi (köşe içi) -->
+        <circle cx="98" cy="118" r="2.5" fill="#60A5FA" filter="url(#glow-blue)"/>
+        <!-- Şanlıurfa — yeşil -->
+        <circle cx="438" cy="198" r="2.5" fill="#34D399" filter="url(#glow-green)"/>
+
+        <!-- ========== RIPPLE ANİMASYONLARI ========== -->
+        <!-- İstanbul — 2 halka -->
+        <circle cx="178" cy="145" r="8" fill="none" stroke="#60A5FA" stroke-width="1.5" opacity="0">
+          <animate attributeName="r" values="8;28;8" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0;0.9" dur="2s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="178" cy="148" r="8" fill="none" stroke="rgba(59,130,246,0.3)" stroke-width="1">
-          <animate attributeName="r" values="8;24;8" dur="4s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.5;0;0.5" dur="4s" repeatCount="indefinite"/>
+        <circle cx="178" cy="145" r="8" fill="none" stroke="#93C5FD" stroke-width="0.8" opacity="0">
+          <animate attributeName="r" values="8;38;8" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" begin="0.5s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="265" cy="185" r="5" fill="none" stroke="rgba(245,158,11,0.35)" stroke-width="1">
-          <animate attributeName="r" values="5;15;5" dur="3.5s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.55;0;0.55" dur="3.5s" repeatCount="indefinite"/>
+
+        <!-- Ankara — 2 halka -->
+        <circle cx="335" cy="135" r="7" fill="none" stroke="#3B82F6" stroke-width="1.5" opacity="0">
+          <animate attributeName="r" values="7;24;7" dur="2.2s" begin="0.3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0;0.9" dur="2.2s" begin="0.3s" repeatCount="indefinite"/>
         </circle>
-        <!-- Labels -->
-        <text x="345" y="132" font-size="9" fill="rgba(147,197,253,0.75)" font-family="Inter,sans-serif">Ankara</text>
-        <text x="155" y="143" font-size="9" fill="rgba(147,197,253,0.75)" font-family="Inter,sans-serif">İstanbul</text>
+        <circle cx="335" cy="135" r="7" fill="none" stroke="#60A5FA" stroke-width="0.8" opacity="0">
+          <animate attributeName="r" values="7;32;7" dur="2.2s" begin="0.8s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.5;0;0.5" dur="2.2s" begin="0.8s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- İzmir — 2 halka -->
+        <circle cx="138" cy="172" r="6" fill="none" stroke="#FBBF24" stroke-width="1.5" opacity="0">
+          <animate attributeName="r" values="6;22;6" dur="1.8s" begin="0.6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0;0.9" dur="1.8s" begin="0.6s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="138" cy="172" r="6" fill="none" stroke="#FDE68A" stroke-width="0.8" opacity="0">
+          <animate attributeName="r" values="6;30;6" dur="1.8s" begin="1s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.5;0;0.5" dur="1.8s" begin="1s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Konya -->
+        <circle cx="295" cy="178" r="5" fill="none" stroke="#F472B6" stroke-width="1.5" opacity="0">
+          <animate attributeName="r" values="5;18;5" dur="2.4s" begin="0.2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0;0.9" dur="2.4s" begin="0.2s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Adana -->
+        <circle cx="358" cy="205" r="5" fill="none" stroke="#FB923C" stroke-width="1.5" opacity="0">
+          <animate attributeName="r" values="5;16;5" dur="2s" begin="1s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0;0.9" dur="2s" begin="1s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Trabzon -->
+        <circle cx="462" cy="86" r="4" fill="none" stroke="#34D399" stroke-width="1.3" opacity="0">
+          <animate attributeName="r" values="4;14;4" dur="2.6s" begin="0.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.85;0;0.85" dur="2.6s" begin="0.4s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Kayseri -->
+        <circle cx="395" cy="155" r="4" fill="none" stroke="#FBBF24" stroke-width="1.3" opacity="0">
+          <animate attributeName="r" values="4;15;4" dur="2.1s" begin="0.7s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.85;0;0.85" dur="2.1s" begin="0.7s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Gaziantep -->
+        <circle cx="400" cy="205" r="4" fill="none" stroke="#F472B6" stroke-width="1.3" opacity="0">
+          <animate attributeName="r" values="4;13;4" dur="1.9s" begin="1.2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.85;0;0.85" dur="1.9s" begin="1.2s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Bursa -->
+        <circle cx="218" cy="142" r="4" fill="none" stroke="#34D399" stroke-width="1.3" opacity="0">
+          <animate attributeName="r" values="4;14;4" dur="2.3s" begin="0.9s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.85;0;0.85" dur="2.3s" begin="0.9s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Diyarbakır -->
+        <circle cx="475" cy="178" r="3.5" fill="none" stroke="#FB923C" stroke-width="1.2" opacity="0">
+          <animate attributeName="r" values="3.5;13;3.5" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Erzurum -->
+        <circle cx="510" cy="115" r="3.5" fill="none" stroke="#60A5FA" stroke-width="1.2" opacity="0">
+          <animate attributeName="r" values="3.5;13;3.5" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0;0.8" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- ========== ŞEHİR ETİKETLERİ ========== -->
+        <text x="184" y="140" font-size="8.5" fill="rgba(147,197,253,0.9)" font-family="Inter,sans-serif" font-weight="600">İstanbul</text>
+        <text x="341" y="130" font-size="8.5" fill="rgba(147,197,253,0.9)" font-family="Inter,sans-serif" font-weight="600">Ankara</text>
+        <text x="144" y="167" font-size="7.5" fill="rgba(253,230,138,0.85)" font-family="Inter,sans-serif">İzmir</text>
+        <text x="300" y="173" font-size="7.5" fill="rgba(244,114,182,0.85)" font-family="Inter,sans-serif">Konya</text>
+        <text x="363" y="200" font-size="7.5" fill="rgba(251,146,60,0.85)" font-family="Inter,sans-serif">Adana</text>
+        <text x="467" y="81" font-size="7.5" fill="rgba(52,211,153,0.85)" font-family="Inter,sans-serif">Trabzon</text>
       </svg>
     </div>
     <div class="map-stats">
@@ -533,10 +696,94 @@
   <div class="stat-item"><div class="stat-n">%100</div><div class="stat-l">Ücretsiz Platform</div></div>
 </div>
 
-<!-- HOW IT WORKS -->
+<!-- BENEFITS SECTION -->
+<section class="section" id="faydalar">
+  <div class="section-eyebrow">Neden Kaybeden ve Bulan?</div>
+  <h2 class="section-title">Her adımda yanınızdayız</h2>
+  <p class="section-desc">Eşyanızı ya da can dostunuzu bulmak için ne yapacağınızı bilmiyorsanız — doğru yerdesiniz.</p>
+
+  <div class="benefits-grid">
+
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap benefit-blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5"/>
+          <path d="M9 6h6M9 10h4"/>
+        </svg>
+      </div>
+      <div class="benefit-body">
+        <h3>Her Yerden, Her Zaman Erişim</h3>
+        <p>Mobil uygulama veya web sitesi — dilediğiniz cihazdan, dilediğiniz anda ilan oluşturun ve yönetin.</p>
+      </div>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap benefit-gold">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </div>
+      <div class="benefit-body">
+        <h3>Nerede Kaybettiğinizi Bilmenize Gerek Yok</h3>
+        <p>Konumdan emin olmasanız da sorun değil. Lokasyon bazlı algoritmamız ilanınızı doğru bölgedeki kullanıcılara otomatik olarak iletir.</p>
+      </div>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap benefit-green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+      <div class="benefit-body">
+        <h3>İlan Aç, Süreci Hızlandır</h3>
+        <p>Bulan kişi ilan açar açmaz anında bilgilendirilirsiniz. Onay ve teslim aşamaları dakikalar içinde tamamlanır.</p>
+      </div>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap benefit-purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <div class="benefit-body">
+        <h3>Adrese Teslim veya Elden Alım</h3>
+        <p>Tercih sizin. Eşyanızın adresinize gönderilmesini sağlayın ya da uygun bir noktada elden teslim alın.</p>
+      </div>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap benefit-teal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+        </svg>
+      </div>
+      <div class="benefit-body">
+        <h3>Evcil Can Dostlarınız da Güvende</h3>
+        <p>Kaybolan hayvanlarınız için de ilan açabilirsiniz. Topluluk desteğiyle her can dostunuza kavuşmak mümkün.</p>
+      </div>
+    </div>
+
+    <div class="benefit-card">
+      <div class="benefit-icon-wrap benefit-blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </div>
+      <div class="benefit-body">
+        <h3>Sade ve Anlaşılır Arayüz</h3>
+        <p>Teknolojiye uzak olsanız bile rahatlıkla kullanabilirsiniz. Her adım açık, her işlem hızlı.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
 <section class="section" id="nasil-calisir">
   <div class="section-eyebrow">Nasıl Çalışır?</div>
-  <h2 class="section-title">Üç adımda kavuşturuyoruz</h2>
+  <h2 class="section-title">Üç Adımda Buluşturuyoruz</h2>
   <p class="section-desc">Konum bazlı teknoloji ile eşyanızın kaybolduğu bölgedeki kullanıcıları anında devreye alıyoruz.</p>
   <div class="steps">
     <div class="step-card">
@@ -644,7 +891,7 @@
 
 <!-- CTA -->
 <div class="cta-section">
-  <h2>Bulunmuş sizi bekleniyor olabilir</h2>
+  <h2>Eşyanız bekleniyor olabilir</h2>
   <p>Hemen ücretsiz ilan verin, Türkiye'nin yardımlaşma ağına katılın.</p>
   <a href="/app/" class="btn-primary">📍 Ücretsiz İlan Ver</a>
 </div>
