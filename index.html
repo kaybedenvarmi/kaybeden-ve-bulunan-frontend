@@ -1,354 +1,696 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaybeden ve Bulan | Türkiye'nin Kayıp Eşya Ağı</title>
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6368006900269736" crossorigin="anonymous"></script>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style type="text/tailwindcss">
-        @layer base {
-            body {
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                @apply bg-[#FDFDFD] text-[#1E293B] scroll-smooth;
-            }
-        }
-        @layer components {
-            .section-container {
-                @apply max-w-7xl mx-auto px-6 lg:px-8 py-20;
-            }
-            .btn-primary {
-                @apply bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-2xl transition-all shadow-lg shadow-blue-200 active:scale-95 flex items-center justify-center gap-3;
-            }
-            .nav-link {
-                @apply text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-wider;
-            }
-            .about-card {
-                @apply bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all duration-300;
-            }
-            .social-icon {
-                @apply w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:bg-blue-600 hover:text-white transition-all duration-300;
-            }
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Türkiye'nin en büyük kayıp eşya platformu. Kaybettiğiniz veya bulduğunuz eşyaları ücretsiz ilan verin, binlerce kullanıcıyla buluşun." />
+<title>Kaybeden ve Bulan | Türkiye'nin Kayıp Eşya Ağı</title>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6368006900269736" crossorigin="anonymous"></script>
 
-        .blue-topbar {
-            background-color: #1a367e;
-            @apply py-3 px-6 shadow-md sticky top-[72px] z-50;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0B1220;
+    --navy-mid: #162035;
+    --sapphire: #1E3A8A;
+    --blue: #3B82F6;
+    --blue-light: #93C5FD;
+    --gold: #F59E0B;
+    --gold-light: #FDE68A;
+    --white: #F8FAFF;
+    --muted: #94A3B8;
+    --border: rgba(59,130,246,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
 
-        .phone-frame {
-            width: 280px;
-            height: 560px;
-            background: #000;
-            border-radius: 40px;
-            border: 10px solid #1a1a1a;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.2);
-        }
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+    background: rgba(11,18,32,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo .dot { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--blue);
+    color: #fff; font-size: 13px; font-weight: 600;
+    padding: 8px 20px; border-radius: 8px;
+    border: none; cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .nav-cta:hover { background: #2563EB; transform: translateY(-1px); }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-        .float-anim { animation: float 4s ease-in-out infinite; }
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem 6rem;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(30,58,138,0.45) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.055) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,158,11,0.12);
+    border: 0.5px solid rgba(245,158,11,0.35);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 12px; font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.75); }
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    max-width: 820px;
+    position: relative; z-index: 1;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--blue-light);
+  }
+  .hero-sub {
+    font-size: 17px; line-height: 1.65;
+    color: var(--muted);
+    max-width: 560px;
+    position: relative; z-index: 1;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 1;
+    margin-bottom: 3.5rem;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue);
+    color: #fff; font-size: 15px; font-weight: 600;
+    padding: 14px 28px; border-radius: 10px;
+    border: none; cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #2563EB; transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--white); font-size: 15px; font-weight: 500;
+    padding: 14px 28px; border-radius: 10px;
+    border: 0.5px solid rgba(248,250,255,0.2); cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: rgba(248,250,255,0.45); background: rgba(248,250,255,0.05); }
 
-        .terms-content h3 {
-            @apply font-bold text-slate-800 mt-8 mb-3 flex items-center gap-2;
-        }
-        .terms-content p {
-            @apply text-slate-600 mb-4 text-sm leading-relaxed;
-        }
-        .terms-content ul {
-            @apply list-disc list-inside text-slate-600 text-sm mb-6 space-y-2 ml-2;
-        }
-        .terms-content li {
-            @apply pl-2;
-        }
-    </style>
+  /* MAP VIZ */
+  .hero-map {
+    position: relative; z-index: 1;
+    width: min(720px, 95%);
+    background: rgba(22,32,53,0.85);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 1.5rem 1.5rem 1.2rem;
+    overflow: hidden;
+  }
+  .map-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .map-label::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #22C55E;
+    animation: pulse 2s infinite;
+  }
+  .map-svg-wrap svg { width: 100%; height: auto; display: block; }
+  .map-stats {
+    display: flex; gap: 0.75rem; margin-top: 0.75rem;
+  }
+  .map-stat {
+    flex: 1;
+    background: rgba(11,18,32,0.65);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.65rem 0.9rem;
+  }
+  .map-stat-n {
+    font-size: 21px; font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: var(--blue-light);
+  }
+  .map-stat-l { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* STATS BAR */
+  .stats-bar {
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex; justify-content: center; gap: 0;
+  }
+  .stat-item {
+    flex: 1; max-width: 240px;
+    text-align: center;
+    padding: 0 1.5rem;
+    border-right: 0.5px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 900;
+    color: var(--white); line-height: 1;
+  }
+  .stat-n span { color: var(--gold); }
+  .stat-l { font-size: 13px; color: var(--muted); margin-top: 0.4rem; font-weight: 500; }
+
+  /* SECTIONS */
+  .section { padding: 5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 900; line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+  .section-desc { font-size: 16px; color: var(--muted); line-height: 1.65; max-width: 500px; }
+
+  /* STEPS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .step-card {
+    background: var(--navy-mid);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .step-card:hover { border-color: rgba(59,130,246,0.45); transform: translateY(-3px); }
+  .step-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 1rem;
+  }
+  .step-icon.blue { background: rgba(59,130,246,0.15); }
+  .step-icon.gold { background: rgba(245,158,11,0.12); }
+  .step-icon.green { background: rgba(34,197,94,0.10); }
+  .step-card h3 { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 0.5rem; }
+  .step-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* TRUST */
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .trust-card {
+    background: var(--navy-mid);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .trust-card.featured {
+    border-color: rgba(59,130,246,0.38);
+    background: linear-gradient(135deg, rgba(30,58,138,0.3), rgba(22,32,53,0.95));
+  }
+  .trust-tag {
+    display: inline-block;
+    background: rgba(59,130,246,0.14);
+    color: var(--blue-light);
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px; border-radius: 6px;
+    margin-bottom: 1rem;
+  }
+  .trust-card h3 {
+    font-size: 20px; font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: var(--white); margin-bottom: 0.5rem;
+  }
+  .trust-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+  .trust-list { list-style: none; margin-top: 1rem; }
+  .trust-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; color: var(--muted); line-height: 1.5;
+    padding: 7px 0;
+    border-bottom: 0.5px solid rgba(59,130,246,0.07);
+  }
+  .trust-list li:last-child { border-bottom: none; }
+  .trust-list .check { color: #22C55E; flex-shrink: 0; margin-top: 1px; }
+
+  /* TERMS */
+  .terms-section {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 2.5rem 5rem;
+  }
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .term-card {
+    background: rgba(22,32,53,0.5);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+  }
+  .term-card h4 { font-size: 14px; font-weight: 600; color: var(--blue-light); margin-bottom: 0.5rem; }
+  .term-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* CTA */
+  .cta-section {
+    margin: 0 2.5rem 5rem;
+    background: linear-gradient(135deg, rgba(30,58,138,0.45), rgba(11,18,32,0.9));
+    border: 0.5px solid rgba(59,130,246,0.3);
+    border-radius: 24px;
+    padding: 4.5rem 3rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 110%, rgba(59,130,246,0.14), transparent);
+    pointer-events: none;
+  }
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 3vw, 2.7rem);
+    font-weight: 900; color: var(--white);
+    margin-bottom: 0.75rem;
+    position: relative; z-index: 1;
+  }
+  .cta-section p {
+    font-size: 16px; color: var(--muted);
+    margin-bottom: 2rem;
+    position: relative; z-index: 1;
+  }
+  .cta-section .btn-primary {
+    font-size: 16px; padding: 16px 36px;
+    position: relative; z-index: 1;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 2rem 2.5rem;
+  }
+  .footer-top {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--white);
+  }
+  .footer-brand small { display: block; font-family: Inter, sans-serif; font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+  .footer-social { display: flex; gap: 1rem; }
+  .footer-social a {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--navy-mid);
+    border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .footer-social a:hover { border-color: var(--blue); background: rgba(59,130,246,0.1); }
+  .footer-bottom {
+    border-top: 0.5px solid var(--border);
+    padding-top: 1.25rem;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 12px; color: rgba(148,163,184,0.45); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .hero { padding: 3rem 1.25rem 4rem; }
+    .stats-bar { flex-wrap: wrap; padding: 1.5rem 1.25rem; }
+    .stat-item { min-width: 45%; border-right: none; border-bottom: 0.5px solid var(--border); padding: 1rem 0.5rem; }
+    .section { padding: 3.5rem 1.25rem; }
+    .trust-grid { grid-template-columns: 1fr; }
+    .cta-section { margin: 0 1.25rem 4rem; padding: 3rem 1.5rem; }
+    footer { padding: 1.5rem 1.25rem; }
+    .footer-top { flex-direction: column; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  /* AD SLOTS */
+  .ad-slot {
+    width: 100%;
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90px;
+    background: rgba(22,32,53,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .ad-slot::before {
+    content: 'REKLAM';
+    position: absolute;
+    top: 6px; left: 50%; transform: translateX(-50%);
+    font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
+    color: rgba(148,163,184,0.3);
+  }
+  .ad-slot .adsbygoogle {
+    max-width: 1100px;
+    width: 100%;
+  }
+</style>
 </head>
-<body class="antialiased">
+<body>
 
-    <header class="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-[100]">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-3 group transition-transform hover:scale-[1.01]">
-                <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-100 p-1">
-                    <img src="https://raw.githubusercontent.com/kaybedenvarmi/kaybeden-ve-bulunan-frontend/main/KVBLogo_SON.png" alt="KVB Logo" class="w-full h-full object-contain">
-                </div>
-                <h1 class="text-xl font-800 tracking-tight text-slate-900">
-                    Kaybeden<span class="text-blue-600">ve</span>Bulan
-                </h1>
-            </a>
-            
-            <nav class="hidden md:flex gap-8">
-                <a href="#hakkimizda" class="nav-link">Biz Kimiz?</a>
-                <a href="#cocuk-guvenligi" class="nav-link">Güvenlik</a>
-                <a href="#misyon" class="nav-link">Misyonumuz</a>
-                <a href="mailto:info@kaybedenvebulan.com.tr" class="nav-link">İletişim</a>
-            </nav>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">K<span class="dot">&</span>B
+    <span style="font-size:12px;font-weight:400;color:var(--muted);margin-left:4px;font-family:Inter,sans-serif;">Kaybeden ve Bulan</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hakkimizda">Hakkımızda</a></li>
+    <li><a href="#nasil-calisir">Nasıl Çalışır?</a></li>
+    <li><a href="#guvenlik">Güvenlik</a></li>
+    <li><a href="#kurallar">Kurallar</a></li>
+    <li><a href="mailto:info@kaybedenvebulan.com.tr">İletişim</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Uygulamaya Git →</a>
+</nav>
 
-            <button onclick="window.location.href='/app/'" class="bg-blue-600 text-white px-6 py-2.5 rounded-xl hover:bg-blue-700 transition-all text-xs font-bold shadow-lg shadow-blue-100 active:scale-95">
-                UYGULAMAYA GİT
-            </button>
-        </div>
-    </header>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge">🇹🇷 Türkiye'nin ulusal kayıp eşya ağı</div>
+  <h1>Kaybettiniz mi?<br><em>Birisi bulmuş olabilir.</em></h1>
+  <p class="hero-sub">
+    Türkiye genelinde binlerce kullanıcıyla büyüyen dayanışma ağı —
+    eşyanızı bulmak için tek adres. Ücretsiz, hızlı, güvenli.
+  </p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">📍 Ücretsiz İlan Ver</a>
+    <a href="#nasil-calisir" class="btn-secondary">Nasıl çalışır? →</a>
+  </div>
 
-    <div class="blue-topbar">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2 text-white/90 text-[10px] font-bold tracking-widest uppercase">
-                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                Türkiye'nin En Büyük Yardımlaşma Ağı Yayında
-            </div>
-            <div class="hidden sm:block text-white/60 text-[10px] font-bold uppercase tracking-tighter">
-                Kaybedenvebulan.com.tr
-            </div>
-        </div>
+  <!-- MAP -->
+  <div class="hero-map">
+    <div class="map-label">Anlık İlan Haritası — Türkiye</div>
+    <div class="map-svg-wrap">
+      <svg viewBox="0 0 660 270" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <path d="M38,120 L55,100 L80,88 L110,82 L145,78 L180,75 L210,70 L240,68 L265,65 L285,60 L310,58 L335,56 L360,54 L385,52 L415,50 L445,48 L475,50 L500,55 L520,65 L535,78 L548,90 L558,105 L565,118 L575,130 L590,140 L610,148 L622,155 L630,162 L625,170 L610,178 L595,182 L580,185 L560,190 L540,195 L520,198 L500,202 L480,205 L460,208 L440,212 L420,215 L400,218 L380,220 L360,222 L340,220 L320,218 L300,215 L280,212 L260,208 L240,205 L220,202 L200,200 L180,197 L160,194 L140,190 L120,185 L100,178 L80,168 L62,155 L48,142 Z"
+          fill="rgba(30,58,138,0.22)" stroke="rgba(59,130,246,0.45)" stroke-width="1.2"/>
+        <!-- City dots -->
+        <circle cx="340" cy="138" r="5" fill="#3B82F6" filter="url(#glow)"/>
+        <circle cx="178" cy="148" r="6" fill="#3B82F6" filter="url(#glow)"/>
+        <circle cx="265" cy="185" r="4" fill="#F59E0B" filter="url(#glow)"/>
+        <circle cx="460" cy="130" r="3.5" fill="#22C55E" filter="url(#glow)"/>
+        <circle cx="540" cy="155" r="3.5" fill="#3B82F6" filter="url(#glow)"/>
+        <circle cx="155" cy="175" r="3" fill="#F59E0B" filter="url(#glow)"/>
+        <circle cx="420" cy="175" r="3" fill="#22C55E" filter="url(#glow)"/>
+        <circle cx="370" cy="95" r="3" fill="#3B82F6" filter="url(#glow)"/>
+        <circle cx="290" cy="158" r="2.5" fill="#F59E0B" filter="url(#glow)"/>
+        <circle cx="495" cy="170" r="2.5" fill="#22C55E" filter="url(#glow)"/>
+        <!-- Ripple animations -->
+        <circle cx="340" cy="138" r="6" fill="none" stroke="rgba(59,130,246,0.35)" stroke-width="1">
+          <animate attributeName="r" values="6;20;6" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="178" cy="148" r="8" fill="none" stroke="rgba(59,130,246,0.3)" stroke-width="1">
+          <animate attributeName="r" values="8;24;8" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.5;0;0.5" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="265" cy="185" r="5" fill="none" stroke="rgba(245,158,11,0.35)" stroke-width="1">
+          <animate attributeName="r" values="5;15;5" dur="3.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.55;0;0.55" dur="3.5s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Labels -->
+        <text x="345" y="132" font-size="9" fill="rgba(147,197,253,0.75)" font-family="Inter,sans-serif">Ankara</text>
+        <text x="155" y="143" font-size="9" fill="rgba(147,197,253,0.75)" font-family="Inter,sans-serif">İstanbul</text>
+      </svg>
     </div>
-
-    <section class="relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <main class="grid lg:grid-cols-2 gap-16 items-center py-16 lg:py-28">
-                <div class="space-y-10 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-xs font-extrabold tracking-wider border border-blue-100">
-                        <i class="fa-solid fa-earth-turkey"></i> ULUSAL KAYIP EŞYA PLATFORMU
-                    </div>
-                    <h2 class="text-5xl md:text-7xl font-800 text-slate-900 leading-[1.1] tracking-tight">
-                        Kaybettin veya Buldun  <br>
-                        Platform Üzerinden <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 italic">Sisteme Yükle.</span>
-                    </h2>
-                    <p class="text-xl text-slate-500 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                        Kaybettiniz veya Buldunuz: <br>
-                        <span class="font-bold text-slate-700">Sisteme Yükle!</span>
-                    </p>
-                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
-                        <button onclick="window.location.href='/app/'" class="btn-primary">
-                            <i class="fa-solid fa-plus-circle"></i> ÜCRETSİZ İLAN VER
-                        </button>
-                        <a href="#hakkimizda" class="px-8 py-4 bg-white border border-slate-200 text-slate-600 font-semibold rounded-2xl hover:bg-slate-50 transition-all flex items-center gap-2 text-sm shadow-sm">
-                            Hakkımızda Daha Fazlası <i class="fa-solid fa-arrow-down text-blue-600"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="flex justify-center lg:justify-end relative">
-                    <div class="absolute -inset-10 bg-blue-200 rounded-full blur-3xl opacity-20"></div>
-                    <div class="phone-frame float-anim border-8 border-white">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#1a1a1a] rounded-b-2xl z-20"></div>
-                        <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                            <source src="https://raw.githubusercontent.com/kaybedenvarmi/kaybeden-ve-bulunan-frontend/main/Screen_Recording_20260424_225557_Gallery.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </section>
-
-    <section id="hakkimizda" class="bg-slate-50/50 border-y border-slate-100">
-        <div class="section-container">
-            <div class="grid lg:grid-cols-3 gap-16 items-start">
-                <div class="lg:col-span-1 space-y-8">
-                    <div class="inline-block px-4 py-1 bg-blue-600 text-white rounded-full text-[10px] font-black tracking-widest uppercase">KURUMSAL KİMLİK</div>
-                    <h3 class="text-4xl font-800 text-slate-900 leading-tight">Biz kimiz?</h3>
-                    <p class="text-slate-600 text-lg leading-relaxed">
-                        Kaybeden ve Bulan, dijitalleşen dünyada geleneksel yardımlaşma kültürünü teknolojiyle harmanlayan Türkiye’nin en kapsamlı <span class="font-bold text-blue-600">Kayıp Eşya Ağı</span> platformudur.
-                    </p>
-                </div>
-
-                <div class="lg:col-span-2 grid md:grid-cols-2 gap-6">
-                    <div id="misyon" class="about-card bg-blue-600 text-white border-none shadow-blue-200">
-                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-heart-pulse text-2xl"></i>
-                        </div>
-                        <h4 class="text-2xl font-800 mb-4 tracking-tight">Misyonumuz</h4>
-                        <p class="text-blue-50 leading-relaxed text-sm">
-                            Sadece bir ilan platformu değil, toplumsal bir dayanışma ekosistemi oluşturmak. Teknolojinin gücünü kullanarak, ilanların doğru kişilere en hızlı şekilde ulaşmasını sağlıyoruz.
-                        </p>
-                    </div>
-
-                    <div class="about-card">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-shield-halved text-2xl"></i>
-                        </div>
-                        <h4 class="text-xl font-800 mb-3">Güven Odaklı</h4>
-                        <p class="text-slate-500 text-sm leading-relaxed">Kullanıcılarımızın güvenliğini ve ilanların doğruluğunu her şeyin önünde tutuyoruz.</p>
-                    </div>
-
-                    <div class="about-card">
-                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-map-location-dot text-2xl"></i>
-                        </div>
-                        <h4 class="text-xl font-800 mb-3">Konum Bazlı Hız</h4>
-                        <p class="text-slate-500 text-sm leading-relaxed">Eşyanın nerede kaybolduğu bilgisiyle, o bölgedeki kullanıcıları sürece dahil ediyoruz.</p>
-                    </div>
-
-                    <div class="about-card border-emerald-100 bg-emerald-50/20">
-                        <div class="w-12 h-12 bg-emerald-500 text-white rounded-xl flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-hand-holding-heart text-2xl"></i>
-                        </div>
-                        <h4 class="text-xl font-800 text-emerald-900 mb-3">Tamamen Ücretsiz</h4>
-                        <p class="text-emerald-700/70 text-sm leading-relaxed">Bu platformun temelinde ticaret değil, iyilik ve toplumsal fayda yatar.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="cocuk-guvenligi" class="bg-white border-b border-slate-100">
-        <div class="section-container">
-            <div class="about-card border-red-100 bg-red-50/10 max-w-5xl mx-auto">
-                <div class="flex flex-col md:flex-row gap-12">
-                    <div class="md:w-1/3">
-                        <div class="w-16 h-16 bg-red-500 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-red-200">
-                            <i class="fa-solid fa-child-reaching text-3xl"></i>
-                        </div>
-                        <h3 class="text-3xl font-800 text-slate-900 leading-tight mb-4">Çocuk Güvenliği Politikası</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            Uygulamamız, kullanıcıların güvenliğini ön planda tutar ve özellikle çocukların korunmasına büyük önem verir.
-                        </p>
-                    </div>
-
-                    <div class="md:w-2/3 grid sm:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-slate-800 font-bold mb-3 flex items-center gap-2">
-                                <i class="fa-solid fa-user-shield text-red-500"></i> Güvenlik Önlemleri
-                            </h4>
-                            <ul class="text-slate-500 text-xs space-y-2 list-none">
-                                <li>• Tüm içerikler yönetici onayından geçer.</li>
-                                <li>• Uygunsuz içeriklerin paylaşımı yasaktır.</li>
-                                <li>• Kullanıcılar içerikleri şikayet edebilir.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-slate-800 font-bold mb-3 flex items-center gap-2">
-                                <i class="fa-solid fa-ban text-red-500"></i> Yasaklı İçerikler
-                            </h4>
-                            <ul class="text-slate-500 text-xs space-y-2 list-none">
-                                <li>• Çocuk istismarı içeren içerikler</li>
-                                <li>• Şiddet, taciz veya zararlı davranışlar</li>
-                                <li>• Kişisel bilgilerin kötüye kullanımı</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-slate-800 font-bold mb-3 flex items-center gap-2">
-                                <i class="fa-solid fa-eye text-red-500"></i> Moderasyon ve Bildirim
-                            </h4>
-                            <p class="text-slate-500 text-xs leading-relaxed">
-                                İlanlar düzenli kontrol edilir. Şüpheli içerikler kaldırılır ve kullanıcılar uygulama içinden bildirim yapabilir.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 class="text-slate-800 font-bold mb-3 flex items-center gap-2">
-                                <i class="fa-solid fa-envelope-open-text text-red-500"></i> İletişim
-                            </h4>
-                            <p class="text-slate-500 text-xs leading-relaxed">
-                                Güvenlik ihlalleri için: <br>
-                                <a href="mailto:kaybedenvebulan@gmail.com" class="font-bold text-blue-600">kaybedenvebulan@gmail.com</a>
-                            </p>
-                            <div class="mt-3 inline-block px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-600">
-                                13+ Yaş Sınırı
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="bg-white">
-        <div class="max-w-4xl mx-auto px-6 py-20">
-            <div class="flex items-center gap-4 mb-12">
-                <div class="h-px bg-slate-200 flex-1"></div>
-                <h2 class="text-xs font-black tracking-[0.3em] text-slate-400 uppercase">KURALLAR VE ŞARTLAR</h2>
-                <div class="h-px bg-slate-200 flex-1"></div>
-            </div>
-            
-            <div class="terms-content">
-                <p class="text-slate-700 font-semibold mb-6">
-                    kaybedenvebulan.com.tr, kaybolan eşyaların, evcil hayvanların sahiplerine ulaştırılmasını amaçlayan bir platformdur.
-                </p>
-
-                <h3>1. Hizmetin Amacı</h3>
-                <p>Platform, kayıp yaşayan kişiler ile buluntuya sahip olan kişileri bir araya getirir.</p>
-                <p class="font-bold text-slate-800 mb-2">Kullanıcılar:</p>
-                <ul>
-                    <li>Kayıp ilanı oluşturabilir</li>
-                    <li>Bulunan eşyaları paylaşabilir</li>
-                    <li>İlanlara yanıt vererek iletişim kurabilir</li>
-                </ul>
-
-                <h3>2. İlan Oluşturma ve Sorumluluk</h3>
-                <p>Platforma eklenen tüm ilanlar, ilgili kullanıcıların beyanına dayanır.</p>
-                <ul>
-                    <li>Paylaşılan bilgilerin doğruluğu kullanıcı sorumluluğundadır</li>
-                    <li>Yanıltıcı veya kötü niyetli içerik paylaşımı yasaktır</li>
-                </ul>
-
-                <h3>3. İletişim Süreci</h3>
-                <p>kaybedenvebulan.com.tr, kullanıcılar arasında doğrudan iletişim kurulmasını sağlar.</p>
-                <p class="italic text-red-600">Platform, taraflar arasındaki iletişimin içeriğinden sorumlu değildir.</p>
-
-                <h3>4. İçerik ve Yayın Politikası</h3>
-                <p>Platform management; uygunsuz ilanları kaldırma ve içerik üzerinde düzenleme yapma haklarını saklı tutar.</p>
-
-                <h3>5. Hukuki Sorumluluk Reddi</h3>
-                <p>kaybedenvebulan.com.tr, doğabilecek herhangi bir zarar veya anlaşmazlıktan sorumlu değildir.</p>
-
-                <h3>6. Kullanım Şartları</h3>
-                <p>Platformu kullanan herkes 18 yaşını doldurmuş ve hukuka uygun hareket ettiğini kabul eder.</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="max-w-7xl mx-auto px-6 py-8 flex justify-center">
-        <div class="w-full max-w-[728px] min-h-[90px] bg-slate-50 border border-slate-100 rounded-xl overflow-hidden flex flex-col items-center justify-center p-2 text-center">
-            <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-1">REKLAM</span>
-            
-            <ins class="adsbygoogle"
-                 style="display:block; text-align:center;"
-                 data-ad-layout="in-article"
-                 data-ad-format="fluid"
-                 data-ad-client="ca-pub-6368006900269736"
-                 data-ad-slot="1346727489"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
+    <div class="map-stats">
+      <div class="map-stat"><div class="map-stat-n">12.4K</div><div class="map-stat-l">Aktif İlan</div></div>
+      <div class="map-stat"><div class="map-stat-n">81</div><div class="map-stat-l">İlde Kullanıcı</div></div>
+      <div class="map-stat"><div class="map-stat-n">%78</div><div class="map-stat-l">Kavuşma Oranı</div></div>
+      <div class="map-stat"><div class="map-stat-n">Ücretsiz</div><div class="map-stat-l">Her zaman</div></div>
     </div>
+  </div>
+</section>
 
-    <footer class="bg-slate-50/80 py-16 border-t border-slate-100">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
-            <div class="flex flex-wrap justify-center gap-4 mb-10">
-                <a href="https://www.instagram.com/kaybedenvebulan/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://x.com/kaybedenvebulan" target="_blank" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="https://www.facebook.com/kaybedenvebulan" target="_blank" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://www.youtube.com/@kaybedenvebulan" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://www.linkedin.com/company/kaybedenvebulan" target="_blank" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://www.tiktok.com/@kaybedenvebulan" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
-            </div>
-            
-            <div class="flex flex-col items-center gap-6 text-center">
-                <div class="flex items-center gap-3 grayscale opacity-30">
-                    <div class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center text-white font-bold text-xs">K&B</div>
-                    <span class="font-800 text-slate-900 tracking-tighter">Kaybeden ve Bulan</span>
-                </div>
-                <p class="text-[10px] text-slate-400 font-extrabold tracking-[0.4em] uppercase">
-                    © 2024 KAYBEDEN VE BULAN — ULUSAL KAYIP EŞYA YARDIMLAŞMA AĞI
-                </p>
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-n">48<span>K+</span></div><div class="stat-l">Kayıtlı Kullanıcı</div></div>
+  <div class="stat-item"><div class="stat-n">12<span>K+</span></div><div class="stat-l">Bulunan Eşya</div></div>
+  <div class="stat-item"><div class="stat-n">81</div><div class="stat-l">İlde Aktif</div></div>
+  <div class="stat-item"><div class="stat-n">%100</div><div class="stat-l">Ücretsiz Platform</div></div>
+</div>
 
-                <div class="map-container mt-4">
-                    <a href="https://clustrmaps.com/site/1c9u5" title="ClustrMaps">
-                        <img src="//www.clustrmaps.com/map_v2.png?d=fCBZSLoYvJCCDZ7dqrlJrECq_napTWnb3XVK6hPpf9k&cl=ffffff" alt="Ziyaretçi Haritası" />
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
+<!-- HOW IT WORKS -->
+<section class="section" id="nasil-calisir">
+  <div class="section-eyebrow">Nasıl Çalışır?</div>
+  <h2 class="section-title">Üç adımda kavuşturuyoruz</h2>
+  <p class="section-desc">Konum bazlı teknoloji ile eşyanızın kaybolduğu bölgedeki kullanıcıları anında devreye alıyoruz.</p>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-icon blue">📝</div>
+      <h3>İlan Oluştur</h3>
+      <p>Kaybettiğiniz veya bulduğunuz eşyayı fotoğraf, konum ve açıklama ile sisteme yükleyin. Dakikalar içinde yayında.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-icon gold">📡</div>
+      <h3>Yakın Çevreye Yayılır</h3>
+      <p>İlanınız o bölgedeki kullanıcılara anlık bildirimle iletilir. Ne kadar geniş ağ, o kadar hızlı sonuç.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-icon green">🤝</div>
+      <h3>Güvenli İletişim</h3>
+      <p>Platform üzerinden güvenli mesajlaşın. Kimlik doğrulaması ile eşyanıza sağlam adımlarla kavuşun.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AD SLOT 1 — Nasıl Çalışır ile Hakkımızda arasında -->
+<div class="ad-slot">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6368006900269736"
+       data-ad-slot="1346727489"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- WHO WE ARE + SECURITY -->
+<section class="section" id="hakkimizda" style="padding-top:0">
+  <div class="section-eyebrow">Kimiz?</div>
+  <h2 class="section-title">Teknoloji ile yardımlaşma</h2>
+  <p class="section-desc">Sadece bir ilan panosu değil — toplumsal dayanışma ekosistemi.</p>
+  <div class="trust-grid">
+    <div class="trust-card featured">
+      <div class="trust-tag">Misyonumuz</div>
+      <h3>Kayıpları değil, kavuşmaları büyütüyoruz</h3>
+      <p>Dijitalleşen dünyada geleneksel komşuluk kültürünü teknolojiyle harmanlıyoruz. Her ilan bir umut, her kavuşma bir hikâye.</p>
+      <ul class="trust-list">
+        <li><span class="check">✓</span> Konum bazlı akıllı eşleştirme sistemi</li>
+        <li><span class="check">✓</span> Moderatör onaylı güvenilir içerik</li>
+        <li><span class="check">✓</span> Ticari reklam içermeyen bağımsız platform</li>
+        <li><span class="check">✓</span> Tamamen ücretsiz, her zaman</li>
+      </ul>
+    </div>
+    <div class="trust-card" id="guvenlik">
+      <div class="trust-tag">Güvenlik Politikası</div>
+      <h3>Çocuk &amp; Kullanıcı Güvenliği</h3>
+      <p>Platformumuz, kullanıcı güvenliğini her şeyin önünde tutar. Özellikle çocukların korunması için kapsamlı önlemler uygulanır.</p>
+      <ul class="trust-list">
+        <li><span class="check">✓</span> Tüm içerikler yönetici onayından geçer</li>
+        <li><span class="check">✓</span> Uygunsuz içerik bildirimi anlık işlenir</li>
+        <li><span class="check">✓</span> 13+ yaş sınırı uygulanır</li>
+        <li><span class="check">✓</span> Kişisel veri koruması (KVKK uyumlu)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TERMS -->
+<section class="terms-section" id="kurallar">
+  <div class="section-eyebrow">Kurallar &amp; Şartlar</div>
+  <h2 class="section-title">Nasıl kullanılır?</h2>
+  <div class="terms-grid">
+    <div class="term-card">
+      <h4>1. Hizmetin Amacı</h4>
+      <p>Platform, kayıp yaşayan kişiler ile buluntuya sahip olan kişileri bir araya getirir. Kayıp ilanı oluşturabilir veya bulunan eşyaları paylaşabilirsiniz.</p>
+    </div>
+    <div class="term-card">
+      <h4>2. Kullanıcı Sorumluluğu</h4>
+      <p>Platforma eklenen ilanların doğruluğundan kullanıcı sorumludur. Yanıltıcı veya kötü niyetli içerik paylaşımı kesinlikle yasaktır.</p>
+    </div>
+    <div class="term-card">
+      <h4>3. İletişim Süreci</h4>
+      <p>Platform, kullanıcılar arasında doğrudan iletişim sağlar. Taraflar arasındaki yazışmaların içeriğinden platform sorumlu değildir.</p>
+    </div>
+    <div class="term-card">
+      <h4>4. İçerik Politikası</h4>
+      <p>Yönetim, uygunsuz ilanları kaldırma ve içerik üzerinde düzenleme yapma hakkını saklı tutar.</p>
+    </div>
+    <div class="term-card">
+      <h4>5. Hukuki Sorumluluk</h4>
+      <p>kaybedenvebulan.com.tr, kullanıcılar arasında doğabilecek anlaşmazlıklardan sorumlu değildir.</p>
+    </div>
+    <div class="term-card">
+      <h4>6. Kullanım Şartları</h4>
+      <p>Platformu kullanan herkes 18 yaşını doldurmuş ve hukuka uygun hareket ettiğini kabul eder.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AD SLOT 2 — Kurallar ile CTA arasında -->
+<div class="ad-slot">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-6368006900269736"
+       data-ad-slot="1346727489"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Eşyanız bekleniyor olabilir</h2>
+  <p>Hemen ücretsiz ilan verin, Türkiye'nin yardımlaşma ağına katılın.</p>
+  <a href="#" class="btn-primary">📍 Ücretsiz İlan Ver</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      K<span style="color:var(--gold)">&</span>B — Kaybeden ve Bulan
+      <small>Ulusal Kayıp Eşya Yardımlaşma Ağı</small>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/kaybedenvebulan/" target="_blank" rel="noopener" title="Instagram">📷</a>
+      <a href="https://x.com/kaybedenvebulan" target="_blank" rel="noopener" title="X (Twitter)">𝕏</a>
+      <a href="https://www.facebook.com/kaybedenvebulan" target="_blank" rel="noopener" title="Facebook">f</a>
+      <a href="https://www.youtube.com/@kaybedenvebulan" target="_blank" rel="noopener" title="YouTube">▶</a>
+      <a href="https://www.linkedin.com/company/kaybedenvebulan" target="_blank" rel="noopener" title="LinkedIn">in</a>
+      <a href="https://www.tiktok.com/@kaybedenvebulan" target="_blank" rel="noopener" title="TikTok">♪</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <nav class="footer-links">
+      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="#guvenlik">Güvenlik</a>
+      <a href="#kurallar">Kullanım Şartları</a>
+      <a href="mailto:info@kaybedenvebulan.com.tr">info@kaybedenvebulan.com.tr</a>
+      <a href="mailto:kaybedenvebulan@gmail.com">Güvenlik Bildirimi</a>
+    </nav>
+    <div class="footer-copy">© 2024 Kaybeden ve Bulan — Tüm hakları saklıdır.</div>
+  </div>
+</footer>
+
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://kaybedenvebulan.matomo.cloud/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='https://cdn.matomo.cloud/kaybedenvebulan.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo -->
 
 </body>
 </html>
