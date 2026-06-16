@@ -46,6 +46,11 @@
 <meta name="twitter:image:alt" content="Kaybeden ve Bulan — Türkiye Kayıp Eşya Platformu" />
 
 <!-- ═══════════════════════════════════════════
+      GOOGLE ADSENSE DOĞRULAMA KODU (İSTEDİĞİNİZ ALAN)
+════════════════════════════════════════════ -->
+<meta name="google-adsense-account" content="ca-pub-6368006900269736">
+
+<!-- ═══════════════════════════════════════════
       SCHEMA.ORG — STRUCTURED DATA (JSON-LD)
 ════════════════════════════════════════════ -->
 <script type="application/ld+json">
@@ -154,7 +159,7 @@
           "name": "Kaybettiğim eşyayı nasıl bulabilirim?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Kaybettiğiniz eşyayı fotoğraf, konum ve açıklama ile platforma yükleyin. Konum bazlı algoritmamız ilanınızı o bölgedeki kullanıcılara anında iletir."
+            "text": "Kaybettiğiniz eşyayı fotoğraf, konum and açıklama ile platforma yükleyin. Konum bazlı algoritmamız ilanınızı o bölgedeki kullanıcılara anında iletir."
           }
         },
         {
@@ -185,19 +190,14 @@
 <link rel="manifest" href="/site.webmanifest" />
 
 <!-- ═══════════════════════════════════════════
-      PERFORMANS / PRELOAD
+      PERFORMANS / PRELOAD / REKLAM KÜTÜPHANELERİ
 ════════════════════════════════════════════ -->
 <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-<!-- Google AdSense Hesap Doğrulama ve Ana Kütüphane -->
-<meta name="google-adsense-account" content="ca-pub-6368006900269736">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6368006900269736" crossorigin="anonymous"></script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -677,7 +677,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">K<span class="dot">&</span>B
+  <a href="#" class="nav-logo">K<span class="dot">&amp;</span>B
     <span style="font-size:12px;font-weight:400;color:var(--muted);margin-left:4px;font-family:Inter,sans-serif;">Kaybeden ve Bulan</span>
   </a>
   <ul class="nav-links">
@@ -695,7 +695,7 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-badge">🇹🇷 Türkiye'nin ulusal kayıp eşya ağı</div>
-  <h1>Kaybettiniz mi?<br><em>Buldunuz mu?<br>Sisteme Yükle</em></h1>
+  <h1>Kaybettiniz mi?<br /><em>Buldunuz mu?<br />Sisteme Yükle</em></h1>
   <p class="hero-sub">
     Türkiye genelinde binlerce kullanıcıyla büyüyen dayanışma ağı —
     eşyanızı bulmak için tek adres. Ücretsiz, hızlı, güvenli.
@@ -731,16 +731,13 @@
             <stop offset="0%" stop-color="rgba(59,130,246,0.22)"/>
             <stop offset="100%" stop-color="rgba(30,58,138,0.10)"/>
           </radialGradient>
-          <!-- Subtle grid -->
           <pattern id="map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
             <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(59,130,246,0.05)" stroke-width="0.5"/>
           </pattern>
         </defs>
 
-        <!-- Arka plan grid -->
         <rect width="680" height="270" fill="url(#map-grid)"/>
 
-        <!-- Türkiye şekli — SADECE DOLGU, sınır çizgisi yok -->
         <path d="M 42,148 L 50,130 L 60,118 L 76,108 L 92,102 L 110,96
           L 128,90 L 148,86 L 164,84 L 178,80
           L 192,76 L 206,72 L 220,68 L 234,64 L 248,62
@@ -759,10 +756,8 @@
           L 112,150 L 94,145 L 74,148 L 56,152 Z"
           fill="url(#map-fill)" stroke="none"/>
 
-        <!-- Boğaz detayı -->
         <path d="M 174,82 L 176,148" fill="none" stroke="#1E3A8A" stroke-width="2.5" opacity="0.6"/>
 
-        <!-- ========== ŞEHİR NOKTALARI ========== -->
         <!-- İstanbul -->
         <circle cx="172" cy="138" r="8" fill="none" stroke="#60A5FA" stroke-width="1.5" opacity="0">
           <animate attributeName="r" values="8;28;8" dur="2s" repeatCount="indefinite"/>
@@ -883,7 +878,7 @@
   </div>
 </section>
 
-<!-- AD SLOT 1: HERO ALTINDAKİ YATAY REKLAM ALANI -->
+<!-- AD SLOT 1 -->
 <div class="ad-slot">
   <ins class="adsbygoogle"
        style="display:block"
@@ -916,7 +911,7 @@
   </div>
 </div>
 
-<!-- HAKKIMIZDA & BENEFITS -->
+<!-- HAKKIMIZDA -->
 <section id="hakkimizda" class="section">
   <div class="section-eyebrow">Biz Kimiz?</div>
   <h2 class="section-title">Türkiye'nin En Büyük Dayanışma Platformu</h2>
@@ -925,7 +920,6 @@
   </p>
 
   <div class="benefits-grid">
-    <!-- Hızlı Bildirim -->
     <div class="benefit-card">
       <div class="benefit-icon-wrap benefit-blue">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
@@ -935,7 +929,6 @@
         <p>İlan verdiğiniz an, eşyanın kaybolduğu veya bulunduğu konumdaki diğer kullanıcılara sistem tarafından anında bilgi geçilir.</p>
       </div>
     </div>
-    <!-- Güvenli İletişim -->
     <div class="benefit-card">
       <div class="benefit-icon-wrap benefit-gold">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
@@ -945,7 +938,6 @@
         <p>Telefon numaranızı veya kişisel bilgilerinizi paylaşmak zorunda kalmadan, uygulama içi kriptolu sohbet ekranından iletişim kurun.</p>
       </div>
     </div>
-    <!-- Akıllı Eşleşme -->
     <div class="benefit-card">
       <div class="benefit-icon-wrap benefit-green">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
@@ -962,7 +954,7 @@
 <section id="nasil-calisir" class="section">
   <div class="section-eyebrow">Süreç Nasıl İşler?</div>
   <h2 class="section-title">Eşyanıza Kavuşmak Sadece 3 Adım</h2>
-  <p class="section-desc"> Karmaşık formlar veya bürokrasi yok. Tamamen kullanıcı dostu ve hızlı aksiyon şeması.</p>
+  <p class="section-desc">Karmaşık formlar veya bürokrasi yok. Tamamen kullanıcı dostu ve hızlı aksiyon şeması.</p>
 
   <div class="steps">
     <div class="step-card">
@@ -983,7 +975,7 @@
   </div>
 </section>
 
-<!-- AD SLOT 2: NASIL ÇALIŞIR ALTINDAKİ İÇERİK ARASI REKLAM ALANI -->
+<!-- AD SLOT 2 -->
 <div class="ad-slot">
   <ins class="adsbygoogle"
        style="display:block"
@@ -996,7 +988,7 @@
   </script>
 </div>
 
-<!-- GÜVENLİK (TRUST) -->
+<!-- GÜVENLİK -->
 <section id="guvenlik" class="section">
   <div class="section-eyebrow">Güvenlik Önceliğimiz</div>
   <h2 class="section-title">Suistimalleri Önleyen Katı Koruma Kalkanı</h2>
@@ -1025,7 +1017,7 @@
   </div>
 </section>
 
-<!-- KURALLAR (TERMS) -->
+<!-- KURALLAR -->
 <section id="kurallar" class="terms-section">
   <div class="section-eyebrow" style="text-align:center;margin-bottom:0.5rem;">Platform Kuralları</div>
   <h2 class="section-title" style="text-align:center;margin-bottom:2rem;">Temiz Bir Topluluk İçin Uyulması Gereken İlkeler</h2>
@@ -1046,7 +1038,7 @@
   </div>
 </section>
 
-<!-- AD SLOT 3: KURALLAR VE CTA ARASINDAKİ KAPANIŞ REKLAM ALANI -->
+<!-- AD SLOT 3 -->
 <div class="ad-slot">
   <ins class="adsbygoogle"
        style="display:block"
@@ -1070,7 +1062,7 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      K<span style="color:var(--gold)">&</span>B
+      K<span style="color:var(--gold)">&amp;</span>B
       <small>Türkiye'nin En Büyük Kayıp Eşya Ağı</small>
     </div>
     <div class="footer-social">
